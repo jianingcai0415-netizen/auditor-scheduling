@@ -1,0 +1,200 @@
+/* "By location" weekly grid: one column per day, one chip per shift. */
+
+.daygrid {
+  background: #fff;
+}
+
+.daygrid__scroll {
+  overflow: auto;
+  max-height: calc(100vh - 250px);
+  min-height: 420px;
+}
+
+.daygrid__grid {
+  display: grid;
+  /* Rows follow their content and are never stretched to fill the viewport: with only four rows
+     on screen the leftover height used to be distributed across them (each row grew to ~140px). */
+  align-content: start;
+  grid-auto-rows: min-content;
+  min-width: 100%;
+  font-size: 0.82rem;
+}
+
+/* Header stays pinned while the rows scroll; the location column stays pinned horizontally. */
+.daygrid__corner {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  padding: 6px 10px;
+  font-weight: 600;
+  color: #495057;
+  background: #f8f9fa;
+  border-bottom: 1px solid #adb5bd;
+  border-right: 1px solid #dee2e6;
+}
+
+.daygrid__head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 5px 8px;
+  color: #495057;
+  background: #f8f9fa;
+  border-bottom: 1px solid #adb5bd;
+  border-left: 1px solid #dee2e6;
+}
+
+.daygrid__head.is-today {
+  background: #e7f1ff;
+}
+
+.daygrid__head-dow {
+  font-size: 0.72rem;
+  color: #868e96;
+}
+
+.daygrid__head-date {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.daygrid__loc {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 92px;
+  padding: 6px 10px;
+  background: #fff;
+  border-bottom: 1px solid #e9ecef;
+  border-right: 1px solid #dee2e6;
+}
+
+.daygrid__loc.search-hit {
+  background: #fff3cd;
+  box-shadow: inset 0 0 0 2px #f0ad4e;
+}
+
+.daygrid__loc-name {
+  flex: 1 1 auto;
+  overflow: hidden;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.daygrid__loc-cal {
+  flex: 0 0 auto;
+  font-size: 0.8rem;
+  color: #006400;
+  cursor: pointer;
+}
+
+.daygrid__cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-height: 92px;
+  padding: 4px;
+  overflow: hidden;
+  border-bottom: 1px solid #e9ecef;
+  border-left: 1px solid #e9ecef;
+}
+
+.daygrid__cell.is-empty {
+  background: #fcfcfd;
+  cursor: pointer;
+}
+
+.daygrid__cell.is-empty:hover {
+  background: #f1f3f5;
+}
+
+.daygrid__chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  /* Content-sized, not full-width: these read as small chips, not as bars. */
+  width: fit-content;
+  min-width: 58px;
+  max-width: 100%;
+  padding: 2px 6px;
+  font-family: inherit;
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* start = the day it begins; cont = still running from an earlier day. */
+.daygrid__chip--start {
+  color: #173404;
+  background: #c0dd97;
+  border-color: #639922;
+}
+
+.daygrid__chip--cont {
+  color: #3b6d11;
+  background: #eaf3de;
+  border-color: #97c459;
+}
+
+.daygrid__chip--warn {
+  color: #501313;
+  background: #f7c1c1;
+  border-color: #e24b4a;
+}
+
+.daygrid__chip--unassigned {
+  color: #444441;
+  background: #f1efe8;
+  border-color: #b4b2a9;
+}
+
+.daygrid__chip-id {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.daygrid__chip-flag {
+  flex: 0 0 auto;
+  font-weight: 700;
+}
+
+.daygrid__chip-cont {
+  flex: 0 0 auto;
+  opacity: 0.55;
+}
+
+.daygrid__more {
+  align-self: flex-start;
+  padding: 1px 6px;
+  font-family: inherit;
+  font-size: 0.7rem;
+  color: #495057;
+  background: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.daygrid__more:hover {
+  background: #e9ecef;
+}
+
+.daygrid__more--collapse {
+  margin-top: 2px;
+  color: #868e96;
+}

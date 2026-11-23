@@ -1,0 +1,370 @@
+/* 审核员分布地图页 */
+
+.map-page {
+  --map-ink: #1f2329;
+  --map-muted: #6b7280;
+  --map-line: #e5e7eb;
+  --map-surface: #ffffff;
+  --map-accent: #1677ff;
+  --map-accent-soft: #e8f1ff;
+  --map-idle: #b6bcc6;
+  --map-idle-soft: #f3f4f6;
+}
+
+.map-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.map-toolbar h5 {
+  margin: 0;
+  color: var(--map-ink);
+}
+
+.map-stats {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
+.map-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.15;
+}
+
+.map-stat b {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--map-ink);
+}
+
+.map-stat span {
+  font-size: 12px;
+  color: var(--map-muted);
+}
+
+.map-stamp {
+  font-size: 12px;
+  color: var(--map-muted);
+}
+
+.map-body {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+
+/* 地图容器必须有确定高度：flex 子项里 height:100% 在高德 SDK 下会算成 0，底图不渲染。 */
+.map-canvas {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: calc(100vh - 210px);
+  min-height: 460px;
+  border: 1px solid var(--map-line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f7f8fa;
+}
+
+.map-canvas-empty {
+  height: calc(100vh - 210px);
+  min-height: 460px;
+  border: 1px dashed var(--map-line);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: var(--map-idle-soft);
+}
+
+.map-side {
+  flex: 0 0 372px;
+  max-width: 372px;
+  height: calc(100vh - 210px);
+  min-height: 460px;
+  overflow-y: auto;
+  border: 1px solid var(--map-line);
+  border-radius: 10px;
+  background: var(--map-surface);
+  padding: 14px 16px;
+}
+
+.map-side-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.map-side-head h6 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--map-ink);
+}
+
+.map-side-sub {
+  font-size: 12px;
+  color: var(--map-muted);
+}
+
+.map-hint {
+  font-size: 13px;
+  color: var(--map-muted);
+  margin: 6px 0 12px;
+}
+
+.map-legend {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  font-size: 12px;
+  color: var(--map-muted);
+  padding: 6px 10px;
+  border: 1px solid var(--map-line);
+  border-radius: 8px;
+  background: var(--map-surface);
+}
+
+.map-legend i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: -1px;
+}
+
+/* ---- 地图打点 ---- */
+.map-pin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  transform: translateY(-4px);
+}
+
+.map-pin-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  box-shadow: 0 1px 4px rgba(16, 24, 40, 0.18);
+  transition: transform 0.12s ease;
+}
+
+.map-pin--duty .map-pin-dot {
+  background: var(--map-accent);
+}
+
+.map-pin--idle .map-pin-dot {
+  background: var(--map-idle);
+}
+
+.map-pin:hover .map-pin-dot {
+  transform: scale(1.08);
+}
+
+.map-pin--selected .map-pin-dot {
+  box-shadow: 0 0 0 4px rgba(22, 119, 255, 0.26), 0 1px 4px rgba(16, 24, 40, 0.18);
+}
+
+.map-pin-caption {
+  margin-top: 3px;
+  font-size: 11px;
+  line-height: 1.15;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--map-ink);
+  background: rgba(255, 255, 255, 0.86);
+  padding: 0 4px;
+  border-radius: 3px;
+}
+
+.map-pin-caption em {
+  font-style: normal;
+  color: var(--map-accent);
+  font-weight: 600;
+}
+
+/* ---- 侧栏 ---- */
+.map-city-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: 7px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.map-city-row:hover {
+  background: var(--map-idle-soft);
+}
+
+.map-city-row.is-active {
+  background: var(--map-accent-soft);
+  border-color: #bcd7ff;
+}
+
+.map-city-name {
+  flex: 1 1 auto;
+  font-size: 13px;
+  color: var(--map-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.map-chip {
+  font-size: 11px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--map-idle-soft);
+  color: var(--map-muted);
+  border: 1px solid var(--map-line);
+  white-space: nowrap;
+}
+
+.map-chip--duty {
+  background: var(--map-accent-soft);
+  color: var(--map-accent);
+  border-color: #bcd7ff;
+}
+
+.map-person {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: 7px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.map-person:hover {
+  background: var(--map-idle-soft);
+}
+
+.map-person.is-active {
+  background: var(--map-accent-soft);
+  border-color: #bcd7ff;
+}
+
+.map-person-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 13px;
+  color: var(--map-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.map-person-code {
+  font-size: 11px;
+  color: var(--map-muted);
+  margin-left: 6px;
+}
+
+.map-detail {
+  margin-top: 12px;
+  border-top: 1px solid var(--map-line);
+  padding-top: 12px;
+}
+
+.map-detail dl {
+  display: grid;
+  grid-template-columns: 62px 1fr;
+  gap: 6px 10px;
+  margin: 0;
+  font-size: 13px;
+}
+
+.map-detail dt {
+  color: var(--map-muted);
+  font-weight: 400;
+}
+
+.map-detail dd {
+  margin: 0;
+  color: var(--map-ink);
+  /* 不要 break-all：那样会把 "18:31:00" 从中间拆开，时间戳应只在空格处换行。 */
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+
+.map-back {
+  font-size: 12px;
+  color: var(--map-accent);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+.map-back:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 1100px) {
+  .map-body {
+    flex-direction: column;
+  }
+
+  .map-side {
+    flex: 1 1 auto;
+    max-width: none;
+    height: auto;
+    max-height: 420px;
+  }
+}
+
+/* 口径切换（此刻 / 今日 / 未来7天）：与统计区保持同一行，窄屏可换行。 */
+.map-scope {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.map-scope .btn {
+  font-size: 12px;
+  padding: 3px 10px;
+}
+
+/* 从地图跳到工作表 / 人员页的入口：文字链而非按钮，避免侧栏出现第二组主操作。 */
+.map-jump {
+  color: var(--map-accent);
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.map-jump:hover {
+  text-decoration: underline;
+}
+
+.map-jump--block {
+  display: inline-block;
+  margin-top: 10px;
+}
+
+/* 审图号：合规标注，弱化到不与地图控件抢视线。 */
+.map-attribution {
+  margin: 6px 0 0;
+  font-size: 11px;
+  color: var(--map-muted);
+  text-align: right;
+}

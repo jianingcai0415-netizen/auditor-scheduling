@@ -1,0 +1,1114 @@
+# Canonical UI label catalog (i18n) - PORTABLE SOURCE OF TRUTH.
+#
+# Applied at startup by UiTranslationSyncService to ANY active database
+# (SQLite and PostgreSQL) through JPA: this mechanism keeps localizations
+# aligned across the two engines.
+#
+# RULE: add every NEW UI key HERE, never in DemoDataRepository's
+# seedLabelTranslations* methods (SQLite-only SQL, not run under the PostgreSQL profile).
+#
+# TSV format, one record per line, with seven TAB-separated fields:
+#   key <TAB> description <TAB> en <TAB> fr <TAB> es <TAB> de <TAB> zh
+# All five languages (en, fr, es, de, zh) are required and must be non-empty (verified by UiTranslationCatalogTest).
+# Empty lines and lines starting with # are ignored. Values cannot contain TAB characters.
+# Synchronization is ADDITIVE: it never overwrites translations already present in the database
+# (changes made on the Labels page remain intact).
+#
+backup.autoKeep	自动备份数量上限	Max automatic backups	Max sauvegardes automatiques	Máx. copias automáticas	Max. automatische Backups	自动备份数量上限
+backup.autoRetentionDays	自动备份保留天数	Automatic backups retention	Conservation des sauvegardes automatiques	Retención de copias automáticas	Aufbewahrung automatischer Backups	自动备份保留天数
+backup.days	天	days	jours	días	Tage	天
+backup.delete	删除此备份	Delete this backup	Supprimer cette sauvegarde	Eliminar esta copia de seguridad	Dieses Backup löschen	删除此备份
+backup.deleteConfirm	删除	Delete	Supprimer	Eliminar	Löschen	删除
+backup.deleteMsg	确定永久删除此备份？	Permanently delete this backup?	Supprimer définitivement cette sauvegarde ?	¿Eliminar definitivamente esta copia de seguridad?	Dieses Backup endgültig löschen?	确定永久删除此备份？
+backup.deleteTitle	删除备份	Delete backup	Supprimer la sauvegarde	Eliminar copia de seguridad	Backup löschen	删除备份
+backup.download	下载此备份	Download the backup	Télécharger la sauvegarde	Descargar la copia	Sicherung herunterladen	下载此备份
+backup.empty	暂无备份：首个备份将自动创建。	No backups yet: the first one will be created automatically.	Aucune sauvegarde pour l'instant : la première sera créée automatiquement.	Aún no hay copias: la primera se creará automáticamente.	Noch keine Sicherungen: die erste wird automatisch erstellt.	暂无备份：首个备份将自动创建。
+backup.file	文件	File	Fichier	Archivo	Datei	文件
+backup.files	个文件	files	fichiers	archivos	Dateien	个文件
+backup.hint	自动备份每 30 分钟运行一次（仅在有变更时），并在覆盖排班前运行。恢复前会先保存当前状态，因此可以回退。	Automatic backup runs every 30 minutes (only when there are changes) and before operations that overwrite shifts. Restoring saves the current state first, so it is reversible.	La sauvegarde automatique s'exécute toutes les 30 minutes (uniquement en cas de modifications) et avant les opérations qui écrasent les créneaux. La restauration enregistre d'abord l'état actuel, elle est donc réversible.	La copia automática se ejecuta cada 30 minutos (solo si hay cambios) y antes de las operaciones que sobrescriben turnos. La restauración guarda antes el estado actual, por lo que es reversible.	Die automatische Sicherung läuft alle 30 Minuten (nur bei Änderungen) und vor Vorgängen, die Schichten überschreiben. Die Wiederherstellung speichert zuerst den aktuellen Zustand und ist daher umkehrbar.	自动备份每 30 分钟运行一次（仅在有变更时），并在覆盖排班前运行。恢复前会先保存当前状态，因此可以回退。
+backup.intervalMinutes	自动备份间隔	Automatic interval	Intervalle automatique	Intervalo automático	Automatisches Intervall	自动备份间隔
+backup.otherKeep	其他备份数量上限	Max other backups	Max autres sauvegardes	Máx. otras copias	Max. andere Backups	其他备份数量上限
+backup.otherRetentionDays	其他备份保留天数	Other backups retention	Conservation des autres sauvegardes	Retención de otras copias	Aufbewahrung sonstiger Backups	其他备份保留天数
+backup.restore	恢复此备份	Restore this backup	Restaurer cette sauvegarde	Restaurar esta copia	Diese Sicherung wiederherstellen	恢复此备份
+backup.restoreConfirm	恢复	Restore	Restaurer	Restaurar	Wiederherstellen	恢复
+backup.restoreMsg	数据库将恢复到以下时间点的状态：	The database will be reverted to its state as of	La base de données sera ramenée à son état du	La base de datos volverá a su estado del	Die Datenbank wird auf den Stand vom	数据库将恢复到以下时间点的状态：
+backup.restoreMsg2	该时间点之后录入的数据将丢失（当前状态会先被保存）。是否继续？	Data entered after that moment will be lost (the current state is saved first anyway). Continue?	Les données saisies après ce moment seront perdues (l'état actuel est d'abord enregistré). Continuer ?	Los datos introducidos después de ese momento se perderán (el estado actual se guarda antes de todos modos). ¿Continuar?	Danach eingegebene Daten gehen verloren (der aktuelle Zustand wird vorher gespeichert). Fortfahren?	该时间点之后录入的数据将丢失（当前状态会先被保存）。是否继续？
+backup.restoreTitle	恢复数据库	Restore database	Restaurer la base de données	Restaurar base de datos	Datenbank wiederherstellen	恢复数据库
+backup.rotationHint	超过保留天数的文件将在轮换时删除；备份数量上限同样生效。	Files older than the specified days are deleted on rotation; the maximum backup count limits also remain active.	Les fichiers plus anciens que le nombre de jours indiqué sont supprimés lors de la rotation ; les limites maximales par nombre de sauvegardes restent également actives.	Los archivos más antiguos que los días indicados se eliminan en la rotación; también siguen activos los límites máximos por número de copias.	Dateien, die älter als die angegebenen Tage sind, werden bei der Rotation gelöscht; die Höchstgrenzen für die Anzahl der Backups bleiben ebenfalls aktiv.	超过保留天数的文件将在轮换时删除；备份数量上限同样生效。
+backup.rotationSettings	自动轮换	Automatic rotation	Rotation automatique	Rotación automática	Automatische Rotation	自动轮换
+backup.runNow	立即备份	Back up now	Sauvegarder maintenant	Hacer copia ahora	Jetzt sichern	立即备份
+backup.size	大小	Size	Taille	Tamaño	Größe	大小
+backup.tag.auto	自动	Automatic	Automatique	Automática	Automatisch	自动
+backup.tag.manual	手动	Manual	Manuelle	Manual	Manuell	手动
+backup.tag.preop	操作前	Pre-operation	Pré-opération	Pre-operación	Vor-Vorgang	操作前
+backup.tag.prerestore	恢复前	Pre-restore	Pré-restauration	Pre-restauración	Vor-Wiederherstellung	恢复前
+backup.validation.autoDays	自动备份保留天数必须在 1 到 3650 天之间。	Automatic backups retention must be between 1 and 3650 days.	La conservation des sauvegardes automatiques doit être comprise entre 1 et 3650 jours.	La retención de copias automáticas debe estar entre 1 y 3650 días.	Die Aufbewahrung automatischer Backups muss zwischen 1 und 3650 Tagen liegen.	自动备份保留天数必须在 1 到 3650 天之间。
+backup.validation.autoKeep	自动备份数量上限必须在 1 到 100000 之间。	The maximum number of automatic backups must be between 1 and 100000.	Le nombre maximum de sauvegardes automatiques doit être compris entre 1 et 100000.	El número máximo de copias automáticas debe estar entre 1 y 100000.	Die maximale Anzahl automatischer Backups muss zwischen 1 und 100000 liegen.	自动备份数量上限必须在 1 到 100000 之间。
+backup.validation.coherence	自动备份保留时长必须至少覆盖两个完整备份间隔。	Automatic backups retention must cover at least two full backup intervals.	La conservation des sauvegardes automatiques doit couvrir au moins deux intervalles complets de sauvegarde.	La retención de copias automáticas debe cubrir al menos dos intervalos completos de copia.	Die Aufbewahrung automatischer Backups muss mindestens zwei vollständige Backup-Intervalle abdecken.	自动备份保留时长必须至少覆盖两个完整备份间隔。
+backup.validation.interval	备份间隔必须为 1 到 1440 之间的整数分钟。	The interval must be an integer between 1 and 1440 minutes.	L’intervalle doit être un nombre entier compris entre 1 et 1440 minutes.	El intervalo debe ser un número entero entre 1 y 1440 minutos.	Das Intervall muss eine ganze Zahl zwischen 1 und 1440 Minuten sein.	备份间隔必须为 1 到 1440 之间的整数分钟。
+backup.validation.otherDays	其他备份保留天数必须在 1 到 3650 天之间。	Other backups retention must be between 1 and 3650 days.	La conservation des autres sauvegardes doit être comprise entre 1 et 3650 jours.	La retención de otras copias debe estar entre 1 y 3650 días.	Die Aufbewahrung sonstiger Backups muss zwischen 1 und 3650 Tagen liegen.	其他备份保留天数必须在 1 到 3650 天之间。
+backup.validation.otherKeep	其他备份数量上限必须在 1 到 100000 之间。	The maximum number of other backups must be between 1 and 100000.	Le nombre maximum d'autres sauvegardes doit être compris entre 1 et 100000.	El número máximo de otras copias debe estar entre 1 y 100000.	Die maximale Anzahl anderer Backups muss zwischen 1 und 100000 liegen.	其他备份数量上限必须在 1 到 100000 之间。
+badge.weekLocked	本周已锁定	Week locked	Semaine verrouillée	Semana bloqueada	Woche gesperrt	本周已锁定
+btn.add	新增	Add	Ajouter	Añadir	Hinzufügen	新增
+btn.addEmployee	新增审核员	Add Operator	Ajouter Opérateur	Añadir Operador	Mitarbeiter hinzufügen	新增审核员
+btn.addLocation	新增地点	Add Location	Ajouter Lieu	Añadir Ubicación	Ort hinzufügen	新增地点
+btn.addRange	新增时间段	Add range	Ajouter une plage	Añadir franja	Bereich hinzufügen	新增时间段
+btn.addShift	新增任务	Add Shift	Ajouter Quart	Añadir Turno	Schicht hinzufügen	新增任务
+btn.analyze	分析	Analyze	Analyser	Analizar	Analysieren	分析
+btn.apply	应用	Apply	Appliquer	Aplicar	Anwenden	应用
+btn.applyTemplate	从模板填充	Fill from template	Remplir depuis le modèle	Rellenar desde plantilla	Aus Vorlage füllen	从模板填充
+btn.cancel	取消	Cancel	Annuler	Cancelar	Abbrechen	取消
+btn.close	关闭	Close	Fermer	Cerrar	Schließen	关闭
+btn.confirm	确认	Confirm	Confirmer	Confirmar	Bestätigen	确认
+btn.copy	复制	Copy	Copier	Copiar	Kopieren	复制
+btn.delete	删除	Delete	Supprimer	Eliminar	Löschen	删除
+btn.discardSolution	放弃方案	Discard	Ignorer	Descartar	Verwerfen	放弃方案
+btn.edit	编辑	Edit	Modifier	Editar	Bearbeiten	编辑
+btn.exportJson	导出 JSON	Export JSON	Exporter JSON	Exportar JSON	JSON exportieren	导出 JSON
+btn.generatePdf	生成 PDF	Generate PDF	Générer PDF	Generar PDF	PDF generieren	生成 PDF
+btn.handleSkill	管理资格	Handle Skill	Gérer Compétences	Gestionar Habilidades	Kompetenzen verwalten	管理资格
+btn.interrupt	中止	Stop	Interrompre	Interrumpir	Abbrechen	中止
+btn.preview	预览	Preview	Aperçu	Vista previa	Vorschau	预览
+btn.printCoverage	打印覆盖情况	Print Coverage	Imprimer Couverture	Imprimir Cobertura	Deckung drucken	打印覆盖情况
+btn.printShifts	打印排班	Print Shifts	Imprimer Quarts	Imprimir Turnos	Schichten drucken	打印排班
+btn.remove	移除	Remove	Retirer	Quitar	Entfernen	移除
+btn.resend	重新发送	Resend	Renvoyer	Reenviar	Erneut senden	重新发送
+btn.save	保存	Save	Enregistrer	Guardar	Speichern	保存
+btn.saveAll	全部保存	Save All	Tout enregistrer	Guardar todo	Alles speichern	全部保存
+btn.saveAndLock	保存并锁定	Save and Lock	Enregistrer et Verrouiller	Guardar y Bloquear	Speichern und Sperren	保存并锁定
+btn.saveAnyway	仍然保存	Save anyway	Enregistrer quand même	Guardar de todos modos	Trotzdem speichern	仍然保存
+btn.saveAssignments	保存分配结果	Save assignments	Enregistrer les affectations	Guardar asignaciones	Zuweisungen speichern	保存分配结果
+btn.saveToTemplate	保存为模板	Save to template	Enregistrer dans le modèle	Guardar en plantilla	In Vorlage speichern	保存为模板
+btn.selectSkills	选择资格	Select Skills	Sélectionner Compétences	Seleccionar Habilidades	Kompetenzen auswählen	选择资格
+btn.sendAllEmails	发送全部邮件	Send all emails	Envoyer tous les e-mails	Enviar todos los emails	Alle E-Mails senden	发送全部邮件
+btn.sendEmail	发送邮件	Send Email	Envoyer l'e-mail	Enviar email	E-Mail senden	发送邮件
+btn.solve	自动排程	Solve	Résoudre	Resolver	Lösen	自动排程
+btn.stopSolving	停止求解	Stop solving	Arrêter	Detener	Stoppen	停止求解
+btn.today	今天	Today	Aujourd'hui	Hoy	Heute	今天
+btn.unlock	解锁	Unlock	Déverrouiller	Desbloquear	Entsperren	解锁
+col.actions	操作	Actions	Actions	Acciones	Aktionen	操作
+col.active	启用	Active	Active	Activa	Aktiv	启用
+col.code	编号	Code	Code	Código	Code	编号
+col.company	公司	Company	Entreprise	Empresa	Unternehmen	公司
+col.createdAt	创建时间	Created on	Créé le	Creado el	Erstellt am	创建时间
+col.dateEnd	结束日期	End Date	Date Fin	Fecha Fin	Enddatum	结束日期
+col.dateStart	开始日期	Start Date	Date Début	Fecha Inicio	Startdatum	开始日期
+col.day	星期	Day	Jour	Día	Tag	星期
+col.description	描述	Description	Description	Descripción	Beschreibung	描述
+col.employee	审核员	Operator	Opérateur	Operador	Mitarbeiter	审核员
+col.end	结束	End	Fin	Fin	Ende	结束
+col.id	ID	ID	ID	ID	ID	ID
+col.key	键名	Key	Clé	Clave	Schlüssel	键名
+col.location	地点	Location	Lieu	Ubicación	Ort	地点
+col.name	名称	Name	Nom	Nombre	Name	名称
+col.optionalSkills	可选资格	O.Skills	Comp.Opt.	Hab.Opc.	Opt.Komp.	可选资格
+col.order	顺序	Order	Ordre	Orden	Reihenfolge	顺序
+col.requiredSkills	必需资格	R.Skills	Comp.Req.	Hab.Req.	Erf.Komp.	必需资格
+col.start	开始	Start	Début	Inicio	Start	开始
+col.type	类型	Type	Type	Tipo	Typ	类型
+common.close	关闭	Close	Fermer	Cerrar	Schließen	关闭
+common.no	否	No	Non	No	Nein	否
+common.yes	是	Yes	Oui	Sí	Ja	是
+common.none	无	None	Aucune	Ninguna	Keine	无
+config.autoPopulate	自动从模板填充	Automatic template population	Remplissage automatique depuis le modèle	Rellenado automático desde la plantilla	Automatische Befüllung aus Vorlage	自动从模板填充
+config.autoPopulate.hint	切换到无排班数据的周期（当前或未来）时，将自动按地点模板填充；历史周期不受影响。	When you move to a period (current or future) with no shifts in Shift Management, it is automatically populated from the location template. Past periods are not affected.	Lorsque vous passez à une période (actuelle ou future) sans créneaux dans la Gestion des créneaux, elle est automatiquement remplie à partir du modèle du site. Les périodes passées ne sont pas modifiées.	Cuando pasas a un periodo (actual o futuro) sin turnos en la Gestión de turnos, se rellena automáticamente desde la plantilla de la sede. Los periodos pasados no se modifican.	Wenn du in der Schichtverwaltung zu einem Zeitraum (aktuell oder zukünftig) ohne Schichten wechselst, wird dieser automatisch aus der Standortvorlage befüllt. Vergangene Zeiträume bleiben unberührt.	切换到无排班数据的周期（当前或未来）时，将自动按地点模板填充；历史周期不受影响。
+config.autoPopulate.label	空周期自动按模板填充	Automatically populate empty periods from the template	Remplir automatiquement les périodes vides à partir du modèle	Rellenar automáticamente los periodos vacíos desde la plantilla	Leere Zeiträume automatisch aus der Vorlage befüllen	空周期自动按模板填充
+config.general.col.autoPopulate	自动填充	Auto-populate	Remplissage auto	Autocompletado	Auto-Befüllung	自动填充
+config.general.col.window	粒度	Granularity	Granularité	Granularidad	Granularität	粒度
+config.general.listHint	参数按部门保存，点击铅笔图标编辑。	Settings are per structure. Use the pencil to edit them.	Les paramètres sont propres à chaque structure. Utilisez le crayon pour les modifier.	Los parámetros son propios de cada estructura. Usa el lápiz para editarlos.	Die Parameter sind strukturspezifisch. Zum Bearbeiten das Stift-Symbol verwenden.	参数按部门保存，点击铅笔图标编辑。
+config.info.activeDatabase	当前数据库	Active database	Base de données active	Base de datos activa	Aktive Datenbank	当前数据库
+config.info.appTitle	应用	Application	Application	Aplicación	Anwendung	应用
+config.info.checkUpdates	检查更新	Check for updates	Vérifier les mises à jour	Buscar actualizaciones	Nach Updates suchen	检查更新
+config.info.component	组件	Component	Composant	Componente	Komponente	组件
+config.info.description	应用主要组件的版本信息。	Versions of the application's main components.	Versions des principaux composants de l'application.	Versiones de los componentes principales de la aplicación.	Versionen der Hauptkomponenten der Anwendung.	应用主要组件的版本信息。
+config.info.error	无法加载后端信息。	Unable to load backend information.	Impossible de charger les informations du backend.	No se pudo cargar la información del backend.	Backend-Informationen konnten nicht geladen werden.	无法加载后端信息。
+config.info.mainTitle	主要组件	Main components	Composants principaux	Componentes principales	Hauptkomponenten	主要组件
+config.info.secondaryTitle	次要库与组件	Secondary libraries and components	Bibliothèques et composants secondaires	Bibliotecas y componentes secundarios	Sekundäre Bibliotheken und Komponenten	次要库与组件
+config.info.unavailable	不可用	Unavailable	Non disponible	No disponible	Nicht verfügbar	不可用
+config.info.upToDate	已是最新	Up to date	À jour	Actualizado	Aktuell	已是最新
+config.info.updateAvailable	有可用更新	Available	Disponible	Disponible	Verfügbar	有可用更新
+config.info.updates	更新	Updates	Mises à jour	Actualizaciones	Aktualisierungen	更新
+config.info.version	版本	Version	Version	Versión	Version	版本
+config.menu.backup	备份	Backup	Sauvegarde	Copia de seguridad	Sicherung	备份
+config.menu.backup.tooltip	数据库备份与恢复	Database backup and restore	Sauvegarde et restauration de la base de données	Copia de seguridad y restauración de la base de datos	Sicherung und Wiederherstellung der Datenbank	数据库备份与恢复
+config.menu.emailSettings	邮件参数	Email Settings	Paramètres e-mail	Parámetros de email	E-Mail-Einstellungen	邮件参数
+config.menu.emailSettings.tooltip	配置用于发送邮件的 SMTP 服务器	Configure the SMTP server for sending emails	Configurer le serveur SMTP pour l'envoi des e-mails	Configura el servidor SMTP para el envío de emails	SMTP-Server für den E-Mail-Versand konfigurieren	配置用于发送邮件的 SMTP 服务器
+config.menu.emailTemplate	邮件模板	Email Template	Modèle d'e-mail	Plantilla de email	E-Mail-Vorlage	邮件模板
+config.menu.emailTemplate.tooltip	配置邮件模板	Configure the email template	Configurer le modèle d'e-mail	Configura la plantilla de email	E-Mail-Vorlage konfigurieren	配置邮件模板
+config.menu.general	常规设置	General settings	Paramètres généraux	Parámetros generales	Allgemeine Einstellungen	常规设置
+config.menu.general.tooltip	配置常规参数	Configure general settings	Configurer les paramètres généraux	Configurar los parámetros generales	Allgemeine Einstellungen konfigurieren	配置常规参数
+config.menu.homeUi	首页配置	General configuration	Configuration générale	Configuración general	Allgemeine Konfiguration	首页配置
+config.menu.homeUi.tooltip	管理首页封面与文案	Manage home cover and texts	Gérer la couverture et les textes de l'accueil	Gestionar la portada y los textos de inicio	Startseite-Cover und Texte verwalten	管理首页封面与文案
+hint.coordinates	用于估算两次审核之间的转场时间。	Used to estimate travel time between two audits.	Utilisées pour estimer le temps de trajet entre deux audits.	Se usan para estimar el tiempo de desplazamiento entre dos auditorías.	Dienen zur Schätzung der Fahrzeit zwischen zwei Audits.	用于估算两次审核之间的转场时间。
+home.ui.title	首页内容	Home content	Contenu accueil	Contenido de inicio	Home-Inhalte	首页内容
+home.ui.cover	首页封面	Home cover	Couverture accueil	Portada inicio	Startseitenbild	首页封面
+home.ui.coverHint	仅支持 .webp 文件，最大 2 MB。	Only .webp files, max 2 MB.	Fichiers .webp uniquement, 2 Mo max.	Solo archivos .webp, máximo 2 MB.	Nur .webp-Dateien, max. 2 MB.	仅支持 .webp 文件，最大 2 MB。
+home.ui.texts	首页文字	Home texts	Textes accueil	Textos de inicio	Home-Texte	首页文字
+home.ui.textTitle	标题	Title	Titre	Título	Titel	标题
+home.ui.textBody	正文	Main text	Texte principal	Texto principal	Haupttext	正文
+home.ui.textHint	提示	Hint	Indice	Sugerencia	Hinweis	提示
+home.title	欢迎使用审核员调配系统	Welcome to Employee Scheduling	Bienvenue dans Employee Scheduling	Bienvenido a Employee Scheduling	Willkommen bei Employee Scheduling	欢迎使用审核员调配系统
+home.body	请选择部门，然后开始维护审核员、订单和排程。	Select a structure to start scheduling shifts.	Sélectionnez une structure pour commencer à planifier les quarts.	Selecciona una estructura para empezar a planificar turnos.	Wähle eine Struktur, um mit der Schichtplanung zu beginnen.	请选择部门，然后开始维护审核员、订单和排程。
+home.hint	可从“审核调配”导入测试数据，也可在“配置”中创建地点和资格。	You can create locations and operators from configuration.	Vous pouvez créer des lieux et des opérateurs depuis la configuration.	Puedes crear sedes y operadores desde la configuración.	Du kannst Standorte und Mitarbeiter in der Konfiguration anlegen.	可从“审核调配”导入测试数据，也可在“配置”中创建地点和资格。
+config.menu.info	系统信息	System Info	Infos système	Info del sistema	Systeminfo	系统信息
+config.menu.info.tooltip	系统版本与信息	System versions and information	Versions et informations système	Versiones e información del sistema	Systemversionen und -informationen	系统版本与信息
+config.menu.localizations	界面翻译	Localizations	Localisations	Localizaciones	Lokalisierungen	界面翻译
+config.menu.localizations.tooltip	管理界面文案与翻译	Manage labels and translations	Gérer les libellés et les traductions	Gestionar etiquetas y traducciones	Beschriftungen und Übersetzungen verwalten	管理界面文案与翻译
+config.menu.pdfTemplate	PDF 模板	PDF templates	Modèles PDF	Plantillas PDF	PDF-Vorlagen	PDF 模板
+config.menu.pdfTemplate.tooltip	配置 PDF 徽标、页眉与页脚	Configure PDF logo, header and footer	Configurer le logo, l’en-tête et le pied de page des PDF	Configurar el logotipo, el encabezado y el pie de página de los PDF	Logo, Kopf- und Fußzeile der PDFs konfigurieren	配置 PDF 徽标、页眉与页脚
+config.menu.skills	资格能力	Skills	Compétences	Competencias	Kompetenzen	资格能力
+config.menu.skills.tooltip	管理资格	Manage skills	Gérer les compétences	Gestionar las competencias	Kompetenzen verwalten	管理资格
+config.menu.solverSettings	求解器参数	Solver Settings	Paramètres du solveur	Parámetros del solver	Solver-Einstellungen	求解器参数
+config.menu.solverSettings.tooltip	配置优化引擎参数	Configure optimization engine settings	Configurer les paramètres du moteur d’optimisation	Configurar los parámetros del motor de optimización	Einstellungen der Optimierungs-Engine konfigurieren	配置优化引擎参数
+config.menu.structures	部门	Structures	Structures	Estructuras	Strukturen	部门
+config.menu.structures.tooltip	管理组织部门	Manage organizational structures	Gérer les structures organisationnelles	Gestionar las estructuras organizativas	Organisationsstrukturen verwalten	管理组织部门
+config.menu.templates	排班模板	Shift templates	Modèles de quarts	Plantillas de turnos	Schichtvorlagen	排班模板
+config.menu.templates.tooltip	配置排班模板	Configure shift templates	Configurer les modèles de quarts	Configurar las plantillas de turnos	Schichtvorlagen konfigurieren	配置排班模板
+config.section.shiftView	排班视图	Shift view	Affichage des quarts	Visualización de turnos	Schichtansicht	排班视图
+config.section.template	每周排班模板	Weekly shift template	Modèle de quarts hebdomadaire	Plantilla de turnos semanal	Wöchentliche Schichtvorlage	每周排班模板
+config.shiftWindow	排班窗口粒度	Shift window granularity	Granularité de la fenêtre de quarts	Granularidad de la ventana de turnos	Granularität des Schichtfensters	排班窗口粒度
+config.shiftWindow.hint	决定排班管理中的窗口宽度与箭头步长。	Determines the window width and the arrow step in Shift Management.	Détermine la largeur de la fenêtre et le pas des flèches dans la gestion des quarts.	Determina el ancho de la ventana y el paso de las flechas en la gestión de turnos.	Bestimmt die Fensterbreite und die Schrittweite der Pfeile in der Schichtverwaltung.	决定排班管理中的窗口宽度与箭头步长。
+config.template.daysWithShifts	有排班的日期	Days with shifts	Jours avec quarts	Días con turnos	Tage mit Schichten	有排班的日期
+config.template.hasShifts	有排班的日期	Day with shifts	Jour avec quarts	Día con turnos	Tag mit Schichten	有排班的日期
+config.template.hint	每周循环模板：点击空白区域新增任务，点击任务进行编辑；将用于新窗口的预填充。	Recurring weekly schema: click an empty area to add a shift, or a shift to edit it. It will be used to pre-populate new windows.	Schéma hebdomadaire récurrent : cliquez sur une zone vide pour ajouter un quart, ou sur un quart pour le modifier. Il servira à préremplir les nouvelles fenêtres.	Esquema semanal recurrente: haga clic en un área vacía para añadir un turno, o en un turno para editarlo. Se usará para rellenar las nuevas ventanas.	Wiederkehrendes Wochenschema: Klicken Sie auf einen leeren Bereich, um eine Schicht hinzuzufügen, oder auf eine Schicht, um sie zu bearbeiten. Es wird zum Vorbefüllen neuer Fenster verwendet.	每周循环模板：点击空白区域新增任务，点击任务进行编辑；将用于新窗口的预填充。
+config.template.listHint	从排班管理保存的模板列表；点击铅笔图标编辑描述与任务。	List of templates saved from Shift Management. Use the pencil to edit description and shifts.	Liste des modèles enregistrés depuis la Gestion des quarts. Utilisez le crayon pour modifier la description et les quarts.	Lista de plantillas guardadas desde Gestión de Turnos. Usa el lápiz para editar descripción y turnos.	Liste der aus der Schichtverwaltung gespeicherten Vorlagen. Mit dem Stift Beschreibung und Schichten bearbeiten.	从排班管理保存的模板列表；点击铅笔图标编辑描述与任务。
+config.template.prepopulate	从本周预填充	Pre-populate from this week	Préremplir à partir de cette semaine	Rellenar desde esta semana	Aus dieser Woche vorbefüllen	从本周预填充
+config.template.shiftsConfigured	已配置任务	Configured shifts	Quarts configurés	Turnos configurados	Konfigurierte Schichten	已配置任务
+config.template.sourceWeek	来源周	Source week	Semaine source	Semana de origen	Quellwoche	来源周
+config.template.window	窗口	Window	Fenêtre	Ventana	Fenster	窗口
+config.template.window.hint	粒度在常规设置中配置。	Granularity set in General settings.	Granularité définie dans les Paramètres généraux.	Granularidad definida en Parámetros generales.	Granularität wird in den Allgemeinen Einstellungen festgelegt.	粒度在常规设置中配置。
+config.template.workingSchema	周工作模式	Working weekly schema	Schéma hebdomadaire de travail	Esquema semanal de trabajo	Wöchentliches Arbeitsschema	周工作模式
+config.title	配置	Configuration	Configuration	Configuración	Konfiguration	配置
+config.window.month	月	Month	Mois	Mes	Monat	月
+config.window.week	周	Week	Semaine	Semana	Woche	周
+confirm.applyTemplate	用模板中的任务替换当前可见周期内的排班？该周期内现有任务将被删除。	Replace the shifts in the visible period with those from the template? Existing shifts in the period will be deleted.	Remplacer les quarts de la période visible par ceux du modèle ? Les quarts existants dans la période seront supprimés.	¿Sustituir los turnos del período visible por los de la plantilla? Los turnos existentes en el período se eliminarán.	Die Schichten im sichtbaren Zeitraum durch die aus der Vorlage ersetzen? Vorhandene Schichten im Zeitraum werden gelöscht.	用模板中的任务替换当前可见周期内的排班？该周期内现有任务将被删除。
+confirm.deleteDateMessage	删除此时间段？	Delete this time range?	Supprimer cette plage horaire ?	¿Eliminar esta franja horaria?	Diesen Zeitbereich löschen?	删除此时间段？
+confirm.deleteDateTitle	删除日期	Delete Date	Supprimer la date	Eliminar fecha	Datum löschen	删除日期
+confirm.deleteEmployee	确定删除此审核员？	Are you sure you want to delete this operator?	Êtes-vous sûr de vouloir supprimer cet opérateur ?	¿Está seguro de eliminar este operador?	Möchten Sie diesen Mitarbeiter wirklich löschen?	确定删除此审核员？
+confirm.deleteEmployeeMessage	删除此审核员？	Delete this operator?	Supprimer cet opérateur ?	¿Eliminar este operador?	Diesen Mitarbeiter löschen?	删除此审核员？
+confirm.deleteEmployeeTitle	删除审核员	Delete Operator	Supprimer l'opérateur	Eliminar operador	Mitarbeiter löschen	删除审核员
+confirm.deleteLabel	删除此文案及其全部翻译？	Delete this label and all its translations?	Supprimer cette étiquette et toutes ses traductions?	¿Eliminar esta etiqueta y todas sus traducciones?	Diese Beschriftung und alle Übersetzungen löschen?	删除此文案及其全部翻译？
+confirm.deleteLanguage	删除此语言？	Delete this language?	Supprimer cette langue?	¿Eliminar este idioma?	Diese Sprache löschen?	删除此语言？
+confirm.deleteLocation	确定删除此地点？	Are you sure you want to delete this location?	Êtes-vous sûr de vouloir supprimer ce lieu?	¿Está seguro de eliminar esta ubicación?	Möchten Sie diesen Ort wirklich löschen?	确定删除此地点？
+confirm.deleteLocationMessage	删除此地点？	Delete this location?	Supprimer ce lieu ?	¿Eliminar esta ubicación?	Diesen Standort löschen?	删除此地点？
+confirm.deleteLocationTitle	删除地点	Delete Location	Supprimer le lieu	Eliminar ubicación	Standort löschen	删除地点
+confirm.deletePrefix	确定删除	Are you sure you want to delete	Voulez-vous vraiment supprimer	¿Seguro que desea eliminar	Möchten Sie wirklich löschen:	确定删除
+confirm.deleteSavedTemplate	删除此已保存模板？	Delete this saved template?	Supprimer ce modèle enregistré ?	¿Eliminar esta plantilla guardada?	Diese gespeicherte Vorlage löschen?	删除此已保存模板？
+confirm.deleteShiftMessage	删除此任务？	Delete this shift?	Supprimer ce quart ?	¿Eliminar este turno?	Diese Schicht löschen?	删除此任务？
+confirm.deleteShiftTitle	删除任务	Delete Shift	Supprimer le quart	Eliminar turno	Schicht löschen	删除任务
+confirm.deleteSkill	确定删除此资格？	Are you sure you want to delete this skill?	Êtes-vous sûr de vouloir supprimer cette compétence?	¿Está seguro de eliminar esta habilidad?	Möchten Sie diese Kompetenz wirklich löschen?	确定删除此资格？
+confirm.deleteStructure	删除此部门？	Delete this structure?	Supprimer cette structure?	¿Eliminar esta estructura?	Diese Struktur löschen?	删除此部门？
+confirm.saveToTemplate	用当前可见周的任务替换每周模板？仅保存任务（不含已分配审核员）。	Replace the weekly template with the visible week's shifts? Only shifts are saved (without assigned operators).	Remplacer le modèle hebdomadaire par les quarts de la semaine visible ? Seuls les quarts sont enregistrés (sans opérateurs affectés).	¿Sustituir la plantilla semanal por los turnos de la semana visible? Solo se guardan los turnos (sin operadores asignados).	Die Wochenvorlage durch die Schichten der sichtbaren Woche ersetzen? Es werden nur die Schichten gespeichert (ohne zugewiesene Operatoren).	用当前可见周的任务替换每周模板？仅保存任务（不含已分配审核员）。
+confirm.title	确认	Confirm	Confirmer	Confirmar	Bestätigen	确认
+constraint.at_least_10_hours_between_2_shifts	两次任务间至少间隔 10 小时	At least 10 hours between 2 shifts	Au moins 10 heures entre 2 quarts	Al menos 10 horas entre 2 turnos	Mindestens 10 Stunden zwischen 2 Schichten	两次任务间至少间隔 10 小时
+constraint.balance_employee_hours	平衡审核员工时	Balance operator hours	Équilibrage des heures de l'opérateur	Equilibrio de horas del operador	Ausgleich der Mitarbeiterstunden	平衡审核员工时
+constraint.balance_employee_shift_assignments	平衡审核员任务分配	Balance operator shift assignments	Équilibrage des affectations de quarts	Equilibrio de asignaciones de turnos	Ausgleich der Schichtzuweisungen	平衡审核员任务分配
+constraint.balance_night_shifts	平衡夜班任务	Balance night shifts	Équilibrage des quarts de nuit	Equilibrio de turnos nocturnos	Ausgleich der Nachtschichten	平衡夜班任务
+constraint.desired_day_for_employee	审核员期望日期	Desired day for operator	Jour souhaité pour l'opérateur	Día deseado para el operador	Gewünschter Tag für Mitarbeiter	审核员期望日期
+constraint.max_one_shift_per_day	每天最多一个任务	Max one shift per day	Maximum un quart par jour	Máximo un turno por día	Maximal eine Schicht pro Tag	每天最多一个任务
+constraint.maximum_consecutive_days	最多连续工作天数	Maximum consecutive days	Maximum de jours consécutifs	Máximo de días consecutivos	Maximale aufeinanderfolgende Tage	最多连续工作天数
+constraint.maximum_weekly_hours	每周最多工时	Maximum weekly hours	Heures hebdomadaires maximales	Horas semanales máximas	Maximale Wochenstunden	每周最多工时
+constraint.minimum_days_off_per_week	每周最少休息天数	Minimum days off per week	Minimum de jours de repos par semaine	Mínimo de días libres por semana	Mindestanzahl freier Tage pro Woche	每周最少休息天数
+constraint.minimum_weekly_shifts_empty_week	每周最少任务数（空周）	Minimum weekly shifts (empty week)	Minimum de quarts hebdomadaires (semaine vide)	Mínimo de turnos semanales (semana vacía)	Mindestanzahl wöchentlicher Schichten (leere Woche)	每周最少任务数（空周）
+constraint.missing_required_skill	缺少必需资格	Missing required skill	Compétence requise manquante	Competencia requerida faltante	Erforderliche Fähigkeit fehlt	缺少必需资格
+constraint.optional_skill_match	可选资格匹配	Optional skill match	Correspondance de compétence facultative	Coincidencia de competencia opcional	Optionale Fähigkeitsübereinstimmung	可选资格匹配
+constraint.overlapping_shift	任务时间重叠	Overlapping shift	Quarts qui se chevauchent	Turnos superpuestos	Überlappende Schicht	任务时间重叠
+constraint.same_location_continuity	同一地点连续性	Same location continuity	Continuité du même lieu	Continuidad en la misma ubicación	Kontinuität am selben Standort	同一地点连续性
+constraint.unassigned_shift_forbidden	禁止未分配任务	Unassigned shift forbidden	Quart non attribué interdit	Turno sin asignar prohibido	Nicht zugewiesene Schicht verboten	禁止未分配任务
+constraint.unassigned_shift_penalty	未分配任务惩罚	Unassigned shift penalty	Pénalité pour quart non attribué	Penalización por turno sin asignar	Strafe für nicht zugewiesene Schicht	未分配任务惩罚
+constraint.unavailable_employee	审核员不可用	Unavailable operator	Opérateur indisponible	Operador no disponible	Nicht verfügbarer Mitarbeiter	审核员不可用
+constraint.undesired_day_for_employee	审核员不希望日期	Undesired day for operator	Jour indésirable pour l'opérateur	Día no deseado para el operador	Unerwünschter Tag für Mitarbeiter	审核员不希望日期
+constraint.weekly_shift_range	每周任务数范围	Weekly shift range	Plage de quarts hebdomadaire	Rango de turnos semanales	Wöchentlicher Schichtbereich	每周任务数范围
+ctx.addShift	新增任务	Add shift	Ajouter un quart	Añadir turno	Schicht hinzufügen	新增任务
+ctx.delete	删除	Delete	Supprimer	Eliminar	Löschen	删除
+ctx.deleteShift	删除任务	Delete shift	Supprimer le quart	Eliminar turno	Schicht löschen	删除任务
+ctx.edit	编辑	Edit	Modifier	Editar	Bearbeiten	编辑
+ctx.editShift	编辑任务	Edit shift	Modifier le quart	Editar turno	Schicht bearbeiten	编辑任务
+dateType.desired	期望	Desired	Souhaité	Deseado	Bevorzugt	期望
+dateType.unavailable	不可用	Unavailable	Non Disponible	No Disponible	Nicht verfügbar	不可用
+dateType.undesired	不希望	Undesired	Non Souhaité	No Deseado	Nicht bevorzugt	不希望
+dates.allDeleted	已删除全部约束。	Constraints deleted.	Contraintes supprimées.	Restricciones eliminadas.	Einschränkungen gelöscht.	已删除全部约束。
+dates.deleteAll	删除全部约束	Delete all constraints	Supprimer toutes les contraintes	Eliminar todas las restricciones	Alle Einschränkungen löschen	删除全部约束
+dates.deleteAllMsg	删除以下审核员的全部日期约束：	Delete ALL date constraints of	Supprimer TOUTES les contraintes de dates de	¿Eliminar TODAS las restricciones de fechas de	ALLE Datumseinschränkungen löschen von	删除以下审核员的全部日期约束：
+dates.deleteAllTitle	删除约束	Delete constraints	Supprimer les contraintes	Eliminar restricciones	Einschränkungen löschen	删除约束
+dates.noConstraints	暂无审核员设置日期约束。请在上方选择一位进行设置。	No operator has date constraints. Pick one above to add them.	Aucun opérateur n'a de contraintes de dates. Sélectionnez-en un ci-dessus pour en ajouter.	Ningún operador tiene restricciones de fechas. Selecciona uno arriba para añadirlas.	Kein Mitarbeiter hat Datumseinschränkungen. Wählen Sie oben einen aus, um welche hinzuzufügen.	暂无审核员设置日期约束。请在上方选择一位进行设置。
+dates.pickEmployee	— 选择审核员 —	— Select operator —	— Sélectionner un opérateur —	— Selecciona operador —	— Mitarbeiter wählen —	— 选择审核员 —
+dates.title	审核员时间偏好	Operator Date Preferences	Préférences de dates des opérateurs	Preferencias de fechas de los operadores	Datumspräferenzen der Mitarbeiter	审核员时间偏好
+day.fri	周五	Friday	Vendredi	Viernes	Freitag	周五
+day.fri.s	周五	Fri	Ven	Vie	Fre	周五
+day.mon	周一	Monday	Lundi	Lunes	Montag	周一
+day.mon.s	周一	Mon	Lun	Lun	Mon	周一
+day.sat	周六	Saturday	Samedi	Sábado	Samstag	周六
+day.sat.s	周六	Sat	Sam	Sáb	Sam	周六
+day.sun	周日	Sunday	Dimanche	Domingo	Sonntag	周日
+day.sun.s	周日	Sun	Dim	Dom	Son	周日
+day.thu	周四	Thursday	Jeudi	Jueves	Donnerstag	周四
+day.thu.s	周四	Thu	Jeu	Jue	Don	周四
+day.tue	周二	Tuesday	Mardi	Martes	Dienstag	周二
+day.tue.s	周二	Tue	Mar	Mar	Die	周二
+day.wed	周三	Wednesday	Mercredi	Miércoles	Mittwoch	周三
+day.wed.s	周三	Wed	Mer	Mié	Mit	周三
+dowShort.fri	五	Fr	Ve	Vi	Fr	五
+dowShort.mon	一	Mo	Lu	Lu	Mo	一
+dowShort.sat	六	Sa	Sa	Sa	Sa	六
+dowShort.sun	日	Su	Di	Do	So	日
+dowShort.thu	四	Th	Je	Ju	Do	四
+dowShort.tue	二	Tu	Ma	Ma	Di	二
+dowShort.wed	三	We	Me	Mi	Mi	三
+email.smtpNotConfigured	邮件发送已禁用：请在「配置 → 邮件参数」中配置 SMTP 服务器。	Email sending disabled: configure the SMTP server in Configuration → Email Settings.	Envoi d'e-mails désactivé : configurez le serveur SMTP dans Configuration → Paramètres e-mail.	Envío de correos desactivado: configura el servidor SMTP en Configuración → Parámetros de correo.	E-Mail-Versand deaktiviert: SMTP-Server unter Konfiguration → E-Mail-Einstellungen einrichten.	邮件发送已禁用：请在「配置 → 邮件参数」中配置 SMTP 服务器。
+emailSet.from	发件人	Sender	Expéditeur	Remitente	Absender	发件人
+emailSet.fromPlaceholder	显示名 <address@example.com>	Display Name <address@example.com>	Nom Affiché <adresse@exemple.com>	Nombre Mostrado <direccion@ejemplo.com>	Anzeigename <adresse@beispiel.de>	显示名 <address@example.com>
+emailSet.hint	SMTP 服务器设置用于发送邮件；修改立即生效；若此处未配置，将使用启动配置（.env）。	SMTP server settings for sending emails. Changes take effect immediately; if no server is configured here, the startup configuration (.env) is used.	Paramètres du serveur SMTP pour l'envoi des e-mails. Les modifications prennent effet immédiatement ; si aucun serveur n'est configuré ici, la configuration de démarrage (.env) est utilisée.	Configuración del servidor SMTP para el envío de emails. Los cambios tienen efecto inmediato; si no se configura aquí, se usa la configuración de arranque (.env).	SMTP-Servereinstellungen für den E-Mail-Versand. Änderungen wirken sofort; ist hier kein Server konfiguriert, wird die Startkonfiguration (.env) verwendet.	SMTP 服务器设置用于发送邮件；修改立即生效；若此处未配置，将使用启动配置（.env）。
+emailSet.host	SMTP 服务器	SMTP server	Serveur SMTP	Servidor SMTP	SMTP-Server	SMTP 服务器
+emailSet.password	密码	Password	Mot de passe	Contraseña	Passwort	密码
+emailSet.passwordKept	••••••（留空表示保持不变）	•••••• (leave empty to keep it)	•••••• (laisser vide pour la conserver)	•••••• (déjala vacía para no cambiarla)	•••••• (leer lassen, um es zu behalten)	••••••（留空表示保持不变）
+emailSet.port	端口	Port	Port	Puerto	Port	端口
+emailSet.sendTest	发送测试邮件	Send test	Envoyer le test	Enviar prueba	Test senden	发送测试邮件
+emailSet.test	测试邮件	Test email	E-mail de test	Email de prueba	Test-E-Mail	测试邮件
+emailSet.testHint	使用当前设置发送一封真实邮件（请先保存修改）。	Sends a real email with the current settings (save your changes first).	Envoie un e-mail réel avec les paramètres actuels (enregistrez d'abord les modifications).	Envía un email real con la configuración actual (guarda antes los cambios).	Sendet eine echte E-Mail mit den aktuellen Einstellungen (Änderungen zuerst speichern).	使用当前设置发送一封真实邮件（请先保存修改）。
+emailSet.tls	STARTTLS	STARTTLS	STARTTLS	STARTTLS	STARTTLS	STARTTLS
+emailSet.username	用户名	Username	Utilisateur	Usuario	Benutzer	用户名
+emailTpl.body	正文	Body	Corps	Cuerpo	Text	正文
+emailTpl.insertPlaceholder	占位符：	Placeholders:	Espaces réservés :	Marcadores:	Platzhalter:	占位符：
+emailTpl.placeholdersHint	发送邮件时，占位符将替换为实际数据。	Placeholders will be replaced with real data when the email is sent.	Les espaces réservés seront remplacés par les données réelles lors de l'envoi.	Los marcadores se sustituirán por los datos reales al enviar el correo.	Platzhalter werden beim Versand durch echte Daten ersetzt.	发送邮件时，占位符将替换为实际数据。
+emailTpl.subject	主题	Subject	Objet	Asunto	Betreff	主题
+emailTpl.subjectPlaceholder	邮件主题…	Email subject…	Objet de l'e-mail…	Asunto del correo…	Betreff der E-Mail…	邮件主题…
+empty.body	创建第一个任务后，此处将显示内容。	This view fills up as soon as you create the first shift.	Cette vue se remplit dès que vous créez le premier quart.	Esta vista se llena en cuanto creas el primer turno.	Diese Ansicht füllt sich, sobald Sie die erste Schicht erstellen.	创建第一个任务后，此处将显示内容。
+empty.hint	请选择设施并新增一个任务开始排班。	Choose a facility and add a shift to get started.	Choisissez une structure et ajoutez un quart pour commencer.	Elige una instalación y añade un turno para empezar.	Wählen Sie eine Einrichtung und fügen Sie eine Schicht hinzu, um zu beginnen.	请选择设施并新增一个任务开始排班。
+empty.title	暂无排班	No shift planned	Aucun quart planifié	Ningún turno planificado	Keine Schicht geplant	暂无排班
+error.email.auth	邮件服务器拒绝了凭据：请检查配置中的 SMTP 用户名和密码。	The mail server rejected the credentials: check the SMTP username and password in the configuration.	Le serveur de messagerie a refusé les identifiants : vérifiez l'utilisateur et le mot de passe SMTP dans la configuration.	El servidor de correo rechazó las credenciales: verifica el usuario y la contraseña SMTP en la configuración.	Der Mailserver hat die Zugangsdaten abgelehnt: SMTP-Benutzer und -Passwort in der Konfiguration prüfen.	邮件服务器拒绝了凭据：请检查配置中的 SMTP 用户名和密码。
+error.email.badData	数据无效：请重新生成 PDF 后重试。	Invalid data: regenerate the PDFs and try again.	Données non valides : régénérez les PDF et réessayez.	Datos no válidos: regenera los PDF e inténtalo de nuevo.	Ungültige Daten: PDFs neu erstellen und erneut versuchen.	数据无效：请重新生成 PDF 后重试。
+error.email.connection	无法连接邮件服务器：请检查网络连接后重试。	Cannot reach the mail server: check your Internet connection and try again.	Impossible de joindre le serveur de messagerie : vérifiez la connexion Internet et réessayez.	No se puede contactar con el servidor de correo: comprueba la conexión a Internet e inténtalo de nuevo.	Mailserver nicht erreichbar: Internetverbindung prüfen und erneut versuchen.	无法连接邮件服务器：请检查网络连接后重试。
+error.email.generic	邮件服务器出现问题，发送失败：请稍后重试。	Sending failed due to a mail server problem: try again later.	Échec de l'envoi en raison d'un problème du serveur de messagerie : réessayez plus tard.	El envío falló por un problema del servidor de correo: inténtalo más tarde.	Senden wegen eines Mailserver-Problems fehlgeschlagen: versuchen Sie es später erneut.	邮件服务器出现问题，发送失败：请稍后重试。
+error.email.noEmail	该审核员没有邮箱地址：请在审核员页面添加。	The operator has no email address: add it from the Operators page.	L'opérateur n'a pas d'adresse e-mail : ajoutez-la depuis la page Opérateurs.	El operador no tiene dirección de email: añádela desde la página Operadores.	Der Mitarbeiter hat keine E-Mail-Adresse: fügen Sie sie auf der Mitarbeiterseite hinzu.	该审核员没有邮箱地址：请在审核员页面添加。
+error.email.notConfigured	未配置 SMTP 服务器：请在配置中完成邮件参数设置。	The SMTP server is not configured: complete the Email Settings in Configuration.	Le serveur SMTP n'est pas configuré : complétez les Paramètres e-mail dans la Configuration.	El servidor SMTP no está configurado: completa los Parámetros de correo en la Configuración.	Der SMTP-Server ist nicht konfiguriert: E-Mail-Einstellungen in der Konfiguration vervollständigen.	未配置 SMTP 服务器：请在配置中完成邮件参数设置。
+error.email.notFound	未找到审核员：请刷新页面并重新生成 PDF。	Operator not found: refresh the page and regenerate the PDFs.	Opérateur introuvable : actualisez la page et régénérez les PDF.	Operador no encontrado: actualiza la página y regenera los PDF.	Mitarbeiter nicht gefunden: Seite aktualisieren und PDFs neu erstellen.	未找到审核员：请刷新页面并重新生成 PDF。
+error.email.quota	邮件服务发送量已达上限：请稍后重试。	The mail service sending limit was reached: try again later.	Limite d'envoi du service de messagerie atteinte : réessayez plus tard.	Se alcanzó el límite de envíos del servicio de correo: inténtalo más tarde.	Sendelimit des Maildienstes erreicht: versuchen Sie es später erneut.	邮件服务发送量已达上限：请稍后重试。
+error.email.recipient	服务器拒绝了收件人：请检查审核员邮箱地址是否正确。	The server rejected the recipient: check that the operator's email address is correct.	Le serveur a refusé le destinataire : vérifiez que l'adresse e-mail de l'opérateur est correcte.	El servidor rechazó el destinatario: comprueba que la dirección de email del operador sea correcta.	Der Server hat den Empfänger abgelehnt: prüfen Sie, ob die E-Mail-Adresse des Mitarbeiters korrekt ist.	服务器拒绝了收件人：请检查审核员邮箱地址是否正确。
+error.email.sender	服务器拒绝了发件人：发件人地址未获邮件服务授权。	The server rejected the sender: the sender address is not authorized on the mail service.	Le serveur a refusé l'expéditeur : l'adresse d'expédition n'est pas autorisée sur le service de messagerie.	El servidor rechazó el remitente: la dirección del remitente no está autorizada en el servicio de correo.	Der Server hat den Absender abgelehnt: die Absenderadresse ist beim Maildienst nicht autorisiert.	服务器拒绝了发件人：发件人地址未获邮件服务授权。
+hint.clickConstraintForSettings	点击约束可在新标签页打开「求解器参数」。	Click a constraint to open Solver Settings in a new tab.	Cliquez sur une contrainte pour ouvrir les paramètres du solveur dans un nouvel onglet.	Haz clic en una restricción para abrir los parámetros del solver en una nueva pestaña.	Klicken Sie auf eine Bedingung, um die Solver-Einstellungen in einem neuen Tab zu öffnen.	点击约束可在新标签页打开「求解器参数」。
+hint.inactiveEmployee	停用后将不再出现在排班管理中，求解器也不会为其分配任务。	If deactivated, it no longer appears in Shift Management and the solver won't assign shifts to them.	S'il est désactivé, il n'apparaît plus dans la gestion des quarts et le solveur ne lui attribue aucun quart.	Si está desactivado, no aparece en la gestión de turnos y el solver no le asigna turnos.	Wenn deaktiviert, erscheint er nicht mehr in der Schichtverwaltung und der Solver weist ihm keine Schichten zu.	停用后将不再出现在排班管理中，求解器也不会为其分配任务。
+hint.inactiveLocation	停用后将不再出现在排班管理中，求解器将忽略该地点。	If deactivated, it no longer appears in Shift Management and the solver ignores it.	Si elle est désactivée, elle n'apparaît plus dans la gestion des quarts et le solveur l'ignore.	Si está desactivada, no aparece en la gestión de turnos y el solver la ignora.	Wenn deaktiviert, erscheint er nicht mehr in der Schichtverwaltung und der Solver ignoriert ihn.	停用后将不再出现在排班管理中，求解器将忽略该地点。
+hint.loadTemplateReplaces	应用模板将替换当前可见周期内的排班。	Applying a template will replace the shifts in the visible period.	L'application d'un modèle remplacera les quarts de la période visible.	Al aplicar una plantilla se sustituirán los turnos del período visible.	Beim Anwenden einer Vorlage werden die Schichten im sichtbaren Zeitraum ersetzt.	应用模板将替换当前可见周期内的排班。
+hint.saveTemplateNoOperators	仅保存各地点任务，不含已分配审核员。	Only the per-location shifts are saved, without the assigned operators.	Seuls les quarts par site sont enregistrés, sans les opérateurs affectés.	Solo se guardan los turnos por sede, sin los operadores asignados.	Es werden nur die Schichten pro Standort gespeichert, ohne die zugewiesenen Operatoren.	仅保存各地点任务，不含已分配审核员。
+hint.skillTranslationFallback	留空的翻译将使用基础名称。	Languages left empty will use the base Name.	Les langues laissées vides utiliseront le Nom de base.	Los idiomas vacíos usarán el Nombre base.	Leere Sprachen verwenden den Basisnamen.	留空的翻译将使用基础名称。
+label.active	启用	Active	Actif	Activo	Aktiv	启用
+label.activeYes	是	Yes	Oui	Sí	Ja	是
+label.address	地址	Address	Adresse	Dirección	Adresse	地址
+label.auditOrderCode	审核订单号	Audit order	Ordre d'audit	Orden de auditoría	Audit-Auftrag	审核订单号
+label.auditStage	审核阶段	Audit stage	Phase d'audit	Fase de auditoría	Audit-Phase	审核阶段
+label.bufferAfter	后置缓冲	Buffer after	Tampon après	Margen posterior	Puffer danach	后置缓冲
+label.bufferBefore	前置缓冲	Buffer before	Tampon avant	Margen anterior	Puffer davor	前置缓冲
+label.certificateNumber	证书编号	Certificate number	Numéro de certificat	Número de certificado	Zertifikatsnummer	证书编号
+label.code	编号	Code	Code	Código	Code	编号
+label.dayOfWeek	星期	Day	Jour	Día	Tag	星期
+label.description	描述	Description	Description	Descripción	Beschreibung	描述
+label.email	邮箱	Email	E-mail	Correo electrónico	E-Mail	邮箱
+label.employee	审核员	Operator	Opérateur	Operador	Mitarbeiter	审核员
+label.end	结束	End	Fin	Fin	Ende	结束
+label.endTime	结束时间	End Time	Heure Fin	Hora Fin	Endzeit	结束时间
+label.facility	设施	Facility	Structure	Instalación	Einrichtung	设施
+label.firstName	名	First Name	Prénom	Nombre	Vorname	名
+label.inactive	否	No	Non	No	Nein	否
+label.key	键名	Key	Clé	Clave	Schlüssel	键名
+label.lastName	姓	Last Name	Nom	Apellido	Nachname	姓
+label.latitude	纬度	Latitude	Latitude	Latitud	Breitengrad	纬度
+label.liveDispatchStatus	实时调度状态	Live dispatch status	Statut opérationnel en temps réel	Estado operativo en tiempo real	Live-Einsatzstatus	实时调度状态
+label.location	地点	Location	Lieu	Ubicación	Ort	地点
+label.locationCode	地点编号	Location Code	Code Lieu	Código Ubicación	Ortscode	地点编号
+label.locationName	地点名称	Location Name	Nom du Lieu	Nombre Ubicación	Ortsname	地点名称
+label.locationOrder	地点顺序	Location Order	Ordre Lieu	Orden Ubicación	Ortsreihenfolge	地点顺序
+label.longitude	经度	Longitude	Longitude	Longitud	Längengrad	经度
+label.month	月	Month	Mois	Mes	Monat	月
+label.name	名称	Name	Nom	Nombre	Name	名称
+label.nurse	护士	Nurse	Infirmière	Enfermera	Krankenschwester	护士
+label.operator	审核员	Operator	Opérateur	Operador	Mitarbeiter	审核员
+label.optionalSkills	可选资格	Optional Skills	Compétences Optionnelles	Habilidades Opcionales	Optionale Kompetenzen	可选资格
+label.order	顺序	Order	Ordre	Orden	Reihenfolge	顺序
+label.period	周期	Period	Période	Período	Zeitraum	周期
+label.phone	电话	Phone	Téléphone	Teléfono	Telefon	电话
+label.qualificationLevel	等级	Level	Niveau	Nivel	Stufe	等级
+label.qualifications	资格与证书	Qualifications and certificates	Qualifications et certificats	Cualificaciones y certificados	Qualifikationen und Zertifikate	资格与证书
+label.reportPreview	预览：找到的排班	Preview shifts found:	Aperçu des quarts trouvés:	Vista previa de turnos encontrados:	Vorschau gefundener Schichten:	预览：找到的排班
+label.requiredSkills	必需资格	Required Skills	Compétences Requises	Habilidades Requeridas	Erforderliche Kompetenzen	必需资格
+label.satisfiedConstraints	已满足约束	Satisfied constraints	Contraintes respectées	Restricciones cumplidas	Erfüllte Bedingungen	已满足约束
+label.score	得分	Score	Score	Puntuación	Punktzahl	得分
+label.selectMonthForReport	选择生成报表的月份。	Select the month for generating the report.	Sélectionnez le mois pour générer le rapport.	Seleccione el mes para generar el reporte.	Wählen Sie den Monat für den Bericht.	选择生成报表的月份。
+label.skills	资格	Skills	Compétences	Habilidades	Kompetenzen	资格
+label.start	开始	Start	Début	Inicio	Start	开始
+label.startTime	开始时间	Start Time	Heure Début	Hora Inicio	Startzeit	开始时间
+label.structureName	部门名称	Structure Name	Nom de la Structure	Nombre de la Estructura	Strukturname	部门名称
+label.translations	翻译	Translations	Traductions	Traducciones	Übersetzungen	翻译
+label.type	类型	Type	Type	Tipo	Typ	类型
+label.violatedConstraints	违反的约束	Violated constraints	Contraintes violées	Restricciones incumplidas	Verletzte Bedingungen	违反的约束
+labels.addTooltip	新增文案	Add a new label	Ajouter un nouveau libellé	Añadir una nueva etiqueta	Neue Beschriftung hinzufügen	新增文案
+labels.deleteTitle	删除文案	Delete label	Supprimer le libellé	Eliminar etiqueta	Beschriftung löschen	删除文案
+labels.noResults	未找到文案。	No labels found.	Aucun libellé trouvé.	No se encontraron etiquetas.	Keine Beschriftungen gefunden.	未找到文案。
+labels.results	{{count}} 条结果	{{count}} result(s)	{{count}} résultat(s)	{{count}} resultado(s)	{{count}} Ergebnis(se)	{{count}} 条结果
+labels.searchPlaceholder	按键名或描述搜索…	Search by key or description…	Rechercher par clé ou description…	Buscar por clave o descripción…	Nach Schlüssel oder Beschreibung suchen…	按键名或描述搜索…
+labels.showTranslationKeys	显示键名	Show keys	Afficher les clés	Mostrar claves	Schlüssel anzeigen	显示键名
+modal.addEmployee	新增审核员	Add Operator	Ajouter Opérateur	Añadir Operador	Mitarbeiter hinzufügen	新增审核员
+modal.addLabel	新增文案	Add Label	Ajouter une étiquette	Añadir etiqueta	Etikett hinzufügen	新增文案
+modal.addLocation	新增地点	Add Location	Ajouter Lieu	Añadir Ubicación	Ort hinzufügen	新增地点
+modal.addShift	新增任务	Add Shift	Ajouter un quart	Añadir turno	Schicht hinzufügen	新增任务
+modal.addSkill	新增资格	Add skill	Ajouter une compétence	Añadir competencia	Kompetenz hinzufügen	新增资格
+modal.addStructure	新增部门	Add Structure	Ajouter Structure	Añadir Estructura	Struktur hinzufügen	新增部门
+modal.addTemplate	新增模板任务	Add template shift	Ajouter un quart-modèle	Añadir turno de plantilla	Vorlagenschicht hinzufügen	新增模板任务
+modal.availabilityDetail	可用性详情	Availability Detail	Détail Disponibilité	Detalle Disponibilidad	Verfügbarkeitsdetail	可用性详情
+modal.confirm	确认	Confirm	Confirmer	Confirmar	Bestätigen	确认
+modal.dateDetails	日期详情	Availability Detail	Détail Disponibilité	Detalle Disponibilidad	Verfügbarkeitsdetail	日期详情
+modal.deleteEmployee	删除审核员	Delete Operator	Supprimer Opérateur	Eliminar Operador	Mitarbeiter löschen	删除审核员
+modal.deleteLabel	删除文案	Delete Label	Supprimer Étiquette	Eliminar Etiqueta	Beschriftung löschen	删除文案
+modal.deleteLanguage	删除语言	Delete Language	Supprimer Langue	Eliminar Idioma	Sprache löschen	删除语言
+modal.deleteLocation	删除地点	Delete Location	Supprimer Lieu	Eliminar Ubicación	Ort löschen	删除地点
+modal.editEmployee	编辑审核员	Edit Operator	Modifier Opérateur	Editar Operador	Mitarbeiter bearbeiten	编辑审核员
+modal.editLabel	编辑文案	Edit Label	Modifier l'étiquette	Editar etiqueta	Etikett bearbeiten	编辑文案
+modal.editLocation	编辑地点	Edit Location	Modifier Lieu	Editar Ubicación	Ort bearbeiten	编辑地点
+modal.editSavedTemplate	编辑模板	Edit template	Modifier le modèle	Editar plantilla	Vorlage bearbeiten	编辑模板
+modal.editShift	编辑任务	Edit Shift	Modifier le quart	Editar turno	Schicht bearbeiten	编辑任务
+modal.editSkill	编辑资格	Edit skill	Modifier la compétence	Editar competencia	Kompetenz bearbeiten	编辑资格
+modal.editStructure	编辑部门	Edit Structure	Modifier Structure	Editar Estructura	Struktur bearbeiten	编辑部门
+modal.editTemplate	编辑模板任务	Edit template shift	Modifier le quart-modèle	Editar turno de plantilla	Vorlagenschicht bearbeiten	编辑模板任务
+modal.employeeDates	审核员日期	Operator Dates	Dates Opérateur	Fechas Operador	Mitarbeiterdaten	审核员日期
+modal.employeeDatesList	审核员日期列表	Operator Dates	Dates Opérateur	Fechas Operador	Mitarbeiterdaten	审核员日期列表
+modal.handleShift	处理任务	Handle Shift	Gérer Quart	Gestionar Turno	Schicht verwalten	处理任务
+modal.labelManagement	文案管理	Labels Management	Gestion des Étiquettes	Gestión de Etiquetas	Beschriftungsverwaltung	文案管理
+modal.languageManagement	语言管理	Language Management	Gestion des Langues	Gestión de Idiomas	Sprachverwaltung	语言管理
+modal.loadTemplate	从模板载入	Load from template	Charger depuis un modèle	Cargar desde plantilla	Aus Vorlage laden	从模板载入
+modal.manageLabels	文案管理	Labels Management	Gestion des Étiquettes	Gestión de Etiquetas	Beschriftungsverwaltung	文案管理
+modal.manageLanguages	语言管理	Language Management	Gestion des Langues	Gestión de Idiomas	Sprachverwaltung	语言管理
+modal.manageStructures	管理部门	Manage Structures	Gestion des Structures	Gestión de Estructuras	Strukturen verwalten	管理部门
+modal.printCoverage	打印覆盖排班	Print Coverage Shifts	Imprimer Couverture Quarts	Imprimir Cobertura Turnos	Schichtdeckung drucken	打印覆盖排班
+modal.printCoverageShifts	打印覆盖排班	Print Coverage Shifts	Imprimer Couverture Quarts	Imprimir Cobertura Turnos	Schichtdeckung drucken	打印覆盖排班
+modal.printShifts	打印每周排班	Print Weekly Shifts	Imprimer Quarts Hebdomadaires	Imprimir Turnos Semanales	Wöchentliche Schichten drucken	打印每周排班
+modal.printWeeklyShifts	打印每周排班	Print Weekly Shifts	Imprimer Quarts Hebdomadaires	Imprimir Turnos Semanales	Wöchentliche Schichten drucken	打印每周排班
+modal.saveTemplate	保存为模板	Save to template	Enregistrer dans le modèle	Guardar en plantilla	In Vorlage speichern	保存为模板
+modal.scoreAnalysis	得分分析	Score Analysis	Analyse du Score	Análisis de Puntuación	Score-Analyse	得分分析
+modal.shiftDetail	任务详情	Shift Detail	Détail du Quart	Detalle del Turno	Schichtdetail	任务详情
+modal.shiftDetails	任务详情	Shift Detail	Détail du Quart	Detalle del Turno	Schichtdetail	任务详情
+modal.shiftsList	任务列表	Shifts List	Liste des Quarts	Lista de Turnos	Schichtliste	任务列表
+modal.skillsForShift	任务所需资格	Skills for Shift	Compétences du Quart	Habilidades del Turno	Schichtkompetenzen	任务所需资格
+modal.skillsList	资格列表	Skills List	Liste des Compétences	Lista de Habilidades	Kompetenzliste	资格列表
+modal.solveResult	求解结果	Solve Result	Résultat de la résolution	Resultado de la resolución	Lösungsergebnis	求解结果
+modal.translations	翻译	Translations	Traductions	Traducciones	Übersetzungen	翻译
+month.apr	4月	April	Avril	Abril	April	4月
+month.apr.s	4月	Apr	Avr	Abr	Apr	4月
+month.april	4月	April	Avril	Abril	April	4月
+month.aug	8月	August	Août	Agosto	August	8月
+month.aug.s	8月	Aug	Aoû	Ago	Aug	8月
+month.august	8月	August	Août	Agosto	August	8月
+month.dec	12月	December	Décembre	Diciembre	Dezember	12月
+month.dec.s	12月	Dec	Déc	Dic	Dez	12月
+month.december	12月	December	Décembre	Diciembre	Dezember	12月
+month.feb	2月	February	Février	Febrero	Februar	2月
+month.feb.s	2月	Feb	Fév	Feb	Feb	2月
+month.february	2月	February	Février	Febrero	Februar	2月
+month.jan	1月	January	Janvier	Enero	Januar	1月
+month.jan.s	1月	Jan	Jan	Ene	Jan	1月
+month.january	1月	January	Janvier	Enero	Januar	1月
+month.jul	7月	July	Juillet	Julio	Juli	7月
+month.jul.s	7月	Jul	Jul	Jul	Jul	7月
+month.july	7月	July	Juillet	Julio	Juli	7月
+month.jun	6月	June	Juin	Junio	Juni	6月
+month.jun.s	6月	Jun	Jui	Jun	Jun	6月
+month.june	6月	June	Juin	Junio	Juni	6月
+month.mar	3月	March	Mars	Marzo	März	3月
+month.mar.s	3月	Mar	Mar	Mar	Mär	3月
+month.march	3月	March	Mars	Marzo	März	3月
+month.may	5月	May	Mai	Mayo	Mai	5月
+month.may.s	5月	May	Mai	May	Mai	5月
+month.nov	11月	November	Novembre	Noviembre	November	11月
+month.nov.s	11月	Nov	Nov	Nov	Nov	11月
+month.november	11月	November	Novembre	Noviembre	November	11月
+month.oct	10月	October	Octobre	Octubre	Oktober	10月
+month.oct.s	10月	Oct	Oct	Oct	Okt	10月
+month.october	10月	October	Octobre	Octubre	Oktober	10月
+month.sep	9月	September	Septembre	Septiembre	September	9月
+month.sep.s	9月	Sep	Sep	Sep	Sep	9月
+month.september	9月	September	Septembre	Septiembre	September	9月
+monthShort.apr	4月	Apr	Avr.	Abr	Apr	4月
+monthShort.aug	8月	Aug	Août	Ago	Aug	8月
+monthShort.dec	12月	Dec	Déc.	Dic	Dez	12月
+monthShort.feb	2月	Feb	Févr.	Feb	Feb	2月
+monthShort.jan	1月	Jan	Janv.	Ene	Jan	1月
+monthShort.jul	7月	Jul	Juil.	Jul	Jul	7月
+monthShort.jun	6月	Jun	Juin	Jun	Jun	6月
+monthShort.mar	3月	Mar	Mars	Mar	Mär	3月
+monthShort.may	5月	May	Mai	May	Mai	5月
+monthShort.nov	11月	Nov	Nov.	Nov	Nov	11月
+monthShort.oct	10月	Oct	Oct.	Oct	Okt	10月
+monthShort.sep	9月	Sep	Sept.	Sep	Sep	9月
+msg.allConstraintsSatisfied	所有约束均已满足 ✓	All constraints satisfied ✓	Toutes les contraintes respectées ✓	Todas las restricciones cumplidas ✓	Alle Bedingungen erfüllt ✓	所有约束均已满足 ✓
+msg.assigned	已分配	Assigned	Assigné	Asignado	Zugewiesen	已分配
+msg.constraintsViolated	个约束被违反	constraint(s) violated	contrainte(s) violée(s)	restricción(es) incumplida(s)	Bedingung(en) verletzt	个约束被违反
+msg.dataNotAvailable	暂无数据。	Data not available.	Données non disponibles.	Datos no disponibles.	Daten nicht verfügbar.	暂无数据。
+msg.err.employeeCodeInUse	审核员编号已被使用，请更换。	Operator code already in use. Choose a different one.	Code opérateur déjà utilisé. Choisissez-en un autre.	Código de operador ya en uso. Elija otro.	Mitarbeitercode bereits vergeben. Wählen Sie einen anderen.	审核员编号已被使用，请更换。
+msg.err.employeeCodeRequired	必须填写审核员编号。	The operator code is required.	Le code de l'opérateur est obligatoire.	El código del operador es obligatorio.	Der Mitarbeitercode ist erforderlich.	必须填写审核员编号。
+msg.err.employeeEmailInvalid	审核员邮箱地址无效。	Invalid operator email address.	Adresse e-mail de l'opérateur invalide.	Dirección de correo del operador no válida.	Ungültige E-Mail-Adresse des Mitarbeiters.	审核员邮箱地址无效。
+msg.err.employeeFirstNameRequired	必须填写审核员名字。	The operator first name is required.	Le prénom de l'opérateur est obligatoire.	El nombre del operador es obligatorio.	Der Vorname des Mitarbeiters ist erforderlich.	必须填写审核员名字。
+msg.err.employeeLastNameRequired	必须填写审核员姓氏。	The operator last name is required.	Le nom de l'opérateur est obligatoire.	El apellido del operador es obligatorio.	Der Nachname des Mitarbeiters ist erforderlich.	必须填写审核员姓氏。
+msg.err.labelInsertFailed	插入文案失败。	Error inserting the label.	Erreur lors de l'insertion de l'étiquette.	Error al insertar la etiqueta.	Fehler beim Einfügen der Beschriftung.	插入文案失败。
+msg.err.labelNotFound	未找到该文案。	Label not found.	Étiquette non trouvée.	Etiqueta no encontrada.	Beschriftung nicht gefunden.	未找到该文案。
+msg.err.languageActiveCannotDelete	当前启用的语言无法删除。	The active language cannot be deleted.	Impossible de supprimer la langue active.	No se puede eliminar el idioma activo.	Die aktive Sprache kann nicht gelöscht werden.	当前启用的语言无法删除。
+msg.err.languageInsertFailed	插入语言失败。	Error inserting the language.	Erreur lors de l'insertion de la langue.	Error al insertar el idioma.	Fehler beim Einfügen der Sprache.	插入语言失败。
+msg.err.languageNotFound	未找到该语言。	Language not found.	Langue non trouvée.	Idioma no encontrado.	Sprache nicht gefunden.	未找到该语言。
+msg.err.locationCodeInUse	地点编号已被使用，请更换。	Location code already in use. Choose a different one.	Code du lieu déjà utilisé. Choisissez-en un autre.	Código de ubicación ya en uso. Elija otro.	Ortscode bereits vergeben. Wählen Sie einen anderen.	地点编号已被使用，请更换。
+msg.err.locationInUse	该地点已被任务或模板引用，无法删除。	The location is used by shifts or templates and cannot be deleted.	Le lieu est utilisé par des quarts ou des modèles: suppression impossible.	La ubicación se usa en turnos o plantillas: no se puede eliminar.	Der Ort wird von Schichten oder Vorlagen verwendet und kann nicht gelöscht werden.	该地点已被任务或模板引用，无法删除。
+msg.err.locationNameRequired	必须填写地点名称。	The location name is required.	Le nom du lieu est obligatoire.	El nombre de la ubicación es obligatorio.	Der Ortsname ist erforderlich.	必须填写地点名称。
+msg.err.locationOrderRequired	地点顺序必须大于零。	The location order must be greater than zero.	L'ordre du lieu doit être supérieur à zéro.	El orden de la ubicación debe ser mayor que cero.	Die Ortsreihenfolge muss größer als null sein.	地点顺序必须大于零。
+msg.err.locationSkillsInvalid	该地点的资格设置无效。	Invalid skills for the location.	Compétences invalides pour le lieu.	Habilidades no válidas para la ubicación.	Ungültige Kompetenzen für den Ort.	该地点的资格设置无效。
+msg.error.addEmployee	新增审核员失败。	Error adding operator.	Erreur lors de l'ajout de l'opérateur.	Error al añadir operador.	Fehler beim Hinzufügen des Mitarbeiters.	新增审核员失败。
+msg.error.addLocation	新增地点失败。	Error adding location.	Erreur lors de l'ajout du lieu.	Error al añadir ubicación.	Fehler beim Hinzufügen des Orts.	新增地点失败。
+msg.error.addShift	新增任务失败。	Error adding shift.	Erreur lors de l'ajout du quart.	Error al añadir turno.	Fehler beim Hinzufügen der Schicht.	新增任务失败。
+msg.error.addStructure	新增部门失败。	Error adding structure.	Erreur lors de l'ajout de la structure.	Error al agregar la estructura.	Fehler beim Hinzufügen der Struktur.	新增部门失败。
+msg.error.delete	删除失败。	Error while deleting.	Erreur lors de la suppression.	Error al eliminar.	Fehler beim Löschen.	删除失败。
+msg.error.deleteDate	删除日期失败。	Error deleting date.	Erreur lors de la suppression de la date.	Error al eliminar fecha.	Fehler beim Löschen des Datums.	删除日期失败。
+msg.error.deleteEmployee	删除审核员失败。	Error deleting operator.	Erreur lors de la suppression de l'opérateur.	Error al eliminar operador.	Fehler beim Löschen des Mitarbeiters.	删除审核员失败。
+msg.error.deleteLocation	删除地点失败。	Error deleting location.	Erreur lors de la suppression du lieu.	Error al eliminar ubicación.	Fehler beim Löschen des Orts.	删除地点失败。
+msg.error.deleteShift	删除任务失败。	Error deleting shift.	Erreur lors de la suppression du quart.	Error al eliminar turno.	Fehler beim Löschen der Schicht.	删除任务失败。
+msg.error.deleteSkill	删除资格失败。	Error deleting skill.	Erreur lors de la suppression de la compétence.	Error al eliminar habilidad.	Fehler beim Löschen der Kompetenz.	删除资格失败。
+msg.error.deleteStructure	无法删除：该部门正在使用中。	Cannot delete: structure is in use.	Impossible de supprimer: la structure est utilisée.	No se puede eliminar: la estructura está en uso.	Löschen nicht möglich: Struktur wird verwendet.	无法删除：该部门正在使用中。
+msg.error.duplicateEmployeeCode	审核员编号已被使用，请更换编号。	Operator code already in use. Choose a different code.	Code opérateur déjà utilisé. Choisissez un autre code.	Código de operador ya en uso. Elija otro código.	Mitarbeitercode bereits vergeben. Wählen Sie einen anderen Code.	审核员编号已被使用，请更换编号。
+msg.error.duplicateLocationCode	地点编号已被使用。	Location code already in use.	Code lieu déjà utilisé.	Código de ubicación ya en uso.	Ortscode bereits vergeben.	地点编号已被使用。
+msg.error.editEmployee	编辑审核员失败。	Error editing operator.	Erreur lors de la modification de l'opérateur.	Error al editar operador.	Fehler beim Bearbeiten des Mitarbeiters.	编辑审核员失败。
+msg.error.editStructure	编辑部门失败。	Error editing structure.	Erreur lors de la modification de la structure.	Error al editar la estructura.	Fehler beim Bearbeiten der Struktur.	编辑部门失败。
+msg.error.generic	出错了	Error	Erreur	Error	Fehler	出错了
+msg.error.loadData	数据加载失败。	Error loading data.	Erreur lors du chargement des données.	Error al cargar los datos.	Fehler beim Laden der Daten.	数据加载失败。
+msg.error.loadEmployee	审核员数据加载失败。	Error loading operator data.	Erreur lors du chargement des données opérateur.	Error al cargar datos del operador.	Fehler beim Laden der Mitarbeiterdaten.	审核员数据加载失败。
+msg.error.loadLabels	文案加载失败。	Error loading labels.	Erreur lors du chargement des étiquettes.	Error al cargar etiquetas.	Fehler beim Laden der Beschriftungen.	文案加载失败。
+msg.error.loadLanguages	语言加载失败。	Error loading languages.	Erreur lors du chargement des langues.	Error al cargar idiomas.	Fehler beim Laden der Sprachen.	语言加载失败。
+msg.error.loadLocations	地点加载失败。	Error loading locations.	Erreur lors du chargement des lieux.	Error al cargar ubicaciones.	Fehler beim Laden der Orte.	地点加载失败。
+msg.error.loadSchedule	排班加载失败。	Error loading schedule.	Erreur lors du chargement du planning.	Error al cargar el horario.	Fehler beim Laden des Zeitplans.	排班加载失败。
+msg.error.loadSkills	资格加载失败。	Error loading skills.	Erreur lors du chargement des compétences.	Error al cargar habilidades.	Fehler beim Laden der Kompetenzen.	资格加载失败。
+msg.error.loadTranslations	翻译加载失败	Error loading translations	Erreur lors du chargement des traductions	Error al cargar traducciones	Fehler beim Laden der Übersetzungen	翻译加载失败
+msg.error.retrieveData	数据获取失败，请重试。	Error retrieving data. Please try again.	Erreur lors de la récupération des données.	Error al recuperar datos. Inténtelo de nuevo.	Fehler beim Abrufen der Daten.	数据获取失败，请重试。
+msg.error.save	保存失败，请重试。	Error saving. Please try again.	Erreur lors de l'enregistrement. Veuillez réessayer.	Error al guardar. Inténtelo de nuevo.	Fehler beim Speichern. Bitte erneut versuchen.	保存失败，请重试。
+msg.error.saveSkills	资格保存失败。	Error saving skills.	Erreur lors de l'enregistrement des compétences.	Error al guardar habilidades.	Fehler beim Speichern der Kompetenzen.	资格保存失败。
+msg.error.saveWeek	保存本周失败。	Error saving week.	Erreur lors de l'enregistrement de la semaine.	Error al guardar la semana.	Fehler beim Speichern der Woche.	保存本周失败。
+msg.error.updateLocation	更新地点失败。	Error updating location.	Erreur lors de la mise à jour du lieu.	Error al actualizar ubicación.	Fehler beim Aktualisieren des Orts.	更新地点失败。
+msg.infeasibleSaveWarning	该方案违反了硬约束：保存后这些违反将写入任务。点击「仍然保存」确认。	The solution violates hard constraints: saving it will write those violations into the shifts. Press "Save anyway" to confirm.	La solution viole des contraintes strictes : en l'enregistrant, ces violations seront écrites dans les quarts. Appuyez sur « Enregistrer quand même » pour confirmer.	La solución viola restricciones estrictas: al guardarla, esas violaciones se escribirán en los turnos. Pulsa "Guardar de todos modos" para confirmar.	Die Lösung verletzt harte Bedingungen: Beim Speichern werden diese Verstöße in die Schichten geschrieben. Zum Bestätigen "Trotzdem speichern" drücken.	该方案违反了硬约束：保存后这些违反将写入任务。点击「仍然保存」确认。
+msg.legendFaintHint	图例说明：浅色背景带是日期申报而非班次	Faint band = an auditor's declared dates (desired / undesired / unavailable), not a shift	Bande claire = dates déclarées par l'auditeur, et non un créneau	Banda clara = fechas declaradas por el auditor, no un turno	Heller Streifen = vom Auditor gemeldete Termine, keine Schicht	浅色背景带 = 审核员申报的期望/不希望/不可用日期，不是班次
+msg.no.score.to.analyze	暂无可分析的得分，请先点击「自动排程」。	No score to analyze yet, please first press the 'Solve' button.	Aucun score à analyser, veuillez d'abord appuyer sur 'Résoudre'.	Sin score para analizar. Pulse primero el botón 'Resolver'.	Kein Score zum Analysieren. Bitte zuerst 'Lösen' drücken.	暂无可分析的得分，请先点击「自动排程」。
+msg.noConstraintData	暂无约束数据。	No constraint data available.	Aucune donnée de contrainte disponible.	No hay datos de restricciones disponibles.	Keine Bedingungsdaten verfügbar.	暂无约束数据。
+msg.noData	暂无数据。	No data available.	Données indisponibles.	Datos no disponibles.	Keine Daten verfügbar.	暂无数据。
+msg.noDates	暂无日期。	No dates.	Aucune date.	Sin fechas.	Keine Daten.	暂无日期。
+msg.noEmployees	暂无审核员。	No operators.	Aucun opérateur.	Sin operadores.	Keine Mitarbeiter.	暂无审核员。
+msg.noLocations	暂无地点。	No locations.	Aucun lieu.	Sin ubicaciones.	Keine Standorte.	暂无地点。
+msg.noShiftsForLocation	该地点暂无任务。	No shifts for this location.	Aucun quart pour ce lieu.	No hay turnos para esta ubicación.	Keine Schichten für diesen Standort.	该地点暂无任务。
+msg.noUnassignedShifts	暂无未分配任务	No unassigned shifts	Aucun quart non assigné	Sin turnos sin asignar	Keine nicht zugewiesenen Schichten	暂无未分配任务
+msg.selectStructure	请选择部门。	Select a structure.	Sélectionnez une structure.	Seleccione una estructura.	Wählen Sie eine Struktur.	请选择部门。
+msg.solutionHasViolations	该方案违反约束：部分任务可能未分配。	The solution violates constraints: some shifts may have been left unassigned.	La solution viole des contraintes : certains créneaux peuvent être restés non affectés.	La solución viola restricciones: algunos turnos pueden haber quedado sin asignar.	Die Lösung verletzt Einschränkungen: einige Schichten sind möglicherweise unbesetzt geblieben.	该方案违反约束：部分任务可能未分配。
+msg.solved	求解完成	Solving complete	Résolution terminée	Resolución completada	Lösung abgeschlossen	求解完成
+msg.solving	求解中…	Solving...	Résolution en cours...	Resolviendo...	Wird gelöst...	求解中…
+msg.solving.banner	正在求解排班…	Solving shifts in progress...	Résolution des quarts en cours...	Resolución de turnos en progreso...	Schichtoptimierung läuft...	正在求解排班…
+msg.solvingInProgress	求解进行中…	Solving in progress…	Résolution en cours…	Resolución en curso…	Lösung läuft…	求解进行中…
+msg.success.activateLanguage	已更新启用语言。	Active language updated.	Langue active mise à jour.	Idioma activo actualizado.	Aktive Sprache aktualisiert.	已更新启用语言。
+msg.success.addLabel	文案已添加。	Label added.	Étiquette ajoutée.	Etiqueta añadida.	Beschriftung hinzugefügt.	文案已添加。
+msg.success.addLanguage	语言添加成功。	Language added successfully.	Langue ajoutée avec succès.	Idioma añadido con éxito.	Sprache erfolgreich hinzugefügt.	语言添加成功。
+msg.success.addStructure	部门添加成功。	Structure added successfully.	Structure ajoutée avec succès.	Estructura añadida con éxito.	Struktur erfolgreich hinzugefügt.	部门添加成功。
+msg.success.deleteDate	日期已删除。	Date deleted successfully.	Date supprimée avec succès.	Fecha eliminada con éxito.	Datum erfolgreich gelöscht.	日期已删除。
+msg.success.deleteEmployee	审核员已删除！	Operator deleted successfully!	Opérateur supprimé avec succès!	¡Operador eliminado con éxito!	Mitarbeiter erfolgreich gelöscht!	审核员已删除！
+msg.success.deleteLabel	文案已删除。	Label deleted.	Étiquette supprimée.	Etiqueta eliminada.	Beschriftung gelöscht.	文案已删除。
+msg.success.deleteLanguage	语言已删除。	Language deleted.	Langue supprimée.	Idioma eliminado.	Sprache gelöscht.	语言已删除。
+msg.success.deleteLocation	地点已删除！	Location deleted successfully!	Lieu supprimé avec succès!	Ubicación eliminada con éxito!	Ort erfolgreich gelöscht!	地点已删除！
+msg.success.deleteStructure	部门已删除。	Structure deleted.	Structure supprimée.	Estructura eliminada.	Struktur gelöscht.	部门已删除。
+msg.success.saveTranslations	翻译已保存。	Translations saved.	Traductions enregistrées.	Traducciones guardadas.	Übersetzungen gespeichert.	翻译已保存。
+msg.success.saved	已保存！	Saved!	Enregistré!	Guardado!	Gespeichert!	已保存！
+msg.success.scheduleComplete	排班完成！	Schedule complete!	Planning terminé!	Programación completa!	Zeitplan abgeschlossen!	排班完成！
+msg.success.updateLabel	文案已更新。	Label updated.	Étiquette mise à jour.	Etiqueta actualizada.	Beschriftung aktualisiert.	文案已更新。
+msg.success.updateLanguage	语言已更新。	Language updated.	Langue mise à jour.	Idioma actualizado.	Sprache aktualisiert.	语言已更新。
+msg.success.updateStructure	部门已更新。	Structure updated.	Structure mise à jour.	Estructura actualizada.	Struktur aktualisiert.	部门已更新。
+msg.success.weekSaved	本周已保存并锁定。	Week saved and locked.	Semaine sauvegardée et verrouillée.	Semana guardada y bloqueada.	Woche gespeichert und gesperrt.	本周已保存并锁定。
+msg.success.weekUnlocked	本周已解锁。	Week unlocked.	Semaine déverrouillée.	Semana desbloqueada.	Woche entsperrt.	本周已解锁。
+msg.unassigned	未分配	Unassigned	Non assigné	Sin asignar	Nicht zugewiesen	未分配
+msg.unassignedShifts	有 {0} 个未分配任务。	There are {0} unassigned shifts.	Il y a {0} quarts non assignés.	Hay {0} turnos sin asignar.	Es gibt {0} nicht zugewiesene Schichten.	有 {0} 个未分配任务。
+msg.unknownLocation	未知地点	Unknown Location	Lieu inconnu	Ubicación desconocida	Unbekannter Ort	未知地点
+msg.validation.selectFacilityMonth	请选择设施和月份。	Please select both facility and month.	Veuillez sélectionner la structure et le mois.	Seleccione la instalación y el mes.	Bitte Einrichtung und Monat auswählen.	请选择设施和月份。
+msg.validation.selectNurseMonth	请选择护士和月份。	Please select both nurse and month.	Veuillez sélectionner l'infirmière et le mois.	Seleccione la enfermera y el mes.	Bitte Krankenschwester und Monat auswählen.	请选择护士和月份。
+msg.warning.endBeforeStart	结束时间必须晚于开始时间！	End time must be after start time!	L'heure de fin doit être après l'heure de début!	La hora de fin debe ser posterior al inicio!	Endzeit muss nach Startzeit liegen!	结束时间必须晚于开始时间！
+msg.warning.insufficientResources	资源不足，无法完成排班。	Insufficient resources to complete the schedule.	Ressources insuffisantes pour compléter le planning.	Recursos insuficientes para completar el horario.	Nicht genügend Ressourcen für den Zeitplan.	资源不足，无法完成排班。
+msg.warning.invalidDatetime	日期/时间格式无效！	Invalid date/time format!	Format date/heure invalide!	Formato fecha/hora inválido!	Ungültiges Datum/Uhrzeit-Format!	日期/时间格式无效！
+msg.warning.labelKeyDescRequired	键名和描述为必填项。	Key and description are required.	Clé et description sont obligatoires.	Clave y descripción son obligatorias.	Schlüssel und Beschreibung sind erforderlich.	键名和描述为必填项。
+msg.warning.langCodeDescRequired	代码和描述为必填项。	Code and description are required.	Code et description sont obligatoires.	Código y descripción son obligatorios.	Code und Beschreibung sind erforderlich.	代码和描述为必填项。
+msg.warning.noShifts	暂无可用任务。	No shifts available.	Aucun quart disponible.	Sin turnos disponibles.	Keine Schichten verfügbar.	暂无可用任务。
+msg.warning.noValidSkills	没有可保存的有效资格。	No valid skills to save.	Aucune compétence valide à enregistrer.	Sin habilidades válidas para guardar.	Keine gültigen Kompetenzen zum Speichern.	没有可保存的有效资格。
+msg.warning.requiredFields	所有字段均为必填项！	All fields are required!	Tous les champs sont obligatoires!	Todos los campos son obligatorios!	Alle Felder sind erforderlich!	所有字段均为必填项！
+msg.warning.shiftNotFound	未找到该任务。	Shift not found.	Quart non trouvé.	Turno no encontrado.	Schicht nicht gefunden.	未找到该任务。
+msg.warning.structureNameRequired	必须填写部门名称。	Structure name is required.	Le nom de la structure est obligatoire.	El nombre de la estructura es obligatorio.	Strukturname ist erforderlich.	必须填写部门名称。
+nav.config	配置	Configuration	Configuration	Configuración	Konfiguration	配置
+nav.dates	审核员时间偏好	Operator Date Preferences	Préférences de dates des opérateurs	Preferencias de fechas de operadores	Datumspräferenzen der Mitarbeiter	审核员时间偏好
+nav.employees	审核员	Operators	Opérateurs	Operadores	Mitarbeiter	审核员
+nav.labels	界面文案	Labels	Étiquettes	Etiquetas	Beschriftungen	界面文案
+nav.languages	语言	Languages	Langues	Idiomas	Sprachen	语言
+nav.locations	地点	Locations	Lieux	Ubicaciones	Standorte	地点
+nav.nextPeriod	下一周期	Next period	Période suivante	Período siguiente	Nächster Zeitraum	下一周期
+nav.nextWeek	下一周	Next week	Semaine suivante	Semana siguiente	Nächste Woche	下一周
+nav.nextYear	下一年	Next year	Année suivante	Año siguiente	Nächstes Jahr	下一年
+nav.prevPeriod	上一周期	Previous period	Période précédente	Período anterior	Vorheriger Zeitraum	上一周期
+nav.previousWeek	上一周	Previous week	Semaine précédente	Semana anterior	Vorherige Woche	上一周
+nav.previousYear	上一年	Previous year	Année précédente	Año anterior	Vorheriges Jahr	上一年
+nav.report	报表	Report	Rapport	Informe	Bericht	报表
+nav.shiftManagement	排班管理	Shift Management	Gestion des quarts	Gestión de turnos	Schichtverwaltung	排班管理
+nav.shifts	排班管理	Shift Management	Gestion des quarts	Gestión de turnos	Schichtverwaltung	排班管理
+nav.skills	资格能力	Skills	Compétences	Competencias	Kompetenzen	资格能力
+nav.structure	部门	Structure	Structure	Estructura	Struktur	部门
+nav.structures	部门	Structures	Structures	Estructuras	Strukturen	部门
+nav.title	排班管理	Shift Management	Gestion des Quarts	Gestión de Turnos	Schichtverwaltung	排班管理
+nav.workflow	审核调配	Scheduling Workflow	Planification des audits	Planificación de auditorías	Audit-Planung	审核调配
+option.desired	期望	Desired	Souhaité	Deseado	Bevorzugt	期望
+option.unavailable	不可用	Unavailable	Non Disponible	No Disponible	Nicht verfügbar	不可用
+option.undesired	不希望	Undesired	Non Souhaité	No Deseado	Nicht bevorzugt	不希望
+pagination.labels	条文案	labels	étiquettes	etiquetas	Beschriftungen	条文案
+pagination.page	第	Page	Page	Pág.	Seite	第
+pagination.results	条结果	results	résultats	resultados	Ergebnisse	条结果
+pdf.col.day	日期	Day	Jour	Día	Tag	日期
+pdf.col.employee	审核员	Operator	Opérateur	Operador	Mitarbeiter	审核员
+pdf.col.end	结束	End	Fin	Fin	Ende	结束
+pdf.col.location	地点	Location	Lieu	Ubicación	Standort	地点
+pdf.col.start	开始	Start	Début	Inicio	Beginn	开始
+pdf.dow.fri	周五	Fri	Ven	Vie	Fr	周五
+pdf.dow.mon	周一	Mon	Lun	Lun	Mo	周一
+pdf.dow.sat	周六	Sat	Sam	Sáb	Sa	周六
+pdf.dow.sun	周日	Sun	Dim	Dom	So	周日
+pdf.dow.thu	周四	Thu	Jeu	Jue	Do	周四
+pdf.dow.tue	周二	Tue	Mar	Mar	Di	周二
+pdf.dow.wed	周三	Wed	Mer	Mié	Mi	周三
+pdf.filenameCompany	公司	Company	Entreprise	Empresa	Unternehmen	公司
+pdf.filenameCoverage	覆盖情况	Coverage	Couverture	Cobertura	Abdeckung	覆盖情况
+pdf.filenameEmployee	审核员	Operator	Opérateur	Operador	Mitarbeiter	审核员
+pdf.filenameLocation	地点	Location	Lieu	Ubicación	Standort	地点
+pdf.filenameShifts	排班	Shifts	Quarts	Turnos	Schichten	排班
+pdf.footer.generated	生成于 {{date}} – 第 {{page}} 页，共 {{total}} 页	Generated on {{date}} – Page {{page}} of {{total}}	Généré le {{date}} – Page {{page}} sur {{total}}	Generado el {{date}} – Página {{page}} de {{total}}	Erstellt am {{date}} – Seite {{page}} von {{total}}	生成于 {{date}} – 第 {{page}} 页，共 {{total}} 页
+pdf.noShiftsPeriod	本周期没有已分配任务。	No shift assigned for this period.	Aucun quart attribué pour cette période.	Ningún turno asignado para este período.	Für diesen Zeitraum ist keine Schicht zugewiesen.	本周期没有已分配任务。
+pdf.titleCoverage	覆盖排班	Coverage Shifts	Couverture des Quarts	Cobertura de Turnos	Schichtdeckung	覆盖排班
+pdf.titleMonthlyShifts	排班报表	Shift Report	Rapport des quarts	Informe de turnos	Schichtbericht	排班报表
+pdf.totalHours	总工时	Total hours	Heures totales	Horas totales	Gesamtstunden	总工时
+pdf.totalShifts	任务总数	Total shifts	Total des quarts	Total de turnos	Schichten insgesamt	任务总数
+pdf.uncovered	— 未覆盖 —	— UNCOVERED —	— NON COUVERT —	— SIN CUBRIR —	— NICHT BESETZT —	— 未覆盖 —
+pdf.uncoveredCount	未覆盖任务	Uncovered shifts	Quarts non couverts	Turnos sin cubrir	Nicht besetzte Schichten	未覆盖任务
+pdfTpl.addTitle	新建 PDF 模板	New PDF template	Nouveau modèle PDF	Nueva plantilla PDF	Neue PDF-Vorlage	新建 PDF 模板
+pdfTpl.chooseLogo	选择徽标	Choose logo	Choisir un logo	Elegir logotipo	Logo auswählen	选择徽标
+pdfTpl.color	主色调	Main color	Couleur principale	Color principal	Hauptfarbe	主色调
+pdfTpl.deleteConfirm	删除 PDF 模板：	Delete the PDF template of	Supprimer le modèle PDF de	Eliminar la plantilla PDF de	PDF-Vorlage löschen von	删除 PDF 模板：
+pdfTpl.deleteTitle	删除 PDF 模板	Delete PDF template	Supprimer le modèle PDF	Eliminar plantilla PDF	PDF-Vorlage löschen	删除 PDF 模板
+pdfTpl.deleted	PDF 模板已删除。	PDF template deleted.	Modèle PDF supprimé.	Plantilla PDF eliminada.	PDF-Vorlage gelöscht.	PDF 模板已删除。
+pdfTpl.editTitle	编辑 PDF 模板	Edit PDF template	Modifier le modèle PDF	Editar plantilla PDF	PDF-Vorlage bearbeiten	编辑 PDF 模板
+pdfTpl.footer	页脚文本	Footer text	Texte de pied de page	Texto del pie de página	Fußzeilentext	页脚文本
+pdfTpl.header	页眉文本	Header text	Texte d’en-tête	Texto del encabezado	Kopfzeilentext	页眉文本
+pdfTpl.logo	徽标	Logo	Logo	Logotipo	Logo	徽标
+pdfTpl.logoHint	支持 PNG 或 JPG，最大 5 MB，将自动缩放。	PNG or JPG, up to 5 MB. Automatically resized.	PNG ou JPG, 5 Mo maximum. Redimensionnement automatique.	PNG o JPG, máximo 5 MB. Redimensionado automático.	PNG oder JPG, maximal 5 MB. Automatische Größenanpassung.	支持 PNG 或 JPG，最大 5 MB，将自动缩放。
+pdfTpl.logoInvalid	请选择有效的 PNG 或 JPG 图片。	Select a valid PNG or JPG image.	Sélectionnez une image PNG ou JPG valide.	Selecciona una imagen PNG o JPG válida.	Wählen Sie ein gültiges PNG- oder JPG-Bild aus.	请选择有效的 PNG 或 JPG 图片。
+pdfTpl.logoTooLarge	徽标不能超过 5 MB。	The logo cannot exceed 5 MB.	Le logo ne peut pas dépasser 5 Mo.	El logotipo no puede superar los 5 MB.	Das Logo darf 5 MB nicht überschreiten.	徽标不能超过 5 MB。
+pdfTpl.noFormats	未配置 PDF 格式。	No PDF format configured.	Aucun format PDF configuré.	Ningún formato PDF configurado.	Kein PDF-Format konfiguriert.	未配置 PDF 格式。
+pdfTpl.preview	预览	Preview	Aperçu	Vista previa	Vorschau	预览
+pdfTpl.previewFooter	生成日期与页码	Generation date and page number	Date de génération et numéro de page	Fecha de generación y número de página	Erstellungsdatum und Seitenzahl	生成日期与页码
+pdfTpl.structure	公司	Company	Entreprise	Empresa	Unternehmen	公司
+pdfTpl.structureLocked	编辑时无法更改所属公司。	The associated company cannot be changed while editing.	L’entreprise associée ne peut pas être changée pendant la modification.	La empresa asociada no se puede cambiar durante la edición.	Das zugeordnete Unternehmen kann während der Bearbeitung nicht geändert werden.	编辑时无法更改所属公司。
+placeholder.address	请输入地址	Enter address	Entrer l'adresse	Ingrese dirección	Adresse eingeben	请输入地址
+placeholder.email	name@example.com	name@example.com	nom@exemple.fr	nombre@ejemplo.es	name@beispiel.de	name@example.com
+placeholder.labelDescription	便于理解的描述	Readable description	Description lisible	Descripción legible	Lesbare Beschreibung	便于理解的描述
+placeholder.labelKey	例如 btn.save	e.g. btn.save	ex. btn.save	p. ej. btn.save	z. B. btn.save	例如 btn.save
+placeholder.locationCode	请输入地点编号	Enter location code	Entrez le code du lieu	Ingrese código ubicación	Ortscode eingeben	请输入地点编号
+placeholder.locationName	请输入地点名称	Enter location name	Entrez le nom du lieu	Ingrese nombre ubicación	Ortsname eingeben	请输入地点名称
+placeholder.locationOrder	请输入地点顺序	Enter location order	Entrez l'ordre du lieu	Ingrese orden ubicación	Ortsreihenfolge eingeben	请输入地点顺序
+placeholder.phone	请输入电话	Enter phone	Entrer le téléphone	Ingrese teléfono	Telefon eingeben	请输入电话
+placeholder.searchKeyOrDescription	搜索键名或描述…	Search key or description...	Rechercher clé ou description...	Buscar clave o descripción...	Schlüssel oder Beschreibung suchen...	搜索键名或描述…
+placeholder.searchLabels	搜索键名、描述或翻译…	Search key, description or translation...	Rechercher clé, description ou traduction...	Buscar clave, descripción o traducción...	Schlüssel, Beschreibung oder Übersetzung suchen...	搜索键名、描述或翻译…
+placeholder.selectFacility	选择设施…	Select facility...	Sélectionner structure...	Seleccionar instalación...	Einrichtung auswählen...	选择设施…
+placeholder.selectLocation	选择地点	Select Location	Sélectionner Lieu	Seleccionar Ubicación	Ort auswählen	选择地点
+placeholder.selectNurse	选择护士…	Select nurse...	Sélectionner infirmière...	Seleccionar enfermera...	Krankenschwester auswählen...	选择护士…
+placeholder.skillName	资格名称	Skill Name	Nom Compétence	Nombre Habilidad	Kompetenzname	资格名称
+placeholder.smtpHost	smtp.example.com	smtp.example.com	smtp.exemple.fr	smtp.ejemplo.es	smtp.beispiel.de	smtp.example.com
+placeholder.structureName	请输入部门名称	Enter structure name	Nom de la structure	Nombre de la estructura	Strukturname eingeben	请输入部门名称
+placeholder.templateDescription	模板描述…	Template description…	Description du modèle…	Descripción de la plantilla…	Beschreibung der Vorlage…	模板描述…
+report.allEmployees	— 全部审核员 —	— All operators —	— Tous les opérateurs —	— Todos los operadores —	— Alle Mitarbeiter —	— 全部审核员 —
+report.allLocations	— 全部地点 —	— All locations —	— Tous les sites —	— Todas las sedes —	— Alle Standorte —	— 全部地点 —
+report.allLocationsPlain	全部地点	All locations	Tous les sites	Todas las sedes	Alle Standorte	全部地点
+report.allShifts	全部任务	All shifts	Tous les créneaux	Todos los turnos	Alle Schichten	全部任务
+report.coverageLabel	覆盖情况	Coverage	Couverture	Cobertura	Abdeckung	覆盖情况
+report.downloadPdf	下载 PDF	Download the PDF	Télécharger le PDF	Descargar el PDF	PDF herunterladen	下载 PDF
+report.emailSent	邮件已发送	Email sent	E-mail envoyé	Email enviado	E-Mail gesendet	邮件已发送
+report.generating	正在生成 PDF…	Generating PDFs…	Génération des PDF…	Generando PDF…	PDF-Erstellung…	正在生成 PDF…
+report.hours	工时	Hours	Heures	Horas	Stunden	工时
+report.menu.coverage	覆盖报表	Head Nurse Report	Rapport infirmière-chef	Informe para enfermera jefe	Bericht für Stationsleitung	覆盖报表
+report.menu.coverage.tooltip	按地点统计的覆盖报表，可直接打印	Coverage report by location, ready to print	Rapport de couverture par site, à imprimer	Informe de cobertura por sede, listo para imprimir	Abdeckungsbericht je Standort, druckfertig	按地点统计的覆盖报表，可直接打印
+report.menu.send	发送排班	Send Shifts	Envoi des créneaux	Envío de turnos	Schichtversand	发送排班
+report.menu.send.tooltip	将排班分别发送给每位审核员	Email each operator their own shifts	Envoyer à chaque opérateur ses créneaux par e-mail	Envía a cada operador sus turnos por email	Jedem Mitarbeiter seine Schichten per E-Mail senden	将排班分别发送给每位审核员
+report.noEmail	缺少邮箱地址	Missing email address	Adresse e-mail manquante	Falta la dirección de email	E-Mail-Adresse fehlt	缺少邮箱地址
+report.noShiftsFor	无排班：	No shifts for	Aucun créneau pour	No hay turnos para	Keine Schichten für	无排班：
+report.openPdf	在浏览器中打开 PDF	Open the PDF in the browser	Ouvrir le PDF dans le navigateur	Abrir el PDF en el navegador	PDF im Browser öffnen	在浏览器中打开 PDF
+report.pickDate	点击选择日期（有排班的日期会高亮）	Click to pick a date (days with shifts are highlighted)	Cliquez pour choisir une date (les jours avec créneaux sont mis en évidence)	Haz clic para elegir una fecha (los días con turnos están resaltados)	Klicken Sie, um ein Datum zu wählen (Tage mit Schichten sind hervorgehoben)	点击选择日期（有排班的日期会高亮）
+report.retrySend	点击重试	Click to retry	Cliquez pour réessayer	Haz clic para reintentar	Zum Wiederholen klicken	点击重试
+report.selectForPdf	请选择审核员或地点以生成 PDF	Select an operator or a location to generate the PDF	Sélectionnez un opérateur ou un site pour générer le PDF	Selecciona un operador o una sede para generar el PDF	Wählen Sie einen Mitarbeiter oder einen Standort, um das PDF zu erstellen	请选择审核员或地点以生成 PDF
+report.sentOn	发送于	Sent on	Envoyé le	Enviado el	Gesendet am	发送于
+report.shiftLabel	个任务	shift(s)	créneau(x)	turno(s)	Schicht(en)	个任务
+rte.bold	加粗	Bold	Gras	Negrita	Fett	加粗
+rte.clear	清除格式	Clear formatting	Effacer la mise en forme	Quitar formato	Formatierung entfernen	清除格式
+rte.italic	斜体	Italic	Italique	Cursiva	Kursiv	斜体
+rte.link	插入链接	Insert link	Insérer un lien	Insertar enlace	Link einfügen	插入链接
+rte.linkPrompt	链接地址：	Link URL:	URL du lien :	URL del enlace:	Link-URL:	链接地址：
+rte.ol	有序列表	Numbered list	Liste numérotée	Lista numerada	Nummerierte Liste	有序列表
+rte.source	查看/编辑 HTML	View/Edit HTML	Afficher/Modifier le HTML	Ver/Editar HTML	HTML anzeigen/bearbeiten	查看/编辑 HTML
+rte.strike	删除线	Strikethrough	Barré	Tachado	Durchgestrichen	删除线
+rte.ul	无序列表	Bulleted list	Liste à puces	Lista con viñetas	Aufzählung	无序列表
+rte.underline	下划线	Underline	Souligné	Subrayado	Unterstrichen	下划线
+savedTemplates.empty	暂无已保存模板。	No saved templates.	Aucun modèle enregistré.	No hay plantillas guardadas.	Keine gespeicherten Vorlagen.	暂无已保存模板。
+select.currentLocationUnknown	当前位置未知	Current location not known	Position actuelle inconnue	Ubicación actual desconocida	Aktueller Standort unbekannt	当前位置未知
+select.none	— 无 —	— None —	— Aucun —	— Ninguno —	— Keiner —	— 无 —
+skills.active	启用	Active	Active	Activa	Aktiv	启用
+skills.addTooltip	新增资格	Add a skill	Ajouter une compétence	Añadir una competencia	Kompetenz hinzufügen	新增资格
+skills.deleteTitle	删除资格	Delete skill	Supprimer la compétence	Eliminar competencia	Kompetenz löschen	删除资格
+skills.deleted	资格已删除。	Skill deleted.	Compétence supprimée.	Competencia eliminada.	Kompetenz gelöscht.	资格已删除。
+skills.inUseTooltip	资格正在使用中，无法删除	Skill in use — cannot be deleted	Compétence utilisée — suppression impossible	Competencia en uso — no se puede eliminar	Kompetenz wird verwendet — Löschen nicht möglich	资格正在使用中，无法删除
+skills.namePlaceholder	资格名称	Skill name	Nom de la compétence	Nombre de la competencia	Name der Kompetenz	资格名称
+skills.namesRequired	所有名称均为必填项。	All names are required.	Tous les noms sont obligatoires.	Todos los nombres son obligatorios.	Alle Namen müssen ausgefüllt werden.	所有名称均为必填项。
+skills.new	新建	New	Nouvelle	Nueva	Neu	新建
+skills.newRow	新建	New	Nouveau	Nuevo	Neu	新建
+skills.noResults	暂无资格。	No skills.	Aucune compétence.	No hay competencias.	Keine Kompetenzen.	暂无资格。
+skills.saved	资格已保存！	Skills saved!	Compétences enregistrées !	¡Competencias guardadas!	Kompetenzen gespeichert!	资格已保存！
+solver.balance.hours	工时	Hours	Heures	Horas	Stunden	工时
+solver.balance.shifts	任务数	Shifts	Quarts	Turnos	Schichten	任务数
+solver.col.balance	平衡	Balance	Équilibrage	Equilibrio	Ausgleich	平衡
+solver.col.duration	时长	Duration	Durée	Duración	Dauer	时长
+solver.col.maxPerDay	每天最多任务数	Max shifts/day	Max quarts/jour	Máx turnos/día	Max. Schichten/Tag	每天最多任务数
+solver.col.minRest	最短休息	Minimum rest	Repos minimal	Descanso mínimo	Mindestruhezeit	最短休息
+solver.err.unimproved	无改进停止时间不能超过最大求解时长。	The unimproved stop cannot exceed the maximum duration.	L'arrêt sans amélioration ne peut pas dépasser la durée maximale.	La parada sin mejoras no puede superar la duración máxima.	Der Stopp ohne Verbesserung darf die maximale Dauer nicht überschreiten.	无改进停止时间不能超过最大求解时长。
+solver.err.weekly	每周最少任务数不能大于上限。	Minimum weekly shifts cannot exceed the maximum.	Les quarts hebdomadaires minimum ne peuvent pas dépasser le maximum.	Los turnos semanales mínimos no pueden superar el máximo.	Die wöchentlichen Mindestschichten dürfen das Maximum nicht überschreiten.	每周最少任务数不能大于上限。
+solver.group.dailyWeekly	每日与每周规则	Daily and weekly rules	Règles quotidiennes et hebdomadaires	Reglas diarias y semanales	Tägliche und wöchentliche Regeln	每日与每周规则
+solver.group.night	夜间时段	Night range	Plage de nuit	Franja nocturna	Nachtzeitraum	夜间时段
+solver.group.options	选项	Options	Options	Opciones	Optionen	选项
+solver.group.processing	求解过程	Processing	Traitement	Procesamiento	Verarbeitung	求解过程
+solver.group.weights	优化权重	Optimization weights	Poids d'optimisation	Pesos de optimización	Optimierungsgewichte	优化权重
+solver.help.allow_unassigned	开启后，求解器可将任务留空（带惩罚），而不再强制覆盖。	When on, the solver may leave shifts uncovered (with a penalty) instead of always forcing coverage.	Activé, le solveur peut laisser des quarts non couverts (avec pénalité) au lieu de toujours forcer la couverture.	Si está activo, el solver puede dejar turnos sin cubrir (con penalización) en lugar de forzar siempre la cobertura.	Wenn aktiv, darf der Solver Schichten unbesetzt lassen (mit Strafe), statt immer eine Besetzung zu erzwingen.	开启后，求解器可将任务留空（带惩罚），而不再强制覆盖。
+solver.help.balance_by_hours	开启后按总工时平衡工作负荷；否则按任务数量平衡。	When on, workload balancing considers total hours worked; otherwise it considers the number of shifts.	Activé, l'équilibrage de la charge prend en compte le total d'heures travaillées ; sinon le nombre de quarts.	Si está activo, el equilibrado de carga considera el total de horas trabajadas; si no, el número de turnos.	Wenn aktiv, berücksichtigt der Lastausgleich die gesamten Arbeitsstunden; andernfalls die Anzahl der Schichten.	开启后按总工时平衡工作负荷；否则按任务数量平衡。
+solver.help.balance_weight	审核员之间负荷分配的均衡程度（按工时或任务数，见对应选项）；数值越大越均衡（0–10）。	How much fair workload distribution among operators matters (by hours or by shift count, see the dedicated option); higher = more even workloads (0–10).	Importance d'une répartition équitable de la charge entre opérateurs (par heures ou par nombre de quarts, voir l'option dédiée) ; plus élevé = charges plus homogènes (0–10).	Cuánto importa una distribución equitativa de la carga entre operadores (por horas o por número de turnos, ver la opción dedicada); mayor = cargas más uniformes (0–10).	Wie wichtig eine faire Lastverteilung unter den Mitarbeitern ist (nach Stunden oder Schichtanzahl, siehe eigene Option); höher = gleichmäßigere Auslastung (0–10).	审核员之间负荷分配的均衡程度（按工时或任务数，见对应选项）；数值越大越均衡（0–10）。
+solver.help.consecutive_days_weight	遵守最大连续工作天数设置的程度；0 表示取消该惩罚（0–10）。	How much respecting the configured maximum consecutive working days matters; 0 disables the penalty (0–10).	Importance du respect du maximum de jours travaillés consécutifs configuré ; 0 désactive la pénalité (0–10).	Cuánto importa cumplir el máximo de días laborables consecutivos configurado; 0 desactiva la penalización (0–10).	Wie wichtig die Einhaltung der konfigurierten maximalen aufeinanderfolgenden Arbeitstage ist; 0 deaktiviert die Strafe (0–10).	遵守最大连续工作天数设置的程度；0 表示取消该惩罚（0–10）。
+solver.help.context_days	加载窗口前后相邻天数中已分配任务作为锁定上下文的天数（重叠、休息、周工时与连续天数约束会参考但不会修改它们）；0 = 仅窗口内。	Days adjacent to the window whose already-assigned shifts are loaded as locked context (overlap, rest, weekly hours and consecutive-day constraints see them but do not change them); 0 = window only.	Jours adjacents à la fenêtre dont les quarts déjà affectés sont chargés comme contexte verrouillé (les contraintes de chevauchement, repos, heures hebdomadaires et jours consécutifs les voient sans les modifier) ; 0 = fenêtre seule.	Días adyacentes a la ventana cuyos turnos ya asignados se cargan como contexto bloqueado (las restricciones de solapamiento, descanso, horas semanales y días consecutivos los ven pero no los cambian); 0 = solo la ventana.	An das Fenster angrenzende Tage, deren bereits zugewiesene Schichten als gesperrter Kontext geladen werden (Überschneidungs-, Ruhe-, Wochenstunden- und Folgetage-Regeln sehen sie, ändern sie aber nicht); 0 = nur Fenster.	加载窗口前后相邻天数中已分配任务作为锁定上下文的天数（重叠、休息、周工时与连续天数约束会参考但不会修改它们）；0 = 仅窗口内。
+solver.help.days_off_weight	遵守每周最少休息天数设置的程度；0 表示取消该惩罚（0–10）。	How much respecting the configured minimum weekly days off matters; 0 disables the penalty (0–10).	Importance du respect des repos hebdomadaires minimum configurés ; 0 désactive la pénalité (0–10).	Cuánto importa cumplir los descansos semanales mínimos configurados; 0 desactiva la penalización (0–10).	Wie wichtig die Einhaltung der konfigurierten wöchentlichen Mindestruhetage ist; 0 deaktiviert die Strafe (0–10).	遵守每周最少休息天数设置的程度；0 表示取消该惩罚（0–10）。
+solver.help.desired_date_weight	在审核员期望日期安排任务的奖励力度；数值越大越优先满足（0–10）。	How much to reward shifts on the operator's preferred dates; higher = the solver satisfies them more (0–10).	Dans quelle mesure récompenser les quarts aux dates préférées de l'opérateur ; plus élevé = le solveur les satisfait davantage (0–10).	Cuánto premiar los turnos en las fechas preferidas del operador; mayor = el solver las satisface más (0–10).	Wie stark Schichten an den Wunschterminen des Mitarbeiters belohnt werden; höher = der Solver erfüllt sie stärker (0–10).	在审核员期望日期安排任务的奖励力度；数值越大越优先满足（0–10）。
+solver.help.diminished_ratio_pct	当改进速率低于初始速率该百分比时停止求解（1–100）；仅在窗口 > 0 时生效。	The solver stops when the improvement rate falls below this percentage of the initial rate (1–100); active only when the window is > 0.	Le solveur s'arrête quand le rythme d'amélioration descend sous ce pourcentage du rythme initial (1–100) ; actif seulement si la fenêtre est > 0.	El solver se detiene cuando el ritmo de mejora cae por debajo de este porcentaje del ritmo inicial (1–100); solo activo con ventana > 0.	Der Solver stoppt, wenn die Verbesserungsrate unter diesen Prozentsatz der Anfangsrate fällt (1–100); nur aktiv, wenn das Fenster > 0 ist.	当改进速率低于初始速率该百分比时停止求解（1–100）；仅在窗口 > 0 时生效。
+solver.help.diminished_window_seconds	收益递减停止的观察窗口（秒）：将当前改进速率与 N 秒前比较；0 表示关闭。	Observation window (seconds) for diminishing-returns stop: compares the current improvement rate with that of N seconds earlier; 0 disables it.	Fenêtre d'observation (secondes) pour l'arrêt à rendement décroissant : compare le rythme d'amélioration actuel à celui d'il y a N secondes ; 0 désactive.	Ventana de observación (segundos) para la parada por rendimiento decreciente: compara el ritmo de mejora actual con el de N segundos antes; 0 la desactiva.	Beobachtungsfenster (Sekunden) für den Stopp bei abnehmendem Ertrag: vergleicht die aktuelle Verbesserungsrate mit der von vor N Sekunden; 0 deaktiviert.	收益递减停止的观察窗口（秒）：将当前改进速率与 N 秒前比较；0 表示关闭。
+solver.help.max_consecutive_days	每位审核员的最大连续工作天数；0 表示不限制。	Maximum consecutive working days per operator; 0 disables the limit.	Jours de travail consécutifs maximaux par opérateur ; 0 désactive la limite.	Días laborables consecutivos máximos por operador; 0 desactiva el límite.	Maximale aufeinanderfolgende Arbeitstage pro Mitarbeiter; 0 deaktiviert das Limit.	每位审核员的最大连续工作天数；0 表示不限制。
+solver.help.max_shifts_per_day	同一审核员每天最多可承担的任务数（1–5）。	Maximum number of shifts for the same operator on the same day (1–5).	Nombre maximal de quarts pour le même opérateur le même jour (1–5).	Número máximo de turnos para el mismo operador en el mismo día (1–5).	Maximale Anzahl an Schichten für denselben Mitarbeiter am selben Tag (1–5).	同一审核员每天最多可承担的任务数（1–5）。
+solver.help.max_solve_seconds	最长求解时间（5–600 秒）：超时后返回已找到的最优方案。	Maximum solving time (5–600 s): after the limit the best solution found is returned.	Temps de calcul maximal (5–600 s) : au-delà, la meilleure solution trouvée est renvoyée.	Tiempo máximo de cálculo (5–600 s): superado el límite se devuelve la mejor solución encontrada.	Maximale Rechenzeit (5–600 s): Nach dem Limit wird die beste gefundene Lösung zurückgegeben.	最长求解时间（5–600 秒）：超时后返回已找到的最优方案。
+solver.help.max_weekly_hours	审核员每周工时上限；0 表示不限制。	Weekly hours cap per operator; 0 disables the limit.	Plafond d'heures hebdomadaires par opérateur ; 0 désactive la limite.	Tope de horas semanales por operador; 0 desactiva el límite.	Wöchentliche Stundenobergrenze pro Mitarbeiter; 0 deaktiviert das Limit.	审核员每周工时上限；0 表示不限制。
+solver.help.max_weekly_shifts	审核员每周最多任务数；0 表示不设上限。	Maximum weekly shifts per operator; 0 disables the maximum.	Quarts hebdomadaires maximaux par opérateur ; 0 désactive le maximum.	Turnos semanales máximos por operador; 0 desactiva el máximo.	Maximale Anzahl wöchentlicher Schichten pro Mitarbeiter; 0 deaktiviert das Maximum.	审核员每周最多任务数；0 表示不设上限。
+solver.help.min_days_off_per_week	审核员每周最少休息天数（0–7）。	Minimum days off per operator in a week (0–7).	Jours de repos minimaux par opérateur sur une semaine (0–7).	Días de descanso mínimos por operador en una semana (0–7).	Mindestanzahl freier Tage pro Mitarbeiter in einer Woche (0–7).	审核员每周最少休息天数（0–7）。
+solver.help.min_weekly_shifts	审核员每周最少任务数；0 表示不设下限。	Minimum weekly shifts per operator; 0 disables the minimum.	Quarts hebdomadaires minimaux par opérateur ; 0 désactive le minimum.	Turnos semanales mínimos por operador; 0 desactiva el mínimo.	Mindestanzahl wöchentlicher Schichten pro Mitarbeiter; 0 deaktiviert das Minimum.	审核员每周最少任务数；0 表示不设下限。
+solver.help.minimum_rest_hours	同一审核员两次任务之间（前一次结束到下一次开始）的最少休息小时数（硬约束）。	Minimum rest hours between the end of one shift and the start of the next for the same operator (hard constraint).	Heures de repos minimales entre la fin d'un quart et le début du suivant pour le même opérateur (contrainte stricte).	Horas mínimas de descanso entre el fin de un turno y el inicio del siguiente del mismo operador (restricción rígida).	Mindestruhezeit zwischen dem Ende einer Schicht und dem Beginn der nächsten desselben Mitarbeiters (harte Regel).	同一审核员两次任务之间（前一次结束到下一次开始）的最少休息小时数（硬约束）。
+solver.help.night_balance_weight	夜班任务在审核员之间均衡分配的重视程度（夜班范围由夜间起止小时确定）（0–10）。	How much fair distribution of night shifts among operators matters (night range set by the night start/end hours) (0–10).	Importance d'une répartition équitable des quarts de nuit entre opérateurs (plage de nuit définie par les heures de début/fin de nuit) (0–10).	Cuánto importa una distribución equitativa de los turnos nocturnos entre operadores (franja nocturna definida por las horas de inicio/fin de noche) (0–10).	Wie wichtig eine faire Verteilung der Nachtschichten unter den Mitarbeitern ist (Nachtzeitraum durch die Nachtbeginn-/-endstunden festgelegt) (0–10).	夜班任务在审核员之间均衡分配的重视程度（夜班范围由夜间起止小时确定）（0–10）。
+solver.help.night_end_hour	夜间时段的结束小时（0–23），用于识别与平衡夜班任务。	End hour of the night range (0–23), used to identify and balance night shifts.	Heure de fin de la plage de nuit (0–23), utilisée pour identifier et équilibrer les quarts de nuit.	Hora de fin de la franja nocturna (0–23), usada para identificar y equilibrar los turnos nocturnos.	Endstunde des Nachtzeitraums (0–23), zur Identifizierung und zum Ausgleich von Nachtschichten.	夜间时段的结束小时（0–23），用于识别与平衡夜班任务。
+solver.help.night_start_hour	夜间时段的开始小时（0–23），用于识别与平衡夜班任务。	Start hour of the night range (0–23), used to identify and balance night shifts.	Heure de début de la plage de nuit (0–23), utilisée pour identifier et équilibrer les quarts de nuit.	Hora de inicio de la franja nocturna (0–23), usada para identificar y equilibrar los turnos nocturnos.	Startstunde des Nachtzeitraums (0–23), zur Identifizierung und zum Ausgleich von Nachtschichten.	夜间时段的开始小时（0–23），用于识别与平衡夜班任务。
+solver.help.optional_skill_weight	对同时具备任务可选资格的审核员的奖励力度（0–10）。	How much to reward operators who also have the shift's optional skills, beyond the mandatory ones (0–10).	Dans quelle mesure récompenser les opérateurs possédant aussi les compétences facultatives du quart, en plus des obligatoires (0–10).	Cuánto premiar a los operadores que también tienen las competencias opcionales del turno, además de las obligatorias (0–10).	Wie stark Mitarbeiter belohnt werden, die zusätzlich zu den Pflichtkompetenzen auch die optionalen Kompetenzen der Schicht besitzen (0–10).	对同时具备任务可选资格的审核员的奖励力度（0–10）。
+solver.help.same_location_weight	地点连续性的奖励力度：相邻日期由同一审核员在同一地点（0–10）。	How much to reward location continuity: the same operators at the same location on nearby days (0–10).	Dans quelle mesure récompenser la continuité de site : les mêmes opérateurs sur le même site les jours proches (0–10).	Cuánto premiar la continuidad de sede: los mismos operadores en la misma sede en días cercanos (0–10).	Wie stark Standortkontinuität belohnt wird: dieselben Mitarbeiter am selben Standort an nahen Tagen (0–10).	地点连续性的奖励力度：相邻日期由同一审核员在同一地点（0–10）。
+solver.help.stop_when_feasible	开启后，一旦满足全部硬约束即停止求解，不再继续优化软权重（更快）。	When on, the solver stops as soon as all hard constraints are satisfied, without further optimizing the soft weights (faster).	Activé, le solveur s'arrête dès que toutes les contraintes strictes sont respectées, sans optimiser davantage les poids souples (plus rapide).	Si está activo, el solver se detiene en cuanto se cumplen todas las restricciones rígidas, sin optimizar más los pesos blandos (más rápido).	Wenn aktiv, stoppt der Solver, sobald alle harten Regeln erfüllt sind, ohne die weichen Gewichte weiter zu optimieren (schneller).	开启后，一旦满足全部硬约束即停止求解，不再继续优化软权重（更快）。
+solver.help.unassigned_weight	每个未覆盖任务的惩罚值；数值越大越倾向覆盖更多任务，即使牺牲软权重（1–100）。	Penalty for each shift left uncovered; higher = the solver covers more shifts even at the expense of soft weights (1–100).	Pénalité pour chaque quart laissé non couvert ; plus élevé = le solveur couvre davantage de quarts, au détriment des poids souples (1–100).	Penalización por cada turno sin cubrir; mayor = el solver cubre más turnos incluso a costa de los pesos blandos (1–100).	Strafe für jede unbesetzte Schicht; höher = der Solver besetzt mehr Schichten, auch zulasten der weichen Gewichte (1–100).	每个未覆盖任务的惩罚值；数值越大越倾向覆盖更多任务，即使牺牲软权重（1–100）。
+solver.help.undesired_date_weight	在审核员不希望日期安排任务的惩罚力度；数值越大越倾向避开（0–10）。	How much to penalize shifts on the operator's unwanted dates; higher = the solver avoids them more (0–10).	Dans quelle mesure pénaliser les quarts aux dates non souhaitées de l'opérateur ; plus élevé = le solveur les évite davantage (0–10).	Cuánto penalizar los turnos en las fechas no deseadas del operador; mayor = el solver las evita más (0–10).	Wie stark Schichten an unerwünschten Terminen des Mitarbeiters bestraft werden; höher = der Solver vermeidet sie stärker (0–10).	在审核员不希望日期安排任务的惩罚力度；数值越大越倾向避开（0–10）。
+solver.help.unimproved_seconds	若在此秒数内没有改进则停止求解；0 表示关闭提前停止。	Stops solving if there is no improvement for this many seconds; 0 disables early stopping.	Arrête le calcul en l'absence d'amélioration pendant ce nombre de secondes ; 0 désactive l'arrêt anticipé.	Detiene el cálculo si no hay mejoras durante estos segundos; 0 desactiva la parada anticipada.	Stoppt die Berechnung, wenn für so viele Sekunden keine Verbesserung erfolgt; 0 deaktiviert den vorzeitigen Stopp.	若在此秒数内没有改进则停止求解；0 表示关闭提前停止。
+solver.help.weekly_shift_weight	遵守每周最少/最多任务数设置的程度；0 表示取消该惩罚（0–10）。	How much respecting the configured weekly min/max shifts matters; 0 disables the penalty (0–10).	Importance du respect des quarts hebdomadaires min/max configurés ; 0 désactive la pénalité (0–10).	Cuánto importa cumplir los turnos semanales mín/máx configurados; 0 desactiva la penalización (0–10).	Wie wichtig die Einhaltung der konfigurierten wöchentlichen Min-/Max-Schichten ist; 0 deaktiviert die Strafe (0–10).	遵守每周最少/最多任务数设置的程度；0 表示取消该惩罚（0–10）。
+solver.hint.balance_weight	0–10。	0–10.	0–10.	0–10.	0–10.	0–10。
+solver.hint.consecutive_days_weight	0–10。遵守最大连续天数的权重。	0–10. Weight for respecting the maximum consecutive days.	0–10. Poids du respect des jours consécutifs maximum.	0–10. Peso del cumplimiento de los días consecutivos máximos.	0–10. Gewicht für die Einhaltung der maximalen aufeinanderfolgenden Tage.	0–10。遵守最大连续天数的权重。
+solver.hint.context_days	0–7：窗口相邻日期中已分配任务将被重叠、休息、周工时与连续天数约束作为锁定上下文参考。0 = 仅窗口内。	0–7: shifts already assigned on days adjacent to the window, seen (locked) by the overlap, rest, weekly-hours and consecutive-day constraints. 0 = window only.	0–7 : quarts déjà affectés les jours adjacents à la fenêtre, vus (verrouillés) par les contraintes de chevauchement, repos, heures hebdomadaires et jours consécutifs. 0 = fenêtre seule.	0–7: turnos ya asignados en los días adyacentes a la ventana, vistos (bloqueados) por las restricciones de solapamiento, descanso, horas semanales y días consecutivos. 0 = solo la ventana.	0–7: bereits zugewiesene Schichten an den an das Fenster angrenzenden Tagen, von den Überschneidungs-, Ruhe-, Wochenstunden- und Folgetage-Regeln gesehen (gesperrt). 0 = nur Fenster.	0–7：窗口相邻日期中已分配任务将被重叠、休息、周工时与连续天数约束作为锁定上下文参考。0 = 仅窗口内。
+solver.hint.days_off_weight	0–10。遵守每周最少休息天数的权重。	0–10. Weight for respecting the minimum weekly days off.	0–10. Poids du respect des repos hebdomadaires minimum.	0–10. Peso del cumplimiento de los descansos semanales mínimos.	0–10. Gewicht für die Einhaltung der wöchentlichen Mindestruhetage.	0–10。遵守每周最少休息天数的权重。
+solver.hint.desired_date_weight	0–10。	0–10.	0–10.	0–10.	0–10.	0–10。
+solver.hint.diminished_ratio_pct	1–100：低于初始改进速率该百分比时停止。仅在窗口 > 0 时使用。	1–100: percentage of the initial improvement rate below which to stop. Used only with window > 0.	1–100 : pourcentage du rythme d'amélioration initial sous lequel s'arrêter. Utilisé uniquement avec fenêtre > 0.	1–100: porcentaje del ritmo de mejora inicial por debajo del cual detenerse. Solo con ventana > 0.	1–100: Prozentsatz der anfänglichen Verbesserungsrate, unter dem gestoppt wird. Nur bei Fenster > 0.	1–100：低于初始改进速率该百分比时停止。仅在窗口 > 0 时使用。
+solver.hint.diminished_window_seconds	0 表示关闭。将当前改进与 N 秒前对比，低于阈值时停止。	0 disables it. Compares the current improvement with that of N seconds earlier and stops when the rate falls below the threshold.	0 désactive. Compare l'amélioration actuelle à celle d'il y a N secondes et s'arrête quand le rythme passe sous le seuil.	0 la desactiva. Compara la mejora actual con la de N segundos antes y se detiene cuando el ritmo cae por debajo del umbral.	0 deaktiviert. Vergleicht die aktuelle Verbesserung mit der von vor N Sekunden und stoppt, wenn die Rate unter die Schwelle fällt.	0 表示关闭。将当前改进与 N 秒前对比，低于阈值时停止。
+solver.hint.max_consecutive_days	0 表示不限制。	0 disables the limit.	0 désactive la limite.	0 desactiva el límite.	0 deaktiviert das Limit.	0 表示不限制。
+solver.hint.max_shifts_per_day	1 到 5。	From 1 to 5.	De 1 à 5.	De 1 a 5.	Von 1 bis 5.	1 到 5。
+solver.hint.max_solve_seconds	5–600 秒。	5–600 seconds.	5–600 secondes.	5–600 segundos.	5–600 Sekunden.	5–600 秒。
+solver.hint.max_weekly_hours	0 表示不限制。	0 disables the limit.	0 désactive la limite.	0 desactiva el límite.	0 deaktiviert das Limit.	0 表示不限制。
+solver.hint.max_weekly_shifts	0 表示不设上限。	0 disables the maximum.	0 désactive le maximum.	0 desactiva el máximo.	0 deaktiviert das Maximum.	0 表示不设上限。
+solver.hint.min_days_off_per_week	0 到 7。	From 0 to 7.	De 0 à 7.	De 0 a 7.	Von 0 bis 7.	0 到 7。
+solver.hint.min_weekly_shifts	0 表示不设下限。	0 disables the minimum.	0 désactive le minimum.	0 desactiva el mínimo.	0 deaktiviert das Minimum.	0 表示不设下限。
+solver.hint.minimum_rest_hours	两次任务之间的最少小时数。	Minimum hours between two shifts.	Heures minimales entre deux quarts.	Horas mínimas entre dos turnos.	Mindeststunden zwischen zwei Schichten.	两次任务之间的最少小时数。
+solver.hint.night_balance_weight	0–10。	0–10.	0–10.	0–10.	0–10.	0–10。
+solver.hint.night_end_hour	0–23。	0–23.	0–23.	0–23.	0–23.	0–23。
+solver.hint.night_start_hour	0–23。	0–23.	0–23.	0–23.	0–23.	0–23。
+solver.hint.optional_skill_weight	0–10。	0–10.	0–10.	0–10.	0–10.	0–10。
+solver.hint.same_location_weight	0–10。	0–10.	0–10.	0–10.	0–10.	0–10。
+solver.hint.unassigned_weight	1–100。	1–100.	1–100.	1–100.	1–100.	1–100。
+solver.hint.undesired_date_weight	0–10。	0–10.	0–10.	0–10.	0–10.	0–10。
+solver.hint.unimproved_seconds	0 表示关闭提前停止。	0 disables early stopping.	0 désactive l'arrêt anticipé.	0 desactiva la parada anticipada.	0 deaktiviert den vorzeitigen Stopp.	0 表示关闭提前停止。
+solver.hint.weekly_shift_weight	0–10。遵守每周最少/最多任务数的权重。	0–10. Weight for respecting the weekly min/max shifts.	0–10. Poids du respect des quarts hebdomadaires min/max.	0–10. Peso del cumplimiento de los turnos semanales mín/máx.	0–10. Gewicht für die Einhaltung der wöchentlichen Min-/Max-Schichten.	0–10。遵守每周最少/最多任务数的权重。
+solver.label.balance_weight	负荷均衡	Workload balance	Équilibrage de la charge	Equilibrio de carga	Lastausgleich	负荷均衡
+solver.label.consecutive_days_weight	最大连续天数	Maximum consecutive days	Jours consécutifs maximum	Días consecutivos máximos	Maximale aufeinanderfolgende Tage	最大连续天数
+solver.label.context_days	上下文天数（窗口边缘）	Context days (window edges)	Jours de contexte (bords de fenêtre)	Días de contexto (bordes de ventana)	Kontexttage (Fensterränder)	上下文天数（窗口边缘）
+solver.label.days_off_weight	每周最少休息天数	Minimum weekly days off	Repos hebdomadaires minimum	Descansos semanales mínimos	Wöchentliche Mindestruhetage	每周最少休息天数
+solver.label.desired_date_weight	期望日期	Desired dates	Dates souhaitées	Fechas deseadas	Wunschtermine	期望日期
+solver.label.diminished_ratio_pct	收益递减停止：阈值（%）	Diminishing-returns stop: threshold (%)	Arrêt à rendement décroissant : seuil (%)	Parada por rendimiento decreciente: umbral (%)	Stopp bei abnehmendem Ertrag: Schwelle (%)	收益递减停止：阈值（%）
+solver.label.diminished_window_seconds	收益递减停止：窗口（秒）	Diminishing-returns stop: window (s)	Arrêt à rendement décroissant : fenêtre (s)	Parada por rendimiento decreciente: ventana (s)	Stopp bei abnehmendem Ertrag: Fenster (s)	收益递减停止：窗口（秒）
+solver.label.max_consecutive_days	最大连续工作天数	Maximum consecutive days	Jours consécutifs maximaux	Días consecutivos máximos	Maximale aufeinanderfolgende Tage	最大连续工作天数
+solver.label.max_shifts_per_day	每天最多任务数	Maximum daily shifts	Quarts quotidiens maximaux	Turnos diarios máximos	Maximale Schichten pro Tag	每天最多任务数
+solver.label.max_solve_seconds	最长求解时长（秒）	Maximum duration (seconds)	Durée maximale (secondes)	Duración máxima (segundos)	Maximale Dauer (Sekunden)	最长求解时长（秒）
+solver.label.max_weekly_hours	每周最多工时	Maximum weekly hours	Heures hebdomadaires maximales	Horas semanales máximas	Maximale Wochenstunden	每周最多工时
+solver.label.max_weekly_shifts	每周最多任务数	Maximum weekly shifts	Quarts hebdomadaires maximaux	Turnos semanales máximos	Maximale Schichten pro Woche	每周最多任务数
+solver.label.min_days_off_per_week	每周最少休息天数	Minimum days off per week	Jours de repos minimaux par semaine	Días de descanso mínimos por semana	Mindestruhetage pro Woche	每周最少休息天数
+solver.label.min_weekly_shifts	每周最少任务数	Minimum weekly shifts	Quarts hebdomadaires minimaux	Turnos semanales mínimos	Mindestschichten pro Woche	每周最少任务数
+solver.label.minimum_rest_hours	最短休息（小时）	Minimum rest (hours)	Repos minimal (heures)	Descanso mínimo (horas)	Mindestruhezeit (Stunden)	最短休息（小时）
+solver.label.night_balance_weight	夜班均衡	Night shift balance	Équilibrage des nuits	Equilibrio de nocturnos	Nachtschichtausgleich	夜班均衡
+solver.label.night_end_hour	夜间结束时间	Night end hour	Heure de fin de nuit	Hora de fin de noche	Nachtende (Stunde)	夜间结束时间
+solver.label.night_start_hour	夜间开始时间	Night start hour	Heure de début de nuit	Hora de inicio de noche	Nachtbeginn (Stunde)	夜间开始时间
+solver.label.optional_skill_weight	可选资格	Optional skills	Compétences facultatives	Competencias opcionales	Optionale Kompetenzen	可选资格
+solver.label.same_location_weight	地点连续性	Location continuity	Continuité de site	Continuidad de sede	Standortkontinuität	地点连续性
+solver.label.unassigned_weight	未分配任务惩罚	Unassigned shift penalty	Pénalité de quart non affecté	Penalización de turno sin asignar	Strafe für unbesetzte Schicht	未分配任务惩罚
+solver.label.undesired_date_weight	不希望日期	Undesired dates	Dates non souhaitées	Fechas no deseadas	Unerwünschte Termine	不希望日期
+solver.label.unimproved_seconds	无改进时停止	Stop without improvement	Arrêt sans amélioration	Parada sin mejoras	Stopp ohne Verbesserung	无改进时停止
+solver.label.weekly_shift_weight	每周任务数（最少/最多）	Weekly shifts (min/max)	Quarts hebdomadaires (min/max)	Turnos semanales (mín/máx)	Wöchentliche Schichten (Min/Max)	每周任务数（最少/最多）
+solver.opt.allow_unassigned	允许未分配任务	Allow unassigned shifts	Autoriser les quarts non affectés	Permitir turnos sin asignar	Unbesetzte Schichten zulassen	允许未分配任务
+solver.opt.balance_by_hours	按工时（而非任务数）平衡负荷	Balance workload by hours (instead of by number of shifts)	Équilibrer la charge par heures (au lieu du nombre de quarts)	Equilibrar la carga por horas (en lugar de por número de turnos)	Last nach Stunden ausgleichen (statt nach Schichtanzahl)	按工时（而非任务数）平衡负荷
+solver.opt.stop_when_feasible	找到首个可行解即停止	Stop at the first feasible solution	Arrêter à la première solution réalisable	Detener en la primera solución factible	Bei der ersten machbaren Lösung stoppen	找到首个可行解即停止
+solverSettings.intro	所选部门的优化参数。	Optimization settings for the selected company.	Paramètres d’optimisation pour l’entreprise sélectionnée.	Parámetros de optimización para la empresa seleccionada.	Optimierungseinstellungen für das ausgewählte Unternehmen.	所选部门的优化参数。
+status.assigned	外派审核中	On external audit	En audit externe	En auditoría externa	Bei externem Audit	外派审核中
+status.available	可调度	Available	Disponible	Disponible	Verfügbar	可调度
+status.travelling	转场中	Travelling	En déplacement	En desplazamiento	Auf Reisen	转场中
+status.unavailable	不可用	Unavailable	Non disponible	No disponible	Nicht verfügbar	不可用
+structures.active	启用	Active	Active	Activa	Aktiv	启用
+structures.addTooltip	新增部门	Add a new structure	Ajouter une nouvelle structure	Añadir una nueva estructura	Neue Struktur hinzufügen	新增部门
+structures.defaultDeleteTooltip	默认部门无法删除	The default structure cannot be deleted	La structure par défaut ne peut pas être supprimée	La estructura predeterminada no se puede eliminar	Die Standardstruktur kann nicht gelöscht werden	默认部门无法删除
+structures.deleteTitle	删除部门	Delete structure	Supprimer la structure	Eliminar estructura	Struktur löschen	删除部门
+structures.loadError	部门加载失败。	Error loading structures.	Erreur lors du chargement des structures.	Error al cargar las estructuras.	Fehler beim Laden der Strukturen.	部门加载失败。
+structures.noResults	暂无部门。	No structures.	Aucune structure.	No hay estructuras.	Keine Strukturen.	暂无部门。
+tab.all	全部	All	Tous	Todos	Alle	全部
+tab.byEmployee	按审核员	By operator	Par opérateur	Por operador	Nach Mitarbeiter	按审核员
+tab.byLocation	按地点	By location	Par lieu	Por ubicación	Nach Ort	按地点
+tab.desired	期望	Desired	Souhaités	Deseados	Bevorzugt	期望
+tab.unavailable	不可用	Unavailable	Non disponibles	No disponibles	Nicht verfügbar	不可用
+tab.undesired	不希望	Undesired	Non souhaités	No deseados	Nicht bevorzugt	不希望
+table.actions	操作	Actions	Actions	Acciones	Aktionen	操作
+table.active	启用	Active	Active	Activa	Aktiv	启用
+table.address	地址	Address	Adresse	Dirección	Adresse	地址
+table.code	编号	Code	Code	Código	Code	编号
+table.constraint	约束	Constraint	Contrainte	Restricción	Einschränkung	约束
+table.date	日期	Date	Date	Fecha	Datum	日期
+table.dateEnd	结束日期	End Date	Date Fin	Fecha Fin	Enddatum	结束日期
+table.dateStart	开始日期	Start Date	Date Début	Fecha Inicio	Startdatum	开始日期
+table.day	星期	Day	Jour	Día	Tag	星期
+table.description	描述	Description	Description	Descripción	Beschreibung	描述
+table.endDate	结束日期	End Date	Date Fin	Fecha Fin	Enddatum	结束日期
+table.id	ID	ID	ID	ID	ID	ID
+table.key	键名	Key	Clé	Clave	Schlüssel	键名
+table.matches	匹配数	# Matches	# Occurrences	# Coincidencias	# Treffer	匹配数
+table.name	名称	Name	Nom	Nombre	Name	名称
+table.optionalSkills	可选资格	O.Skills	Comp.Opt.	Hab.Opc.	Opt.Komp.	可选资格
+table.order	顺序	Order	Ordre	Orden	Reihenfolge	顺序
+table.phone	电话	Phone	Téléphone	Teléfono	Telefon	电话
+table.requiredSkills	必需资格	R.Skills	Comp.Req.	Hab.Req.	Erf.Komp.	必需资格
+table.score	得分	Score	Score	Score	Score	得分
+table.shifts	任务数	Shifts	Créneaux	Turnos	Schichten	任务数
+table.startDate	开始日期	Start Date	Date Début	Fecha Inicio	Startdatum	开始日期
+table.structureName	部门	Structure	Structure	Estructura	Struktur	部门
+table.total	合计	Total	Total	Total	Gesamt	合计
+table.translation	翻译	Translation	Traduction	Traducción	Übersetzung	翻译
+table.type	类型	Type	Type	Tipo	Typ	类型
+table.uncovered	未覆盖	Uncovered	Non couverts	Sin cubrir	Unbesetzt	未覆盖
+table.violations	违反次数	Violations	Violations	Violaciones	Verstöße	违反次数
+table.weight	权重	Weight	Poids	Peso	Gewicht	权重
+toast.assignmentsSaved	分配结果已保存！	Assignments saved!	Affectations enregistrées !	¡Asignaciones guardadas!	Zuweisungen gespeichert!	分配结果已保存！
+toast.autoPopulated	已按模板自动填充该周期	Period automatically populated from the template	Période remplie automatiquement à partir du modèle	Periodo rellenado automáticamente desde la plantilla	Zeitraum automatisch aus der Vorlage befüllt	已按模板自动填充该周期
+toast.backupDeleteError	删除备份失败。	Error deleting the backup.	Erreur lors de la suppression de la sauvegarde.	Error al eliminar la copia de seguridad.	Fehler beim Löschen des Backups.	删除备份失败。
+toast.backupDeleted	备份已删除。	Backup deleted.	Sauvegarde supprimée.	Copia de seguridad eliminada.	Backup gelöscht.	备份已删除。
+toast.backupDone	备份完成！	Backup completed!	Sauvegarde effectuée !	¡Copia realizada!	Sicherung abgeschlossen!	备份完成！
+toast.backupError	备份失败。	Error during backup.	Erreur lors de la sauvegarde.	Error durante la copia.	Fehler bei der Sicherung.	备份失败。
+toast.backupSettingsError	备份参数保存失败。	Error saving backup settings.	Erreur lors de l’enregistrement des paramètres de sauvegarde.	Error al guardar los parámetros de copia de seguridad.	Fehler beim Speichern der Backup-Einstellungen.	备份参数保存失败。
+toast.backupSettingsSaved	备份参数已保存。	Backup settings saved.	Paramètres de sauvegarde enregistrés.	Parámetros de copia de seguridad guardados.	Backup-Einstellungen gespeichert.	备份参数已保存。
+toast.codeDuplicate	地点编号已被使用，请更换。	Location code already in use. Choose a different one.	Code de lieu déjà utilisé. Choisissez-en un autre.	El código de ubicación ya está en uso. Elija uno diferente.	Standortcode wird bereits verwendet. Wählen Sie einen anderen.	地点编号已被使用，请更换。
+toast.dateDeleted	日期已删除。	Date deleted.	Date supprimée.	Fecha eliminada.	Datum gelöscht.	日期已删除。
+toast.datesSaved	日期已保存！	Dates saved!	Dates enregistrées !	¡Fechas guardadas!	Daten gespeichert!	日期已保存！
+toast.descriptionRequired	必须填写描述。	Description is required.	La description est obligatoire.	La descripción es obligatoria.	Die Beschreibung ist erforderlich.	必须填写描述。
+toast.emailError	邮件发送失败。	Error sending the email.	Erreur lors de l'envoi de l'e-mail.	Error al enviar el email.	Fehler beim Senden der E-Mail.	邮件发送失败。
+toast.emailSent	邮件已发送！	Email sent!	E-mail envoyé !	¡Email enviado!	E-Mail gesendet!	邮件已发送！
+toast.emailSettingsSaved	邮件参数已保存：立即生效。	Email settings saved: effective immediately.	Paramètres e-mail enregistrés : effet immédiat.	Parámetros de email guardados: efecto inmediato.	E-Mail-Einstellungen gespeichert: sofort wirksam.	邮件参数已保存：立即生效。
+toast.emailTemplateSaved	邮件模板已保存。	Email template saved.	Modèle d'e-mail enregistré.	Plantilla de email guardada.	E-Mail-Vorlage gespeichert.	邮件模板已保存。
+toast.emailsFailed	封发送失败	emails failed	e-mails non envoyés	emails fallidos	E-Mails fehlgeschlagen	封发送失败
+toast.emailsSent	封已发送	emails sent	e-mails envoyés	emails enviados	E-Mails gesendet	封已发送
+toast.employeeAdded	审核员已添加！	Operator added!	Opérateur ajouté !	¡Operador añadido!	Mitarbeiter hinzugefügt!	审核员已添加！
+toast.employeeCodeDuplicate	审核员编号已被使用，请更换。	Operator code already in use. Choose a different one.	Code d'opérateur déjà utilisé. Choisissez-en un autre.	El código de operador ya está en uso. Elija uno diferente.	Mitarbeitercode wird bereits verwendet. Wählen Sie einen anderen.	审核员编号已被使用，请更换。
+toast.employeeDeleted	审核员已删除。	Operator deleted.	Opérateur supprimé.	Operador eliminado.	Mitarbeiter gelöscht.	审核员已删除。
+toast.employeeDoubleBooked	同一名审核员被排到了两个时间重叠的班次：请换人或调整时间后再保存。	The same auditor was assigned to two overlapping shifts: change the person or the times, then save again.	Le même auditeur a été affecté à deux créneaux qui se chevauchent : changez la personne ou les horaires, puis enregistrez.	El mismo auditor fue asignado a dos turnos que se solapan: cambie la persona o los horarios y vuelva a guardar.	Derselbe Auditor wurde zwei sich überschneidenden Schichten zugewiesen: Person oder Zeiten ändern und erneut speichern.	同一名审核员被排到了两个时间重叠的班次：请换人或调整时间后再保存。
+toast.employeeStatusChanged	求解过程中有审核员的调度状态发生变化：请重新运行求解器。	An operator's status changed during solving: run the solver again.	Le statut d'un opérateur a changé pendant le calcul : relancez le solveur.	El estado de un operador cambió durante el cálculo: vuelva a ejecutar el solver.	Der Status eines Operators hat sich während der Berechnung geändert: Solver erneut starten.	求解过程中有审核员的调度状态发生变化：请重新运行求解器。
+toast.employeeUpdated	审核员已更新！	Operator updated!	Opérateur mis à jour !	¡Operador actualizado!	Mitarbeiter aktualisiert!	审核员已更新！
+toast.endAfterStart	结束时间必须晚于开始时间。	End time must be after start time.	L’heure de fin doit être après le début.	La hora de fin debe ser posterior al inicio.	Die Endzeit muss nach der Startzeit liegen.	结束时间必须晚于开始时间。
+toast.error	错误	Error	Erreur	Error	Fehler	错误
+toast.errorAdd	添加失败。	Error while adding.	Erreur lors de l'ajout.	Error al añadir.	Fehler beim Hinzufügen.	添加失败。
+toast.errorDelete	删除失败。	Error while deleting.	Erreur lors de la suppression.	Error al eliminar.	Fehler beim Löschen.	删除失败。
+toast.errorEdit	修改失败。	Error while editing.	Erreur lors de la modification.	Error durante la edición.	Fehler bei der Bearbeitung.	修改失败。
+toast.errorLoad	加载失败。	Error while loading.	Erreur lors du chargement.	Error al cargar.	Fehler beim Laden.	加载失败。
+toast.errorLoadCalendar	日历加载失败。	Error loading the calendar.	Erreur lors du chargement du calendrier.	Error al cargar el calendario.	Fehler beim Laden des Kalenders.	日历加载失败。
+toast.errorLoadDates	日期加载失败。	Error loading the dates.	Erreur lors du chargement des dates.	Error al cargar las fechas.	Fehler beim Laden der Daten.	日期加载失败。
+toast.errorSave	保存失败。	Error while saving.	Erreur lors de l'enregistrement.	Error al guardar.	Fehler beim Speichern.	保存失败。
+toast.errorSolverPolling	求解器轮询出错。	Error while polling the solver.	Erreur lors de l'interrogation du solveur.	Error durante el sondeo del solver.	Fehler beim Abfragen des Solvers.	求解器轮询出错。
+toast.errorSolverStart	求解器启动失败。	Error starting the solver.	Erreur lors du démarrage du solveur.	Error al iniciar el solver.	Fehler beim Starten des Solvers.	求解器启动失败。
+toast.generalSettingsSaved	常规参数已保存。	General settings saved.	Paramètres généraux enregistrés.	Parámetros generales guardados.	Allgemeine Einstellungen gespeichert.	常规参数已保存。
+toast.info	提示	Information	Information	Información	Information	提示
+toast.insertStartEnd	请输入开始和结束时间。	Enter start and end time.	Saisissez l'heure de début et de fin.	Introduzca la hora de inicio y de fin.	Start- und Endzeit eingeben.	请输入开始和结束时间。
+toast.invalidDateFormat	日期/时间格式无效。	Invalid date/time format.	Format de date/heure non valide.	Formato de fecha/hora no válido.	Ungültiges Datums-/Zeitformat.	日期/时间格式无效。
+toast.keyRequired	必须填写键名。	The key is required.	La clé est obligatoire.	La clave es obligatoria.	Der Schlüssel ist erforderlich.	必须填写键名。
+toast.labelAdded	文案已添加。	Label added.	Étiquette ajoutée.	Etiqueta añadida.	Etikett hinzugefügt.	文案已添加。
+toast.labelUpdated	文案已更新。	Label updated.	Étiquette mise à jour.	Etiqueta actualizada.	Etikett aktualisiert.	文案已更新。
+toast.locationAdded	地点已添加！	Location added!	Lieu ajouté !	¡Ubicación añadida!	Standort hinzugefügt!	地点已添加！
+toast.locationDeleted	地点已删除。	Location deleted.	Lieu supprimé.	Ubicación eliminada.	Standort gelöscht.	地点已删除。
+toast.locationSkillsLoadFailed	无法加载该地点的资格：保存前请先检查。	Could not load the location's skills: check them before saving.	Impossible de charger les compétences du lieu : vérifiez-les avant d'enregistrer.	No se pudieron cargar las competencias de la sede: verifíquelas antes de guardar.	Die Fähigkeiten des Standorts konnten nicht geladen werden: vor dem Speichern prüfen.	无法加载该地点的资格：保存前请先检查。
+toast.locationUpdated	地点已更新！	Location updated!	Lieu mis à jour !	¡Ubicación actualizada!	Standort aktualisiert!	地点已更新！
+toast.pdfTemplateSaved	PDF 模板已保存。	PDF template saved.	Modèle PDF enregistré.	Plantilla PDF guardada.	PDF-Vorlage gespeichert.	PDF 模板已保存。
+toast.restoreError	恢复失败。	Error during restore.	Erreur lors de la restauration.	Error durante la restauración.	Fehler bei der Wiederherstellung.	恢复失败。
+toast.restored	数据库已恢复，正在刷新页面…	Database restored. Reloading the page…	Base de données restaurée. Rechargement de la page…	Base de datos restaurada. Recargando la página…	Datenbank wiederhergestellt. Seite wird neu geladen…	数据库已恢复，正在刷新页面…
+toast.savedTemplateAdded	模板已保存！	Template saved!	Modèle enregistré !	¡Plantilla guardada!	Vorlage gespeichert!	模板已保存！
+toast.savedTemplateDeleted	模板已删除。	Template deleted.	Modèle supprimé.	Plantilla eliminada.	Vorlage gelöscht.	模板已删除。
+toast.selectLocation	请选择地点。	Select a location.	Sélectionnez un lieu.	Seleccione una ubicación.	Wählen Sie einen Standort.	请选择地点。
+toast.shiftAdded	任务已添加！	Shift added!	Quart ajouté !	¡Turno añadido!	Schicht hinzugefügt!	任务已添加！
+toast.shiftDeleted	任务已删除。	Shift deleted.	Quart supprimé.	Turno eliminado.	Schicht gelöscht.	任务已删除。
+toast.shiftNoCrossDay	任务不能跨越两天。	A shift cannot span two days.	Un quart ne peut pas couvrir deux jours.	Un turno no puede abarcar dos días.	Eine Schicht kann sich nicht über zwei Tage erstrecken.	任务不能跨越两天。
+toast.shiftUpdated	任务已更新！	Shift updated!	Quart mis à jour !	¡Turno actualizado!	Schicht aktualisiert!	任务已更新！
+toast.solutionDiscarded	方案已放弃。	Solution discarded.	Solution ignorée.	Solución descartada.	Lösung verworfen.	方案已放弃。
+toast.solveCompleted	求解完成！	Solve completed!	Résolution terminée !	¡Resolución completada!	Lösung abgeschlossen!	求解完成！
+toast.solverSettingsSaved	求解器参数已保存。	Solver settings saved.	Paramètres du solveur enregistrés.	Parámetros del solver guardados.	Solver-Einstellungen gespeichert.	求解器参数已保存。
+toast.structureAdded	部门已添加。	Structure added.	Structure ajoutée.	Estructura añadida.	Struktur hinzugefügt.	部门已添加。
+toast.structureUpdated	部门已更新。	Structure updated.	Structure mise à jour.	Estructura actualizada.	Struktur aktualisiert.	部门已更新。
+toast.success	操作成功	Success	Succès	Éxito	Erfolg	操作成功
+toast.templateAdded	模板已添加！	Template added!	Modèle ajouté !	¡Plantilla añadida!	Vorlage hinzugefügt!	模板已添加！
+toast.templateApplied	已按模板创建任务	Shifts created from template	Quarts créés à partir du modèle	Turnos creados desde la plantilla	Schichten aus Vorlage erstellt	已按模板创建任务
+toast.templateDeleted	模板已删除。	Template deleted.	Modèle supprimé.	Plantilla eliminada.	Vorlage gelöscht.	模板已删除。
+toast.templateDescSaved	描述已保存！	Description saved!	Description enregistrée !	¡Descripción guardada!	Beschreibung gespeichert!	描述已保存！
+toast.templatePrepopulated	模板已按所选周预填充。	Template pre-populated from the selected week.	Modèle prérempli à partir de la semaine sélectionnée.	Plantilla rellenada desde la semana seleccionada.	Vorlage aus der ausgewählten Woche vorbefüllt.	模板已按所选周预填充。
+toast.templateSaved	已按当前可见周更新模板	Template updated from the visible week	Modèle mis à jour à partir de la semaine visible	Plantilla actualizada desde la semana visible	Vorlage aus der sichtbaren Woche aktualisiert	已按当前可见周更新模板
+toast.templateUpdated	模板已更新！	Template updated!	Modèle mis à jour !	¡Plantilla actualizada!	Vorlage aktualisiert!	模板已更新！
+toast.testEmailSent	测试邮件已发送至	Test email sent to	E-mail de test envoyé à	Email de prueba enviado a	Test-E-Mail gesendet an	测试邮件已发送至
+toast.warning	警告	Warning	Attention	Atención	Warnung	警告
+tooltip.applyTemplate	用模板中的任务替换当前可见周期内的排班	Replace the shifts in the visible period with those from the template	Remplacer les quarts de la période visible par ceux du modèle	Sustituir los turnos del período visible por los de la plantilla	Die Schichten im sichtbaren Zeitraum durch die aus der Vorlage ersetzen	用模板中的任务替换当前可见周期内的排班
+tooltip.clearSearch	清除搜索	Clear search	Effacer la recherche	Limpiar búsqueda	Suche löschen	清除搜索
+tooltip.delete	删除	Delete	Supprimer	Eliminar	Löschen	删除
+tooltip.deleteEmployee	删除审核员	Delete operator	Supprimer l'opérateur	Eliminar operador	Mitarbeiter löschen	删除审核员
+tooltip.deleteLocation	删除地点	Delete location	Supprimer le lieu	Eliminar ubicación	Ort löschen	删除地点
+tooltip.edit	编辑	Edit	Modifier	Editar	Bearbeiten	编辑
+tooltip.editEmployee	编辑审核员	Edit operator	Modifier l'opérateur	Editar operador	Mitarbeiter bearbeiten	编辑审核员
+tooltip.editLocation	编辑地点	Edit location	Modifier le lieu	Editar ubicación	Ort bearbeiten	编辑地点
+tooltip.employeeDatesEmpty	管理日期（暂无日期）	Manage dates (no dates)	Gérer les dates (aucune date)	Gestionar fechas (sin fechas)	Daten verwalten (keine Daten)	管理日期（暂无日期）
+tooltip.employeeDatesWithData	管理日期（已有日期）	Manage dates (with dates assigned)	Gérer les dates (avec dates assignées)	Gestionar fechas (con fechas asignadas)	Daten verwalten (mit zugewiesenen Daten)	管理日期（已有日期）
+tooltip.employeeHasShifts	该审核员已有排班任务，无法删除	Operator has assigned shifts — cannot be deleted	L'opérateur a des quarts assignés — suppression impossible	El operador tiene turnos asignados — no se puede eliminar	Mitarbeiter hat zugewiesene Schichten — kann nicht gelöscht werden	该审核员已有排班任务，无法删除
+tooltip.exportJson	导出 JSON	Export JSON	Exporter JSON	Exportar JSON	JSON exportieren	导出 JSON
+tooltip.hideTranslationKeys	隐藏翻译键名	Hide translation keys	Masquer les clés de traduction	Ocultar claves de traducción	Übersetzungsschlüssel ausblenden	隐藏翻译键名
+tooltip.locationHasShifts	该地点已有排班任务，无法删除	Location has assigned shifts — cannot be deleted	Le lieu a des quarts assignés — suppression impossible	La ubicación tiene turnos asignados — no se puede eliminar	Standort hat zugewiesene Schichten — kann nicht gelöscht werden	该地点已有排班任务，无法删除
+tooltip.locationShiftsEmpty	管理排班日期（暂无任务）	Manage shift dates (no shifts)	Gérer dates de quart (aucun quart)	Gestionar fechas de turno (sin turnos)	Schichtdaten verwalten (keine Schichten)	管理排班日期（暂无任务）
+tooltip.locationShiftsWithData	管理排班日期（已有任务）	Manage shift dates (with shifts)	Gérer dates de quart (avec quarts)	Gestionar fechas de turno (con turnos)	Schichtdaten verwalten (mit Schichten)	管理排班日期（已有任务）
+tooltip.nextPeriod	下一周期	Next period	Période suivante	Período siguiente	Nächster Zeitraum	下一周期
+tooltip.nextWeek	下一周	Next week	Semaine suivante	Semana siguiente	Nächste Woche	下一周
+tooltip.nextYear	下一年	Next year	Année suivante	Año siguiente	Nächstes Jahr	下一年
+tooltip.openSolverSettings	在新标签页打开「求解器参数」	Open Solver Settings in a new tab	Ouvrir les paramètres du solveur dans un nouvel onglet	Abrir los parámetros del solver en una nueva pestaña	Solver-Einstellungen in einem neuen Tab öffnen	在新标签页打开「求解器参数」
+tooltip.prevPeriod	上一周期	Previous period	Période précédente	Período anterior	Vorheriger Zeitraum	上一周期
+tooltip.previousWeek	上一周	Previous week	Semaine précédente	Semana anterior	Vorherige Woche	上一周
+tooltip.previousYear	上一年	Previous year	Année précédente	Año anterior	Vorjahr	上一年
+tooltip.saveAndLockWeek	保存并锁定本周	Save and lock current week	Enregistrer et verrouiller la semaine	Guardar y bloquear semana actual	Aktuelle Woche speichern und sperren	保存并锁定本周
+tooltip.saveToTemplate	将当前可见周的任务保存为模板（不含已分配审核员）	Save the visible week's shifts as the template (without assigned operators)	Enregistrer les quarts de la semaine visible comme modèle (sans opérateurs affectés)	Guardar los turnos de la semana visible como plantilla (sin operadores asignados)	Die Schichten der sichtbaren Woche als Vorlage speichern (ohne zugewiesene Operatoren)	将当前可见周的任务保存为模板（不含已分配审核员）
+tooltip.saveToTemplateWeekOnly	仅在周视图中可用	Available only in weekly view	Disponible uniquement en vue hebdomadaire	Disponible solo en vista semanal	Nur in der Wochenansicht verfügbar	仅在周视图中可用
+tooltip.showTranslationKeys	显示翻译键名	Show translation keys	Afficher les clés de traduction	Mostrar claves de traducción	Übersetzungsschlüssel anzeigen	显示翻译键名
+tooltip.today	回到今天	Go to today	Aller à aujourd'hui	Ir a hoy	Zu heute springen	回到今天
+tooltip.unlockWeek	解锁本周以编辑	Unlock week to edit it	Déverrouiller la semaine pour la modifier	Desbloquear la semana para editarla	Woche zum Bearbeiten entsperren	解锁本周以编辑
+tooltip.weekLocked	本周已锁定	Week locked	Semaine verrouillée	Semana bloqueada	Woche gesperrt	本周已锁定
+validation.emailInvalid	请输入有效的邮箱地址。	Enter a valid email address.	Saisissez une adresse e-mail valide.	Introduce una dirección de correo válida.	Geben Sie eine gültige E-Mail-Adresse ein.	请输入有效的邮箱地址。
+backup.hintAuto	自动备份按固定间隔运行，并在覆盖排班的操作前运行。	Automatic backup runs at regular intervals and before operations that overwrite shifts.	La sauvegarde automatique s'exécute à intervalles réguliers et avant les opérations qui écrasent les créneaux.	La copia automática se ejecuta a intervalos regulares y antes de las operaciones que sobrescriben turnos.	Die automatische Sicherung läuft in regelmäßigen Abständen und vor Vorgängen, die Schichten überschreiben.	自动备份按固定间隔运行，并在覆盖排班的操作前运行。
+backup.hintRestore	恢复前会创建安全快照以便回退。	A safety snapshot is created before restore to enable recovery.	Un instantané de sécurité est créé avant la restauration afin de permettre la récupération.	Antes de restaurar se crea una instantánea de seguridad para permitir la recuperación.	Vor der Wiederherstellung wird ein Sicherheitssnapshot erstellt, um eine Wiederherstellung zu ermöglichen.	恢复前会创建安全快照以便回退。
+backup.emptyUnavailable	暂无备份：该功能当前不可用。	No backups: the feature is currently unavailable.	Aucune sauvegarde : la fonction n'est pas disponible actuellement.	Sin copias: la función no está disponible en este momento.	Keine Sicherungen: die Funktion ist derzeit nicht verfügbar.	暂无备份：该功能当前不可用。
+msg.err.backupToolsUnavailable	备份不可用：未安装数据库客户端工具，或版本低于服务器。	Backup unavailable: the database client tools are not installed or are older than the server.	Sauvegarde indisponible : les outils client de la base de données ne sont pas installés ou sont plus anciens que le serveur.	Copia no disponible: las herramientas cliente de la base de datos no están instaladas o son más antiguas que el servidor.	Sicherung nicht verfügbar: die Client-Tools der Datenbank fehlen oder sind älter als der Server.	备份不可用：未安装数据库客户端工具，或版本低于服务器。
+msg.err.restoreNotSupported	当前数据库不支持自动恢复：请下载备份并使用 pg_restore 恢复。	Automatic restore is not available on this database: download the backup and restore it with pg_restore.	La restauration automatique n'est pas disponible sur cette base de données : téléchargez la sauvegarde et restaurez-la avec pg_restore.	La restauración automática no está disponible en esta base de datos: descarga la copia y restáurala con pg_restore.	Die automatische Wiederherstellung ist für diese Datenbank nicht verfügbar: Sicherung herunterladen und mit pg_restore wiederherstellen.	当前数据库不支持自动恢复：请下载备份并使用 pg_restore 恢复。
+msg.err.databaseBusy	数据库忙：请稍后重试。数据未发生任何更改。	Database busy: try again shortly. No data was changed.	Base de données occupée : réessayez dans un instant. Aucune donnée n'a été modifiée.	Base de datos ocupada: inténtalo de nuevo en unos instantes. No se ha modificado ningún dato.	Datenbank belegt: in Kürze erneut versuchen. Es wurden keine Daten geändert.	数据库忙：请稍后重试。数据未发生任何更改。
+msg.err.backupInProgress	备份进行中：请等其完成后再试。数据未发生任何更改。	Backup in progress: try again when it finishes. No data was changed.	Sauvegarde en cours : réessayez une fois terminée. Aucune donnée n'a été modifiée.	Copia en curso: inténtalo de nuevo al finalizar. No se ha modificado ningún dato.	Sicherung läuft: nach Abschluss erneut versuchen. Es wurden keine Daten geändert.	备份进行中：请等其完成后再试。数据未发生任何更改。
+msg.err.notADatabase	所选文件不是可读的数据库备份。数据未发生任何更改。	The selected file is not a readable database backup. No data was changed.	Le fichier sélectionné n'est pas une sauvegarde de base de données lisible. Aucune donnée n'a été modifiée.	El archivo seleccionado no es una copia de base de datos legible. No se ha modificado ningún dato.	Die ausgewählte Datei ist keine lesbare Datenbanksicherung. Es wurden keine Daten geändert.	所选文件不是可读的数据库备份。数据未发生任何更改。
+msg.err.incompatibleDatabase	该备份来自更早或不兼容的应用版本（数据库迁移不一致）。数据未发生任何更改：请更新应用后重试，或改用更新的备份。	The backup is from an older or different application version (schema migrations do not match). No data was changed: update the application and try again, or use a more recent backup.	La sauvegarde provient d'une version antérieure ou différente de l'application (les migrations de schéma ne correspondent pas). Aucune donnée n'a été modifiée : mettez à jour l'application et réessayez, ou utilisez une sauvegarde plus récente.	La copia de seguridad es de una versión anterior o distinta de la aplicación (las migraciones de esquema no coinciden). No se ha modificado ningún dato: actualiza la aplicación e inténtalo de nuevo, o usa una copia más reciente.	Die Sicherung stammt von einer älteren oder anderen Anwendungsversion (die Schema-Migrationen stimmen nicht überein). Es wurden keine Daten geändert: Aktualisieren Sie die Anwendung und versuchen Sie es erneut, oder verwenden Sie eine neuere Sicherung.	该备份来自更早或不兼容的应用版本（数据库迁移不一致）。数据未发生任何更改：请更新应用后重试，或改用更新的备份。
+msg.err.noRollbackSnapshot	无法创建安全备份：恢复操作已取消，数据未发生任何更改。	The safety backup could not be created: restore was cancelled without changes.	La sauvegarde de sécurité n'a pas pu être créée : restauration annulée sans modification.	No se pudo crear la copia de seguridad: restauración cancelada sin cambios.	Die Sicherheitssicherung konnte nicht erstellt werden: Wiederherstellung ohne Änderungen abgebrochen.	无法创建安全备份：恢复操作已取消，数据未发生任何更改。
+msg.err.promotionBusy	数据库忙：恢复已取消，数据未发生任何更改。请稍后重试。	The database is busy: restore was cancelled without changes. Try again shortly.	La base de données est occupée : restauration annulée sans modification. Réessayez dans un instant.	La base de datos está ocupada: restauración cancelada sin cambios. Inténtalo de nuevo en unos instantes.	Die Datenbank ist belegt: Wiederherstellung ohne Änderungen abgebrochen. In Kürze erneut versuchen.	数据库忙：恢复已取消，数据未发生任何更改。请稍后重试。
+msg.err.promotionIoError	恢复失败；请查看服务器报告的状态。	Restore failed; check the status reported by the server.	La restauration a échoué ; vérifiez l’état indiqué par le serveur.	La restauración falló; comprueba el estado indicado por el servidor.	Die Wiederherstellung ist fehlgeschlagen; prüfen Sie den vom Server gemeldeten Status.	恢复失败；请查看服务器报告的状态。
+backup.recoveryFile	需要人工处理：请使用应急备份	Manual intervention required: use the emergency backup	Intervention manuelle requise : utilisez la sauvegarde d'urgence	Se requiere intervención manual: utiliza la copia de emergencia	Manueller Eingriff erforderlich: Verwenden Sie die Notfallsicherung	需要人工处理：请使用应急备份
+msg.err.backupAdminAuthRequired	需要备份管理员令牌。	Backup administrator token required.	Jeton administrateur de sauvegarde requis.	Se requiere el token de administrador de copias.	Administrator-Token für Sicherungen erforderlich.	需要备份管理员令牌。
+msg.err.backupAdminTokenNotConfigured	备份 API 已禁用：请在服务器上配置 BACKUP_ADMIN_TOKEN。	Backup API is disabled: configure BACKUP_ADMIN_TOKEN on the server.	L’API de sauvegarde est désactivée : configurez BACKUP_ADMIN_TOKEN sur le serveur.	La API de copias está deshabilitada: configura BACKUP_ADMIN_TOKEN en el servidor.	Die Sicherungs-API ist deaktiviert: Konfigurieren Sie BACKUP_ADMIN_TOKEN auf dem Server.	备份 API 已禁用：请在服务器上配置 BACKUP_ADMIN_TOKEN。
+backup.adminAuthRequired	此区域需要备份管理员令牌。	This section requires the backup administrator token.	Cette section nécessite le jeton administrateur de sauvegarde.	Esta sección requiere el token de administrador de copias.	Dieser Bereich erfordert das Administrator-Token für Sicherungen.	此区域需要备份管理员令牌。
+backup.adminToken	管理员令牌	Administrator token	Jeton administrateur	Token de administrador	Administrator-Token	管理员令牌
+backup.unlock	解锁	Unlock	Déverrouiller	Desbloquear	Entsperren	解锁
+toast.errorDownload	下载失败。	Error while downloading.	Erreur lors du téléchargement.	Error durante la descarga.	Fehler beim Herunterladen.	下载失败。
+backup.lock	锁定	Lock	Verrouiller	Bloquear	Sperren	锁定
+msg.err.backupAdminTlsRequired	管理备份需要安全连接。	A secure connection is required to administer backups.	Une connexion sécurisée est requise pour administrer les sauvegardes.	Se requiere una conexión segura para administrar las copias.	Für die Verwaltung der Sicherungen ist eine sichere Verbindung erforderlich.	管理备份需要安全连接。
+msg.err.backupAdminRateLimited	认证尝试过多：请等待一分钟。	Too many authentication attempts: wait one minute.	Trop de tentatives d’authentification : attendez une minute.	Demasiados intentos de autenticación: espera un minuto.	Zu viele Authentifizierungsversuche: Warten Sie eine Minute.	认证尝试过多：请等待一分钟。
+msg.err.safetyBackupFailed	操作已取消：无法创建安全备份。	Operation cancelled: the safety backup could not be created.	Opération annulée : la sauvegarde de sécurité n’a pas pu être créée.	Operación cancelada: no se pudo crear la copia de seguridad.	Vorgang abgebrochen: Die Sicherheitssicherung konnte nicht erstellt werden.	操作已取消：无法创建安全备份。
+login.title	登录	Sign in	Connexion	Iniciar sesión	Anmelden	登录
+login.subtitle	请输入账号密码进入审核员调配系统。	Enter your credentials to manage shifts.	Saisissez vos identifiants pour gérer les créneaux.	Introduce tus credenciales para gestionar los turnos.	Zugangsdaten eingeben, um Schichten zu verwalten.	请输入账号密码进入审核员调配系统。
+login.username	用户名	Username	Nom d'utilisateur	Nombre de usuario	Benutzername	用户名
+login.password	密码	Password	Mot de passe	Contraseña	Passwort	密码
+login.submit	登录	Sign in	Se connecter	Acceder	Anmelden	登录
+login.invalid	用户名或密码不正确。	Incorrect username or password.	Nom d'utilisateur ou mot de passe incorrect.	Nombre de usuario o contraseña incorrectos.	Benutzername oder Passwort falsch.	用户名或密码不正确。
+login.unreachable	无法连接服务器，请稍后重试。	Server unreachable. Try again shortly.	Serveur injoignable. Réessayez dans un instant.	Servidor no disponible. Inténtalo de nuevo en unos instantes.	Server nicht erreichbar. In Kürze erneut versuchen.	无法连接服务器，请稍后重试。
+user.roleAdmin	管理员	Administrator	Administrateur	Administrador	Administrator	管理员
+user.roleCaposala	排班管理	Shift management	Gestion des créneaux	Gestión de turnos	Schichtverwaltung	排班管理
+user.logout	退出登录	Sign out	Se déconnecter	Cerrar sesión	Abmelden	退出登录
+user.exitApp	关闭应用	Close application	Fermer l’application	Cerrar aplicación	Anwendung schließen	关闭应用
+confirm.exitAppTitle	关闭应用？	Close the application?	Fermer l’application ?	¿Cerrar la aplicación?	Anwendung schließen?	关闭应用？
+confirm.exitAppBody	本机所有用户的访问都将停止。	The app will close for all users on this PC.	L’application sera fermée pour tous les utilisateurs de ce PC.	La app se cerrará para todos los usuarios de este PC.	Die App wird für alle Benutzer auf diesem PC geschlossen.	本机所有用户的访问都将停止。
+confirm.exitAppConfirm	关闭应用	Close app	Fermer l’app	Cerrar app	App schließen	关闭应用
+msg.err.userUsernameRequired	必须填写用户名	Username is required	Nom d'utilisateur obligatoire	Nombre de usuario obligatorio	Benutzername ist erforderlich	必须填写用户名
+msg.err.userPasswordRequired	必须填写密码	Password is required	Mot de passe obligatoire	Contraseña obligatoria	Passwort ist erforderlich	必须填写密码
+msg.err.userRoleInvalid	角色无效	Invalid role	Rôle non valide	Rol inválido	Ungültige Rolle	角色无效
+msg.err.userDuplicate	用户名已被使用	Username already in use	Nom d'utilisateur déjà utilisé	Nombre de usuario ya en uso	Benutzername bereits vergeben	用户名已被使用
+msg.err.userNotFound	未找到该用户	User not found	Utilisateur introuvable	Usuario no encontrado	Benutzer nicht gefunden	未找到该用户
+msg.err.userCannotSelfDeactivate	不能停用自己的账号	You cannot deactivate your own account	Vous ne pouvez pas désactiver votre propre compte	No puedes desactivar tu propia cuenta	Sie können Ihr eigenes Konto nicht deaktivieren	不能停用自己的账号
+nav.users	用户	Users	Utilisateurs	Usuarios	Benutzer	用户
+btn.addUser	新增用户	Add user	Ajouter un utilisateur	Añadir usuario	Benutzer hinzufügen	新增用户
+btn.deactivate	停用	Deactivate	Désactiver	Desactivar	Deaktivieren	停用
+user.displayName	显示名称	Display name	Nom affiché	Nombre mostrado	Anzeigename	显示名称
+user.displayNamePlaceholder	例如：张三	e.g. Mario Rossi	ex. Mario Rossi	ej. Mario Rossi	z.B. Mario Rossi	例如：张三
+user.role	角色	Role	Rôle	Rol	Rolle	角色
+user.lastLogin	最近登录	Last login	Dernière connexion	Último acceso	Letzter Login	最近登录
+user.newPassword	新密码（留空表示不变）	New password (leave blank to keep unchanged)	Nouveau mot de passe (laisser vide pour ne pas changer)	Nueva contraseña (dejar vacío para no cambiar)	Neues Passwort (leer lassen um unverändert zu lassen)	新密码（留空表示不变）
+user.deactivateTitle	停用用户	Deactivate user	Désactiver l'utilisateur	Desactivar usuario	Benutzer deaktivieren	停用用户
+user.deactivateMsg	用户	The user	L'utilisateur	El usuario	Der Benutzer	用户
+user.deactivateMsg2	将被停用，且无法再登录。	will be deactivated and will no longer be able to sign in.	sera désactivé et ne pourra plus se connecter.	será desactivado y ya no podrá iniciar sesión.	wird deaktiviert und kann sich nicht mehr anmelden.	将被停用，且无法再登录。
+modal.addUser	新建用户	New user	Nouvel utilisateur	Nuevo usuario	Neuer Benutzer	新建用户
+modal.editUser	编辑用户	Edit user	Modifier l'utilisateur	Editar usuario	Benutzer bearbeiten	编辑用户
+users.empty	暂无用户。	No users.	Aucun utilisateur.	No hay usuarios.	Keine Benutzer.	暂无用户。
+toast.userCreated	用户已创建。	User created.	Utilisateur créé.	Usuario creado.	Benutzer erstellt.	用户已创建。
+toast.userSaved	用户已更新。	User updated.	Utilisateur mis à jour.	Usuario actualizado.	Benutzer aktualisiert.	用户已更新。
+toast.userDeactivated	用户已停用。	User deactivated.	Utilisateur désactivé.	Usuario desactivado.	Benutzer deaktiviert.	用户已停用。
+msg.err.userEmailDuplicate	邮箱地址已被使用。	Email address already in use.	Adresse email déjà utilisée.	La dirección de correo ya está en uso.	E-Mail-Adresse bereits vergeben.	邮箱地址已被使用。
+msg.err.emailInvalid	邮箱地址无效。	Invalid email address.	Adresse email invalide.	Dirección de correo no válida.	Ungültige E-Mail-Adresse.	邮箱地址无效。
+msg.err.emailAlreadyRegistered	该邮箱已注册。	This email is already registered.	Cette adresse email est déjà enregistrée.	Esta dirección de correo ya está registrada.	Diese E-Mail-Adresse ist bereits registriert.	该邮箱已注册。
+msg.err.otpInvalid	验证码无效或已过期。	Invalid or expired code.	Code invalide ou expiré.	Código no válido o caducado.	Ungültiger oder abgelaufener Code.	验证码无效或已过期。
+msg.err.otpAlreadyUsed	验证码已被使用，请重新获取。	Code already used. Request a new one.	Code déjà utilisé. Demandez-en un nouveau.	Código ya utilizado. Solicite uno nuevo.	Code bereits verwendet. Fordern Sie einen neuen an.	验证码已被使用，请重新获取。
+msg.err.otpTooMany	尝试次数过多，请几分钟后再试。	Too many attempts. Try again in a few minutes.	Trop de tentatives. Réessayez dans quelques minutes.	Demasiados intentos. Inténtelo de nuevo en unos minutos.	Zu viele Versuche. Versuchen Sie es in einigen Minuten erneut.	尝试次数过多，请几分钟后再试。
+msg.err.otpSendFailed	验证码发送失败，请重试。	Failed to send the code. Try again.	Échec de l'envoi du code. Réessayez.	No se pudo enviar el código. Inténtelo de nuevo.	Fehler beim Senden des Codes. Versuchen Sie es erneut.	验证码发送失败，请重试。
+msg.err.otpNotRequired	本安装环境无需邮箱验证。	Email verification is not required in this installation.	La vérification par email n'est pas requise dans cette installation.	La verificación por correo no es necesaria en esta instalación.	Die E-Mail-Verifizierung ist bei dieser Installation nicht erforderlich.	本安装环境无需邮箱验证。
+login.noAccount	还没有账号？	Don't have an account?	Vous n'avez pas de compte ?	¿No tienes una cuenta?	Kein Konto?	还没有账号？
+login.register	注册	Register	S'inscrire	Registrarse	Registrieren	注册
+login.inactive	账号待审批或已停用，请联系管理员。	Account pending approval or disabled. Contact an administrator.	Compte en attente d'approbation ou désactivé. Contactez un administrateur.	Cuenta pendiente de aprobación o desactivada. Contacte a un administrador.	Konto wartet auf Genehmigung oder ist deaktiviert. Kontaktieren Sie einen Administrator.	账号待审批或已停用，请联系管理员。
+register.title	注册	Registration	Inscription	Registro	Registrierung	注册
+register.subtitle	验证邮箱并创建审核员调配账号。	Verify your email and create the shift management account.	Vérifiez votre email et créez le compte de gestion des horaires.	Verifique su correo y cree la cuenta de gestión de turnos.	Bestätigen Sie Ihre E-Mail und erstellen Sie das Schichtverwaltungskonto.	验证邮箱并创建审核员调配账号。
+register.email	邮箱地址	Email address	Adresse email	Dirección de correo	E-Mail-Adresse	邮箱地址
+register.sendOtp	发送验证码	Send code	Envoyer le code	Enviar código	Code senden	发送验证码
+register.otp	验证码	Verification code	Code de vérification	Código de verificación	Verifizierungscode	验证码
+register.otpSentTo	验证码已发送至	Sent to	Envoyé à	Enviado a	Gesendet an	验证码已发送至
+register.verifyOtp	验证	Verify code	Vérifier le code	Verificar código	Code überprüfen	验证
+register.passwordHint	至少 8 个字符。	At least 8 characters.	Au moins 8 caractères.	Al menos 8 caracteres.	Mindestens 8 Zeichen.	至少 8 个字符。
+register.complete	创建账号	Create account	Créer le compte	Crear cuenta	Konto erstellen	创建账号
+register.doneTitle	注册已提交	Registration submitted!	Inscription envoyée !	¡Registro enviado!	Registrierung übermittelt!	注册已提交
+register.doneBody	管理员审批后即可登录。	An administrator must approve your account before you can sign in. You will be notified upon activation.	Un administrateur doit approuver votre compte avant que vous puissiez vous connecter. Vous serez prévenu lors de l'activation.	Un administrador debe aprobar su cuenta antes de que pueda iniciar sesión. Se le notificará al activarse.	Ein Administrator muss Ihr Konto genehmigen, bevor Sie sich anmelden können. Sie werden bei der Aktivierung benachrichtigt.	管理员审批后即可登录。
+register.backToLogin	返回登录	Back to login	Retour à la connexion	Volver al inicio de sesión	Zurück zur Anmeldung	返回登录
+register.back	返回	Back	Retour	Atrás	Zurück	返回
+register.otpSent	验证码已发送，请检查邮箱。	Code sent. Check your email.	Code envoyé. Vérifiez votre email.	Código enviado. Revise su correo.	Code gesendet. Prüfen Sie Ihre E-Mail.	验证码已发送，请检查邮箱。
+register.errorGeneric	操作失败，请重试。	An error occurred.	Une erreur est survenue.	Se produjo un error.	Ein Fehler ist aufgetreten.	操作失败，请重试。
+user.email	邮箱	Email	Email	Correo	E-Mail	邮箱
+user.pending	待审批	Pending	En attente	Pendiente	Ausstehend	待审批
+user.activateTitle	批准用户	Approve user	Approuver l'utilisateur	Aprobar usuario	Benutzer genehmigen	批准用户
+user.activateMsg	用户	The user	L'utilisateur	El usuario	Der Benutzer	用户
+user.activateMsg2	将被启用，并可登录。	will be activated and will be able to sign in.	sera activé et pourra se connecter.	será activado y podrá iniciar sesión.	wird aktiviert und kann sich anmelden.	将被启用，并可登录。
+btn.approve	批准并启用	Approve / activate	Approuver / activer	Aprobar / activar	Genehmigen / aktivieren	批准并启用
+toast.userActivated	用户已启用。	User activated.	Utilisateur activé.	Usuario activado.	Benutzer aktiviert.	用户已启用。
+msg.err.userLastAdmin	不能移除最后一位在用管理员。	You cannot remove the last active administrator.	Vous ne pouvez pas supprimer le dernier administrateur actif.	No puede eliminar al último administrador activo.	Sie können den letzten aktiven Administrator nicht entfernen.	不能移除最后一位在用管理员。
+msg.err.accountInactive	账号待审批或已停用。	Account pending approval or disabled.	Compte en attente d'approbation ou désactivé.	Cuenta pendiente de aprobación o desactivada.	Konto wartet auf Genehmigung oder ist deaktiviert.	账号待审批或已停用。
+register.firstAdminTitle	创建首个管理员	Create the initial administrator	Créer l'administrateur initial	Crear el administrador inicial	Ersten Administrator erstellen	创建首个管理员
+register.firstAdminSubtitle	你是首位使用者，请验证邮箱并创建管理员账号。	You are the first person to use the application: verify your email and create the administrator account.	Vous êtes la première personne à utiliser l'application : vérifiez votre email et créez le compte administrateur.	Eres la primera persona en usar la aplicación: verifica tu correo y crea la cuenta de administrador.	Sie sind die erste Person, die die Anwendung nutzt: Bestätigen Sie Ihre E-Mail und erstellen Sie das Administratorkonto.	你是首位使用者，请验证邮箱并创建管理员账号。
+register.firstAdminDoneTitle	管理员创建成功	Administrator created!	Administrateur créé !	¡Administrador creado!	Administrator erstellt!	管理员创建成功
+register.firstAdminDoneBody	管理员账号已启用，现在可以登录。	Your administrator account is active: you can sign in now.	Votre compte administrateur est actif : vous pouvez vous connecter dès maintenant.	Su cuenta de administrador está activa: puede iniciar sesión ahora.	Ihr Administratorkonto ist aktiv: Sie können sich jetzt anmelden.	管理员账号已启用，现在可以登录。
+register.firstAdminStandaloneSubtitle	你是首位使用者，请创建管理员用户名和密码。	You are the first person to use the application: create the administrator account credentials.	Vous êtes la première personne à utiliser l'application : créez les identifiants du compte administrateur.	Eres la primera persona en usar la aplicación: crea las credenciales de la cuenta de administrador.	Sie sind die erste Person, die die Anwendung nutzt: Erstellen Sie die Anmeldedaten des Administratorkontos.	你是首位使用者，请创建管理员用户名和密码。
+register.standaloneSubtitle	请创建审核员调配账号。	Create the credentials for your shift management account.	Créez les identifiants de votre compte de gestion des horaires.	Cree las credenciales de su cuenta de gestión de turnos.	Erstellen Sie die Anmeldedaten für Ihr Schichtverwaltungskonto.	请创建审核员调配账号。
+register.stepEmail	邮箱	Email	Email	Correo	E-Mail	邮箱
+register.stepOtp	验证码	Code	Code	Código	Code	验证码
+register.stepProfile	账号信息	Profile	Profil	Perfil	Profil	账号信息
+register.emailHint	验证码将发送到此邮箱。	We will send you a verification code to this address.	Nous vous enverrons un code de vérification à cette adresse.	Le enviaremos un código de verificación a esta dirección.	Wir senden Ihnen einen Verifizierungscode an diese Adresse.	验证码将发送到此邮箱。
+register.resendIn	后可重新发送	resend in	renvoi dans	reenvío en	erneuter Versand in	后可重新发送
+register.resendOtp	重新发送验证码	Resend the code	Renvoyer le code	Reenviar el código	Code erneut senden	重新发送验证码
+register.cambiaEmail	更换邮箱	Change email	Changer d'email	Cambiar correo	E-Mail ändern	更换邮箱
+register.usernameHint	3–64 个字符，可使用字母、数字、点、短横线或下划线。	3-64 characters: letters, numbers, dots, dashes or underscores.	3 à 64 caractères : lettres, chiffres, points, tirets ou tirets bas.	3-64 caracteres: letras, números, puntos, guiones o guiones bajos.	3-64 Zeichen: Buchstaben, Zahlen, Punkte, Bindestriche oder Unterstriche.	3–64 个字符，可使用字母、数字、点、短横线或下划线。
+register.passwordStrength	密码强度	Strength	Robustesse	Fortaleza	Stärke	密码强度
+register.pwWeak	弱	Weak	Faible	Débil	Schwach	弱
+register.pwFair	一般	Fair	Moyenne	Aceptable	Mittelmäßig	一般
+register.pwGood	良好	Good	Bonne	Buena	Gut	良好
+register.pwStrong	强	Strong	Forte	Fuerte	Stark	强
+register.securityNote	邮箱仅用于一次性验证码，不会共享数据。	Your email is verified with a one-time code. No data is shared.	Votre email est vérifié avec un code à usage unique. Aucune donnée n'est partagée.	Su correo se verifica con un código de un solo uso. No se comparte ningún dato.	Ihre E-Mail wird mit einem Einmalcode verifiziert. Es werden keine Daten geteilt.	邮箱仅用于一次性验证码，不会共享数据。
+config.skills.listHint	资格按部门维护，点击铅笔图标管理。	Skills belong to each structure. Use the pencil to manage them.	Les compétences sont propres à chaque structure. Utilisez le crayon pour les gérer.	Las competencias son propias de cada estructura. Usa el lápiz para gestionarlas.	Die Kompetenzen gehören zur jeweiligen Struktur. Zum Verwalten das Stift-Symbol verwenden.	资格按部门维护，点击铅笔图标管理。
+config.skills.col.count	资格数	Skills	Compétences	Competencias	Kompetenzen	资格数
+config.skills.backToStructures	返回部门列表	Back to companies	Retour aux sociétés	Volver a las empresas	Zurück zu den Firmen	返回部门列表
+update.title	有新版本可用	A new version is available	Une nouvelle version est disponible	Hay una nueva versión disponible	Eine neue Version ist verfügbar	有新版本可用
+update.body	当前安装版本为 {{current}}，最新发布版本为 {{latest}}。	The installed version is {{current}}, while the latest published one is {{latest}}.	La version installée est la {{current}}, tandis que la dernière publiée est la {{latest}}.	La versión instalada es la {{current}}, mientras que la última publicada es la {{latest}}.	Die installierte Version ist {{current}}, die zuletzt veröffentlichte ist {{latest}}.	当前安装版本为 {{current}}，最新发布版本为 {{latest}}。
+update.howTo	更新方法：下载新安装包，卸载当前版本后安装新版本。您的数据（数据库、备份和设置）保留在原处，首次启动即可使用。	To update: download the new installer, uninstall the current version and install the new one. Your data — database, backups and settings — stays where it is and is there at first start.	Pour mettre à jour : téléchargez le nouvel installateur, désinstallez la version actuelle et installez la nouvelle. Vos données — base, sauvegardes et configuration — restent en place.	Para actualizar: descarga el nuevo instalador, desinstala la versión actual e instala la nueva. Tus datos — base de datos, copias y configuración — permanecen donde están.	Zum Aktualisieren: das neue Installationsprogramm herunterladen, die aktuelle Version deinstallieren und die neue installieren. Ihre Daten — Datenbank, Sicherungen und Konfiguration — bleiben erhalten.	更新方法：下载新安装包，卸载当前版本后安装新版本。您的数据（数据库、备份和设置）保留在原处，首次启动即可使用。
+update.dismissForever	此版本不再提醒	Don't remind me for this version	Ne plus me le rappeler pour cette version	No recordármelo para esta versión	Für diese Version nicht mehr erinnern	此版本不再提醒
+update.later	稍后	Later	Plus tard	Más tarde	Später	稍后
+update.download	前往下载	Go to download	Aller au téléchargement	Ir a la descarga	Zum Download	前往下载
+toast.shiftsChanged	求解后排班已发生变化：未保存任何内容。请刷新后重新求解。	The shifts changed after the solve: nothing was saved. Reload and run the solve again.	Les créneaux ont changé après le calcul : rien n'a été enregistré. Rechargez et relancez le calcul.	Los turnos cambiaron después del cálculo: no se guardó nada. Recarga y vuelve a lanzar el cálculo.	Die Schichten wurden nach der Berechnung geändert: nichts wurde gespeichert. Neu laden und Berechnung erneut starten.	求解后排班已发生变化：未保存任何内容。请刷新后重新求解。
+msg.err.safetyBackupClientToolsMissing	操作已取消：缺少 pg_dump 或其版本低于服务器，无法创建安全备份。请联系系统管理员——重试无效。	Operation cancelled: pg_dump is missing or older than the server, so the safety backup cannot be created. Contact your system administrator — retrying will not help.	Opération annulée : pg_dump est absent ou plus ancien que le serveur, la sauvegarde de sécurité ne peut donc pas être créée. Contactez votre administrateur système : réessayer ne changera rien.	Operación cancelada: pg_dump no está instalado o es más antiguo que el servidor, por lo que no se puede crear la copia de seguridad. Contacta con el administrador del sistema: reintentar no sirve.	Vorgang abgebrochen: pg_dump fehlt oder ist älter als der Server, daher kann die Sicherungskopie nicht erstellt werden. Wenden Sie sich an Ihren Systemadministrator — ein erneuter Versuch hilft nicht.	操作已取消：缺少 pg_dump 或其版本低于服务器，无法创建安全备份。请联系系统管理员——重试无效。
+msg.err.safetyBackupBusy	操作已取消：另一个备份正在进行。请一分钟后再试。数据未发生任何更改。	Operation cancelled: another backup is running. Try again in a minute. No data was changed.	Opération annulée : une autre sauvegarde est en cours. Réessayez dans une minute. Aucune donnée n'a été modifiée.	Operación cancelada: hay otra copia de seguridad en curso. Inténtalo de nuevo en un minuto. No se ha modificado ningún dato.	Vorgang abgebrochen: eine andere Sicherung läuft gerade. Versuchen Sie es in einer Minute erneut. Es wurden keine Daten geändert.	操作已取消：另一个备份正在进行。请一分钟后再试。数据未发生任何更改。
+backup.confirmRetentionTitle	确认轮换	Confirm rotation	Confirmer la rotation	Confirmar la rotación	Rotation bestätigen	确认轮换
+backup.confirmRetentionMsg	您正在降低保留时长或备份数量上限：下次轮换时，超出新限制的文件将被永久删除。是否继续？	You are lowering the retention or the maximum number of backups: at the next rotation, files beyond the new limits will be permanently deleted. Continue?	Vous réduisez la durée de conservation ou le nombre maximal de sauvegardes : à la prochaine rotation, les fichiers dépassant les nouvelles limites seront supprimés définitivement. Continuer ?	Estás reduciendo el período de conservación o el número máximo de copias: en la próxima rotación, los archivos que superen los nuevos límites se eliminarán definitivamente. ¿Continuar?	Sie verringern die Aufbewahrungsdauer oder die maximale Anzahl der Backups: Bei der nächsten Rotation werden Dateien über den neuen Grenzen endgültig gelöscht. Fortfahren?	您正在降低保留时长或备份数量上限：下次轮换时，超出新限制的文件将被永久删除。是否继续？
+label.new	新建	New	Nouveau	Nuevo	Neu	新建
+map.approvalNo	地图审图号标注	Map approval no. {{no}}	Numéro d'approbation de la carte {{no}}	N.º de aprobación del mapa {{no}}	Kartenfreigabenummer {{no}}	审图号 {{no}}
+map.auditor	审核员量词（接在数字后）	auditors	auditeurs	auditores	Auditoren	名审核员
+map.back	返回按钮	Back	Retour	Volver	Zurück	返回
+map.cities	城市数统计卡	Cities	Villes	Ciudades	Städte	城市
+map.city	人员所在城市	City	Ville	Ciudad	Stadt	所在城市
+map.cityList	侧栏城市列表标题	Cities	Villes	Ciudades	Städte	城市列表
+map.code	工号	Code	Code	Código	Code	工号
+map.dataTime	数据时间戳标签	Data as of	Données au	Datos al	Datenstand	数据时间
+map.email	邮箱	Email	E-mail	Correo electrónico	E-Mail	邮箱
+map.groupHome	打点口径：按常驻城市	By home base	Par ville de rattachement	Por ciudad de residencia	Nach Wohnsitz	按常驻
+map.groupLabel	打点口径切换的无障碍标签	Grouping	Regroupement	Agrupación	Gruppierung	打点口径
+map.groupOnsite	打点口径：按任务所在地	By work site	Par lieu de mission	Por lugar de trabajo	Nach Einsatzort	按现场
+map.headNext	城市头部统计（未来7天口径）	{{n}} on duty within 7 days	{{n}} en service sous 7 jours	{{n}} en servicio en 7 días	{{n}} im Dienst innerhalb von 7 Tagen	{{n}} 人7天内有班
+map.headNow	城市头部统计（此刻口径）	{{n}} on duty	{{n}} en service	{{n}} en servicio	{{n}} im Dienst	{{n}} 人在岗
+map.headToday	城市头部统计（今日口径）	{{n}} on duty today	{{n}} en service aujourd'hui	{{n}} en servicio hoy	{{n}} heute im Dienst	{{n}} 人今日有班
+map.homeCity	人员常驻城市	Home city	Ville de rattachement	Ciudad de residencia	Wohnsitz	常驻城市
+map.idle	空闲状态标签	Idle	Disponible	Disponible	Verfügbar	空闲
+map.keyMissingBody	地图密钥缺失说明	This page uses the AMap JS API. Apply for a Web (JS API) key and its security code at console.amap.com, then set app.map.amap-js-key and app.map.amap-js-security-code (or the AMAP_JS_KEY and AMAP_JS_SECURITY_CODE environment variables) and restart the backend; no frontend rebuild is needed.	Cette page utilise l'API JS AMap. Demandez une clé Web (JS API) et son code de sécurité sur console.amap.com, puis renseignez app.map.amap-js-key et app.map.amap-js-security-code (ou les variables d'environnement AMAP_JS_KEY et AMAP_JS_SECURITY_CODE) et redémarrez le backend ; aucune reconstruction du frontend n'est nécessaire.	Esta página usa la API JS de AMap. Solicite una clave Web (JS API) y su código de seguridad en console.amap.com, configure app.map.amap-js-key y app.map.amap-js-security-code (o las variables de entorno AMAP_JS_KEY y AMAP_JS_SECURITY_CODE) y reinicie el backend; no hace falta recompilar el frontend.	Diese Seite nutzt die AMap JS API. Beantragen Sie auf console.amap.com einen Web-Schlüssel (JS API) samt Sicherheitscode, setzen Sie app.map.amap-js-key und app.map.amap-js-security-code (oder die Umgebungsvariablen AMAP_JS_KEY und AMAP_JS_SECURITY_CODE) und starten Sie das Backend neu; ein Neubau des Frontends ist nicht nötig.	本页使用高德地图 JS API。请到 console.amap.com 申请「Web端(JS API)」Key 与安全密钥，然后设置 app.map.amap-js-key 与 app.map.amap-js-security-code（或环境变量 AMAP_JS_KEY、AMAP_JS_SECURITY_CODE）并重启后端，无需重新构建前端。
+map.keyMissingTitle	地图密钥缺失标题	Map key not configured	Clé de carte non configurée	Clave de mapa no configurada	Kartenschlüssel nicht konfiguriert	地图密钥未配置
+map.loadError	地图数据加载失败	Failed to load map data.	Échec du chargement des données de la carte.	Error al cargar los datos del mapa.	Kartendaten konnten nicht geladen werden.	加载地图数据失败。
+map.loading	加载中提示	Loading…	Chargement…	Cargando…	Wird geladen…	加载中…
+map.mapError	底图加载失败	Map failed to load. Check the key and Referer whitelist.	Échec du chargement de la carte. Vérifiez la clé et la liste des référents autorisés.	Error al cargar el mapa. Compruebe la clave y la lista de referentes permitidos.	Karte konnte nicht geladen werden. Prüfen Sie Schlüssel und Referer-Whitelist.	地图加载失败，请检查密钥与 Referer 白名单。
+map.noShift	该时间范围内无班次	No shift in this range	Aucun poste sur cette période	Sin turno en este rango	Keine Schicht in diesem Zeitraum	该时间范围内无班次
+map.none	城市下无审核员	No auditors.	Aucun auditeur.	Sin auditores.	Keine Auditoren.	该城市暂无审核员。
+map.onDuty	在岗状态标签	On duty	En service	En servicio	Im Dienst	在岗
+map.onDutyNow	当前在岗统计卡	On duty now	En service maintenant	En servicio ahora	Jetzt im Dienst	当前在岗
+map.onsiteCount	城市头部统计（现场口径）	{{n}} on site	{{n}} sur site	{{n}} en el sitio	{{n}} vor Ort	现场 {{n}} 人
+map.openOrder	跳转到订单的提示	Open this order in the scheduling workflow	Ouvrir cet ordre dans le flux de planification	Abrir este pedido en el flujo de planificación	Diesen Auftrag im Planungsablauf öffnen	在工作表中查看此订单
+map.openPerson	跳转到人员详情的提示	Open auditor details	Ouvrir la fiche de l'auditeur	Abrir los datos del auditor	Auditorendetails öffnen	查看审核员详情
+map.order	关联工单	Order	Ordre	Pedido	Auftrag	关联工单
+map.pickHint	未选中城市时的提示	Click a city on the map to see its auditors.	Cliquez sur une ville de la carte pour voir ses auditeurs.	Haga clic en una ciudad del mapa para ver sus auditores.	Klicken Sie auf eine Stadt in der Karte, um ihre Auditoren zu sehen.	点击地图上的城市，查看该城市的审核员。
+map.refresh	刷新按钮	Refresh	Actualiser	Actualizar	Aktualisieren	刷新
+map.scopeLabel	时间范围切换的无障碍标签	Time range	Période	Rango temporal	Zeitraum	时间范围
+map.scopeNext7	时间口径：未来7天	Next 7 days	7 prochains jours	Próximos 7 días	Nächste 7 Tage	未来7天
+map.scopeNow	时间口径：此刻	Now	Maintenant	Ahora	Jetzt	此刻
+map.scopeToday	时间口径：今日	Today	Aujourd'hui	Hoy	Heute	今日
+map.selectStructure	未选择部门时的提示	Select a structure in the top-right corner first.	Sélectionnez d'abord une structure en haut à droite.	Seleccione primero una estructura en la esquina superior derecha.	Wählen Sie zuerst oben rechts eine Struktur aus.	请先在右上角选择一个部门。
+map.shiftNext	班次标签（未来7天口径）	Upcoming shift	Poste à venir	Próximo turno	Nächste Schicht	近期班次
+map.shiftNow	班次标签（此刻口径）	Current shift	Poste en cours	Turno actual	Aktuelle Schicht	当前班次
+map.shiftToday	班次标签（今日口径）	Today's shift	Poste du jour	Turno de hoy	Heutige Schicht	今日班次
+map.title	地图页标题	Auditor Distribution	Répartition des auditeurs	Distribución de auditores	Auditorenverteilung	审核员分布地图
+map.todayOff	状态（今日无班）	Not on duty today	Pas en service aujourd'hui	Sin servicio hoy	Heute nicht im Dienst	今日无班
+map.todayOn	状态（今日有班）	On duty today	En service aujourd'hui	En servicio hoy	Heute im Dienst	今日有班
+map.todayTotal	统计卡（今日有班）	On duty today	En service aujourd'hui	En servicio hoy	Heute im Dienst	今日有班
+map.totalAuditors	审核员总数统计卡	Auditors	Auditeurs	Auditores	Auditoren	审核员
+map.unassigned	未归属城市分组	No city assigned	Aucune ville attribuée	Sin ciudad asignada	Keiner Stadt zugeordnet	未归属城市
+map.weekOff	状态（7天内无班）	No shift within 7 days	Aucun poste sous 7 jours	Sin turno en 7 días	Keine Schicht innerhalb von 7 Tagen	7天内无班
+map.weekOn	状态（7天内有班）	On duty within 7 days	En service sous 7 jours	En servicio en 7 días	Im Dienst innerhalb von 7 Tagen	7天内有班
+map.weekTotal	统计卡（7天内有班）	On duty within 7 days	En service sous 7 jours	En servicio en 7 días	Im Dienst innerhalb von 7 Tagen	7天内有班
+map.noStructureTitle	未选择部门时的空态标题	No structure selected	Aucune structure sélectionnée	Ninguna estructura seleccionada	Keine Struktur ausgewählt	未选择部门
+label.resume	简历栏标题	Resume	CV	Currículum	Lebenslauf	简历
+msg.resumeEmpty	简历未上传的空状态提示	No resume uploaded yet — PDF only, up to 10 MB.	Aucun CV téléversé pour l'instant — PDF uniquement, 10 Mo max.	Aún no se ha subido ningún currículum: solo PDF, máx. 10 MB.	Noch kein Lebenslauf hochgeladen — nur PDF, max. 10 MB.	尚未上传简历（仅支持 PDF，最大 10 MB）。
+tooltip.employeeHasUpcomingShifts	删除按钮禁用时的提示（有在途班次）	This auditor holds a current or upcoming shift — reassign it before deleting.	Cet auditeur a un poste en cours ou à venir — réaffectez-le avant de le supprimer.	Este auditor tiene un turno en curso o próximo: reasígnelo antes de eliminarlo.	Dieser Auditor hat eine laufende oder kommende Schicht — bitte zuerst umbesetzen.	该审核员有进行中或未来的班次，请先改派后再删除。
+error.employeeInUse	删除失败：存在在途班次	This auditor still has a current or upcoming shift. Reassign it first.	Cet auditeur a encore un poste en cours ou à venir. Réaffectez-le d'abord.	Este auditor todavía tiene un turno en curso o próximo. Reasígnelo primero.	Dieser Auditor hat noch eine laufende oder kommende Schicht. Bitte zuerst umbesetzen.	该审核员仍有进行中或未来的班次，请先改派再删除。
+msg.resumeSaveFirst	新增员工时简历栏的提示	Save this auditor first, then you can upload a resume.	Enregistrez d'abord cet auditeur pour pouvoir téléverser un CV.	Guarde primero este auditor y después podrá subir un currículum.	Bitte zuerst den Auditor speichern, danach kann ein Lebenslauf hochgeladen werden.	请先保存该审核员，然后即可上传简历。
+btn.upload	上传按钮	Upload	Téléverser	Subir	Hochladen	上传
+tooltip.downloadResume	下载简历按钮提示	Download resume	Télécharger le CV	Descargar currículum	Lebenslauf herunterladen	下载简历
+tooltip.deleteResume	删除简历按钮提示	Delete resume	Supprimer le CV	Eliminar currículum	Lebenslauf löschen	删除简历
+toast.resumeUploaded	简历上传成功	Resume uploaded.	CV téléversé.	Currículum subido.	Lebenslauf hochgeladen.	简历已上传。
+toast.resumeDeleted	简历删除成功	Resume deleted.	CV supprimé.	Currículum eliminado.	Lebenslauf gelöscht.	简历已删除。
+toast.errorUpload	上传失败的通用提示	Upload failed.	Échec du téléversement.	Error al subir.	Hochladen fehlgeschlagen.	上传失败。
+error.resumeType	上传失败：文件不是 PDF	Only PDF files are accepted.	Seuls les fichiers PDF sont acceptés.	Solo se aceptan archivos PDF.	Nur PDF-Dateien werden akzeptiert.	只支持 PDF 文件。
+error.resumeTooLarge	上传失败：文件超过 10 MB	File is larger than 10 MB.	Le fichier dépasse 10 Mo.	El archivo supera los 10 MB.	Die Datei ist größer als 10 MB.	文件超过 10 MB。
+error.resumeStoreFailed	上传失败：落盘失败	Could not save the file — check disk space.	Impossible d'enregistrer le fichier — vérifiez l'espace disque.	No se pudo guardar el archivo: compruebe el espacio en disco.	Datei konnte nicht gespeichert werden — bitte Speicherplatz prüfen.	无法保存文件，请检查磁盘空间。
+confirm.deleteResume	删除简历前的确认	Delete this resume? This cannot be undone.	Supprimer ce CV ? Cette action est irréversible.	¿Eliminar este currículum? No se puede deshacer.	Diesen Lebenslauf löschen? Das lässt sich nicht rückgängig machen.	确定删除该简历？此操作不可撤销。
+tooltip.replaceResume	替换简历按钮提示	Replace resume	Remplacer le CV	Reemplazar el currículum	Lebenslauf ersetzen	替换简历
+map.taskCity	侧栏：当前班次的任务地点	Task city	Ville de la mission	Ciudad de la tarea	Einsatzort	任务地点
+map.crossCity	任务地点与常驻城市不同时的标记	(cross-city)	(hors ville)	(otra ciudad)	(andere Stadt)	（跨城）
+search.operator	排班页搜索框：按审核员姓名定位行	Search operator…	Rechercher un auditeur…	Buscar auditor…	Prüfer suchen…	搜索审核员…
+search.location	排班页搜索框：按城市名定位行	Search city…	Rechercher une ville…	Buscar ciudad…	Stadt suchen…	搜索城市…
+search.none	搜索无匹配时的提示	No match	Aucun résultat	Sin resultados	Kein Treffer	无匹配
+search.prev	搜索：跳到上一个匹配行	Previous match	Résultat précédent	Coincidencia anterior	Vorheriger Treffer	上一个匹配
+search.next	搜索：跳到下一个匹配行	Next match	Résultat suivant	Coincidencia siguiente	Nächster Treffer	下一个匹配
+daygrid.collapse	天格子视图：展开 +N 后收起	Collapse	Réduire	Contraer	Einklappen	收起
+daygrid.unassigned	天格子视图：班次尚未分配审核员	Unassigned	Non attribué	Sin asignar	Nicht zugewiesen	未分配
+daygrid.continuation	天格子视图：跨天班次在后续日期的提示	(continues)	(se poursuit)	(continúa)	(Fortsetzung)	（跨天延续）
+daygrid.missingSkill	天格子视图：已分配的审核员缺少所需资格	⚠ Missing required qualification	⚠ Qualification requise manquante	⚠ Falta la cualificación requerida	⚠ Erforderliche Qualifikation fehlt	⚠ 缺少所需资格

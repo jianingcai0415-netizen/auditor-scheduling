@@ -1,0 +1,584 @@
+# Architecture
+
+Why this application is built the way it is. Each section states a decision, what it buys,
+and what it costs — the constraints are as informative as the choices, and several of them
+were paid for in production before they were written down.
+
+The shape of the problem, in one sentence: a small healthcare organisation has to cover
+locations with qualified staff, week after week, and the assignment is a constraint
+satisfaction problem that a human solves badly and slowly. Everything else — the interface,
+the two database engines, the installers — exists to put that solver in the hands of someone
+who does not run a server room.
+
+---
+
+## 1. The system at a glance
+
+```mermaid
+flowchart TB
+    subgraph client["Browser"]
+        UI["React 19 + TypeScript<br/>bundled by Vite"]
+    end
+
+    subgraph server["Quarkus 3.37 · single process, port 8080"]
+        REST["JAX-RS endpoints<br/>form authentication, ADMIN / HEAD NURSE"]
+        SOLVER["Timefold Solver 1.33<br/>SolverManager, asynchronous"]
+        ORM["Hibernate ORM with Panache<br/>25 entities"]
+        FLYWAY["Flyway<br/>schema migrations"]
+        BACKUP["Backup service<br/>scheduled and manual"]
+        MAIL["Mailer<br/>OTP and shift PDFs"]
+    end
+
+    subgraph data["Persistence — one engine per installation"]
+        SQLITE[("SQLite<br/>single file")]
+        PG[("PostgreSQL<br/>server")]
+    end
+
+    UI -- "REST/JSON + session cookie" --> REST
+    REST --> SOLVER
+    REST --> ORM
+    REST --> BACKUP
+    REST --> MAIL
+    FLYWAY -- "at startup" --> ORM
+    ORM --> SQLITE
+    ORM --> PG
+
+    classDef store fill:#0e1017,stroke:#39405a,color:#e6e8ee
+    class SQLITE,PG store
+```
+
+One process, one port, one artifact. There is no separate frontend server, no message broker
+and no cache tier, because the deployment target is a Raspberry Pi in a clinic and every
+additional moving part is one more thing that can be found broken on a Monday morning by
+somebody who is not an administrator.
+
+One exception, and it is worth knowing about: on PostgreSQL, backup and restore shell out to
+`pg_dump` and `pg_restore`, which must be installed with a major version at least that of the
+server. Without them the feature disables itself rather than failing later — but it is a
+versioned coupling that lives outside the process.
+
+---
+
+## 2. Startup: what happens before anything can go wrong
+
+Three things must happen in a fixed order, and each of them was moved earlier at some point
+because it had gone wrong where it used to be.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant JVM as JVM
+    participant Main as AppMain.main()
+    participant Guard as SingleInstanceGuard
+    participant Rename as LegacyDatabaseName
+    participant Q as Quarkus
+    participant CS as Config sources
+    participant FW as Flyway
+    participant Obs as StartupEvent observers
+
+    JVM->>Main: launch
+    Main->>Guard: enforce()
+    alt another instance holds the lock
+        Guard-->>JVM: open the browser on it, exit
+    end
+    Main->>Rename: migrate()
+    Note over Rename: renames large_data.db → employee_scheduling.db,<br/>WAL companions first. Must precede Flyway.
+    Main->>Q: Quarkus.run()
+    Q->>CS: build (AppUserConfigSource 450, AppDataDirConfigSource 320, …)
+    Note over CS: the data directory is resolved here,<br/>which is why config.properties cannot move it
+    Q->>FW: migrate at start
+    Q->>Obs: StartupEvent
+    Note over Obs: DatabaseConfigValidator (APPLICATION) … UiTranslationSyncService (+600)<br/>DemoDataRepository, DemoDatasetSeeder and BrowserLauncher declare no priority
+    Obs-->>JVM: listening on :8080
+```
+
+**Why `main()` and not a `StartupEvent` observer.** Observers fire after runtime
+initialisation — that is, after Flyway has already migrated and after the HTTP port has been
+contested. The duplicate-instance check used to live there, and two rapid double-clicks on the
+desktop icon had two processes migrating the same SQLite file at once. The rename has the same
+constraint for a different reason: arriving after Flyway means finding an empty database
+already created under the new name, at which point renaming is no longer safe.
+
+**Only two observers declare a priority**, and only one of those orderings is load-bearing:
+`UiTranslationSyncService` at `APPLICATION + 600` runs after everything that might still be
+creating tables. The rest — `DemoDataRepository`, `DemoDatasetSeeder`, `BrowserLauncher` —
+leave it to CDI, so their relative order is undefined and nothing may depend on it.
+
+---
+
+## 3. One artifact, built in one order
+
+The frontend is not deployed separately: Vite writes its output straight into the resources
+that Quarkus serves, so the jar contains the interface.
+
+```mermaid
+flowchart LR
+    A["frontend/<br/>npm run build"] -->|"tsc -b && vite build"| B["src/main/resources/<br/>META-INF/resources/"]
+    B --> C["mvn package<br/>-Dquarkus.package.jar.type=uber-jar<br/>-Dquarkus.profile=&lt;engine&gt;"]
+    C --> D["*-runner.jar<br/>~77 MB"]
+    D --> E["jpackage → MSI<br/>JRE included, ~125 MB"]
+    D --> F["systemd unit<br/>Linux service"]
+```
+
+**The order is load-bearing.** The jar embeds that directory exactly as it is on disk, so a
+jar built before the frontend build ships the *previous* interface — and the defect you think
+you fixed is still there, in a package that looks correct.
+
+**The profile is build-time.** `quarkus.datasource.db-kind` and `quarkus.flyway.locations`
+are fixed when the jar is built; no environment variable changes them afterwards. A jar built
+without a profile is broken on both engines: the default profile has
+`quarkus.flyway.active=false`, so no migration ever runs. On PostgreSQL it dies at connection
+time; on SQLite the legacy bootstrap partially builds the schema and then
+`validateRequiredSchema()` aborts startup naming the first missing table. Loud, but only after
+the package has been installed.
+
+The Linux installer reads the engine baked into the jar and refuses a mismatch before touching
+the machine. The Windows script does not need to: it builds the jar itself with the selected
+profile.
+
+---
+
+## 4. Front end — React 19, TypeScript, Vite
+
+React for the interactive timeline, which is the heart of the product: dragging a shift onto
+an operator and seeing constraints react is not something a server-rendered page does well.
+TypeScript because the REST contract has thirty-odd shapes and a rename without a compiler is
+a guessing game. Vite (8, on Rolldown) for a dev server that reloads in under a second on a
+laptop and produces a code-split bundle without configuration archaeology.
+
+| Directory | Responsibility |
+|---|---|
+| `src/pages/` | One file per screen: Shifts, Employees, Locations, Specialists, Structures, Skills, Labels, Dates, Report, Config, Users, Login, Register, Home |
+| `src/components/` | Modals, navbar, timeline, backup and solver panels |
+| `src/api/` | The single HTTP client; every call goes through it, including error-code mapping |
+| `src/auth/` | `AuthContext`: session, roles, sign-in and sign-out |
+| `src/store/` | Zustand — selected organisation, language, and a small cache of per-structure UI settings whose source of truth is the backend |
+| `src/i18n/` | i18next (Chinese and English), catalogue fetched from the backend |
+
+In development the Vite server on :5173 proxies to Quarkus on :8080, so there is one origin
+and the session cookie behaves exactly as it will in production. In production Quarkus serves
+the built assets itself and the SPA fallback filter routes unknown paths to `index.html`.
+
+**Translations live in the database, not in the bundle.** They are edited from the Labels
+page at runtime, without a rebuild — the reason the i18n catalogue is fetched rather than
+compiled in. The interface offers Chinese and English; the portable catalogue carries six
+languages.
+
+---
+
+## 5. Back end — layering
+
+```mermaid
+flowchart TB
+    R["rest/ — JAX-RS resources<br/>authorization, validation, HTTP status"]
+    D["dto/ — transport shapes<br/>the REST contract, decoupled from the schema"]
+    P["persistence/ — Panache entities<br/>25 entities over 30 tables, structure ownership"]
+    S["solver/ + domain/ — planning model<br/>separate from the persisted model"]
+    C["config/ — startup and boot-time config sources<br/>data directory, single instance, SPA fallback filter"]
+
+    R --> D
+    R --> P
+    R --> S
+    C -.->|"before Quarkus boots"| R
+```
+
+Eight packages — the five above plus `security/` (HTML sanitisation) and `utils/` (lenient
+JSON deserialisation) — and one rule: the REST layer never returns an entity. DTOs exist so that a column
+rename does not become a breaking API change, and so that a lazily-loaded association cannot
+serialise half the database by accident.
+
+### What a request passes through
+
+```mermaid
+flowchart TB
+    REQ(["HTTP request"]) --> SPA{"Is it a browser<br/>navigation?"}
+    SPA -- "Accept: text/html,<br/>unknown path" --> IDX["SpaRoutingFilter<br/>serves index.html"]
+    SPA -- "API call" --> BAK{"/backup/*?"}
+    BAK -- yes --> TOK["BackupAdminFilter<br/>AUTHENTICATION − 200<br/>token, and TLS unless localhost"]
+    BAK -- no --> GATE
+    TOK --> GATE["DatabaseRequestGate<br/>AUTHENTICATION − 100<br/>excludes REST during a restore;<br/>serialises writers on SQLite"]
+    GATE --> AUTH["Quarkus form authentication<br/>session cookie, 8 hours"]
+    AUTH --> ACT["ActiveUserFilter<br/>AUTHORIZATION<br/>pending accounts get INACTIVE"]
+    ACT --> ROLE["@RolesAllowed<br/>ADMIN / CAPOSALA"]
+    ROLE --> RES["Resource method<br/>validates structure ownership"]
+    RES --> ORM["Panache query, filtered by structure"]
+    ORM --> DB[("Database")]
+```
+
+The order is expressed as JAX-RS priorities, and it matters: the backup token is checked
+*before* authentication, which is why an unauthenticated call to `/backup/list` answers 401
+from the token filter rather than 403 from the role check. `ActiveUserFilter` exempts `/auth/me`,
+`/auth/logout` and `/auth/register/*`, so an account still awaiting approval can discover its
+own state, sign out, and finish registering — and nothing else.
+
+The planning model lives in `domain/` and `dto/` — the transport shapes double as problem
+facts — and is **deliberately not** the persistence model. Timefold needs a
+graph it can copy cheaply thousands of times per second; JPA entities carry proxies, dirty
+tracking and a session. Keeping them apart costs a mapping step and buys a solver that never
+touches the database mid-solve.
+
+---
+
+## 6. Persistence — Hibernate ORM with Panache
+
+The data layer was hand-written JDBC until July 2026: roughly 6,500 lines of
+`PreparedStatement`, string-built SQL and manual result mapping. It was migrated to
+Hibernate ORM with Panache one entity at a time, keeping the REST contract identical
+bit-for-bit at every step.
+
+What the change bought, concretely:
+
+- **One dialect boundary instead of hundreds.** SQLite and PostgreSQL disagree on
+  auto-increment, boolean literals, upserts and date handling. In JDBC every one of those
+  disagreements was a place to get wrong; in Hibernate it is a dialect.
+- **Transactions that actually span an operation.** Multi-request operations — saving a week
+  of assignments, applying a template — are atomic. Before, a failure halfway left rows
+  behind.
+- **Ownership filtered in the queries.** Every entity that belongs to an organisation is
+  filtered by structure in the repository. Endpoints still validate that the caller's
+  `structureId` owns the requested record before delegating — belt and braces, because
+  cross-organisation reads were a real class of bug before.
+
+### The data model, in one picture
+
+Everything an organisation owns hangs off `structures`, and that single edge is what makes
+multi-organisation isolation enforceable rather than aspirational.
+
+```mermaid
+erDiagram
+    STRUCTURES ||--o{ EMPLOYEES : owns
+    STRUCTURES ||--o{ SPECIALISTS : owns
+    STRUCTURES ||--o{ LOCATIONS : owns
+    STRUCTURES ||--o{ SKILLS : owns
+    STRUCTURES ||--o{ SHIFT_TEMPLATE_HEADERS : owns
+
+    SPECIALISTS ||--o{ LOCATIONS : "supervises (SET NULL)"
+    LOCATIONS ||--o{ SHIFTS : "must be covered by"
+    EMPLOYEES ||--o{ SHIFTS : "assigned to (SET NULL)"
+
+    EMPLOYEES ||--o{ EMPLOYEE_SKILLS : has
+    SKILLS ||--o{ EMPLOYEE_SKILLS : ""
+    LOCATIONS ||--o{ LOCATION_SKILLS : requires
+    SKILLS ||--o{ LOCATION_SKILLS : ""
+    SHIFTS ||--o{ SHIFT_SKILLS : "snapshot of"
+    SKILLS ||--o{ SHIFT_SKILLS : ""
+
+    EMPLOYEES ||--o{ EMPLOYEE_DATES : "prefers / cannot"
+    EMPLOYEES ||--o{ OPERATOR_SPECIALIST_AFFINITY : ""
+    SPECIALISTS ||--o{ OPERATOR_SPECIALIST_AFFINITY : "avoid / incompatible"
+
+    SHIFT_TEMPLATE_HEADERS ||--o{ SHIFT_TEMPLATES : "named week"
+    LOCATIONS ||--o{ SHIFT_TEMPLATES : ""
+```
+
+Three modelling choices are worth naming, because each one is a decision and not an accident:
+
+- **`shifts.employee_id` is `ON DELETE SET NULL`, everything else cascades.** Removing an
+  employee must not remove the shift they were covering: the coverage still has to happen, and
+  the schedule should show the hole rather than quietly lose the row.
+- **`shift_skills` records requirements per shift**, even though `location_skills` already
+  says what a location needs: applying a template copies the rows onto each generated shift.
+  The solver therefore reads the requirements attached to the shift it is assigning, not the
+  location's current ones.
+- **Skills belong to a structure** (`UNIQUE (structure_id, name)`, since V5). Two
+  organisations can both have a skill called "Triage" and mean different things by it.
+
+Two kinds of direct JDBC remain. The deliberate ones are compatibility DDL for pre-Flyway
+databases and the SQLite backup path, which needs `VACUUM INTO` on a real connection. The rest
+is the superseded JDBC data layer still sitting in `DemoDataRepository`: every REST call now
+goes to an `*Orm` twin, so those methods are unreachable — dead weight pending deletion, not a
+second way of reaching the database.
+
+---
+
+## 7. Two engines, one application
+
+```mermaid
+flowchart LR
+    subgraph desktop["Desktop — one person, one machine"]
+        W["Windows MSI<br/>JRE bundled"] --> S[("SQLite<br/>employee_scheduling.db")]
+    end
+    subgraph server2["Server — a team"]
+        L["Linux service<br/>systemd"] --> P[("PostgreSQL<br/>employee_scheduling")]
+    end
+```
+
+| | SQLite | PostgreSQL |
+|---|---|---|
+| Deployment | A file next to the user's data | A service to install and maintain |
+| Concurrency | One writer at a time | Real concurrent access |
+| Backup | `VACUUM INTO`, consistent and hot | `pg_dump -Fc`, `pg_restore --single-transaction` |
+| Registration | Standalone: username and password | Server: email with a one-time passcode |
+| Intended for | A clinic where one person plans | Several people planning together |
+
+Supporting both is not free — it is the reason for two migration directories, a parity test
+and a build-time profile. It is worth it because the alternative was asking a single-user
+clinic to install and maintain a database server, which is exactly the barrier that stops
+this kind of software from being used at all.
+
+**The file and the database now share a name.** The SQLite file is
+`employee_scheduling.db`, matching the PostgreSQL database and role. It used to be
+`large_data.db`, inherited from the Timefold quickstart. Renaming it required a migration
+that runs *before* Quarkus boots (`LegacyDatabaseName`, called from `AppMain.main()`),
+because Flyway would otherwise create an empty database under the new name while the real one
+sat beside it — an empty application with the data two centimetres away and no error anywhere.
+
+---
+
+## 8. Flyway — one migration set per engine
+
+```mermaid
+flowchart TB
+    subgraph mig["src/main/resources/db/migration/"]
+        direction LR
+        SQ["sqlite/<br/>V1 … V8"]
+        PGM["postgresql/<br/>V1 … V8"]
+    end
+    SQ -->|"quarkus.flyway.locations<br/>fixed at build time"| J1["SQLite jar"]
+    PGM --> J2["PostgreSQL jar"]
+    T["MigrationSchemaParityTest"] -. "fails the build if the two<br/>diverge structurally" .-> mig
+```
+
+The two directories hold the same eight versions with the same logical schema, written in
+each engine's dialect. They are not shared, because a single set would mean either a
+lowest-common-denominator schema or runtime branching inside the SQL. They cannot silently
+drift, because `MigrationSchemaParityTest` compares tables, columns, constraints and indexes
+and fails the build — and it rejects structural DDL it does not understand rather than
+reporting a false pass.
+
+Two settings deserve their reasoning:
+
+- **`baseline-on-migrate=false`**, set explicitly for SQLite and left at the Flyway default
+  for PostgreSQL. Pointing the application at a populated database with no
+  `flyway_schema_history` fails loudly. With baselining on, that same database would be
+  silently stamped at version 1 and later migrations would run against a schema that never
+  received the earlier ones — corruption discovered weeks later.
+- **`migrate-at-start=true`.** Upgrading is "install the new package and start it". There is
+  no migration step for the administrator to forget, because there is no administrator.
+
+---
+
+## 9. Timefold Solver — the planning model
+
+```mermaid
+classDiagram
+    class EmployeeSchedule {
+        <<PlanningSolution>>
+        +List~Employee~ employees ProblemFact + ValueRange
+        +List~Shift~ shifts PlanningEntity collection
+        +List~Location~ locations ProblemFact
+        +SolverSettings solverSettings ProblemFact
+        +HardSoftBigDecimalScore score PlanningScore
+    }
+    class Shift {
+        <<PlanningEntity>>
+        +Integer id PlanningId
+        +boolean pinned PlanningPin
+        +Employee employee PlanningVariable
+        +LocalDateTime start
+        +LocalDateTime end
+        +Integer location_id
+        +String location_desc
+    }
+    EmployeeSchedule "1" o-- "many" Shift
+```
+
+The shift is the planning entity and the assigned employee is the only planning variable:
+times and locations are given, people are what the solver decides. Three details matter.
+
+**`allowsUnassigned = true`.** A shift may stay empty. Without it, an understaffed week has no
+feasible solution at all and the solver returns nothing useful; with it, the schedule can come
+back with the gaps visible and a penalty attached, which is the answer a planner can act on.
+Whether a gap is penalised or forbidden is then a per-organisation setting, *Allow unassigned
+shifts*, and it is **off by default**: out of the box an empty shift is a hard violation.
+
+**`@PlanningPin`.** Shifts already decided — and shifts just outside the planning window —
+are pinned. This is what fixed the "blindness at the window edges": solving a week in
+isolation produced a schedule that was locally perfect and violated the rest rule against the
+Sunday before it.
+
+**`HardSoftBigDecimalScore`.** Hard constraints are inviolable, soft ones are preferences, and
+the decimal part exists because soft penalties are measured in minutes and weights are
+user-configurable — integer arithmetic accumulated rounding error across thousands of shifts.
+
+### The constraints
+
+Eight hard constraints, thirteen soft ones, exactly as named in
+`EmployeeSchedulingConstraintProvider`:
+
+| Hard — never violated | Soft — traded off |
+|---|---|
+| Missing required skill | Optional skill match |
+| Unavailable employee | Desired day for employee |
+| Overlapping shift | Undesired day for employee |
+| At least 10 hours between 2 shifts | Maximum consecutive days |
+| Max one shift per day | Minimum days off per week |
+| Maximum weekly hours | Weekly shift range · Minimum weekly shifts (empty week) |
+| Incompatible specialist | Avoid specialist |
+| Unassigned shift forbidden | Unassigned shift penalty |
+| | Balance employee hours · Balance employee shift assignments · Balance night shifts |
+| | Same location continuity |
+
+Note where the line falls: a maximum of *weekly hours* is hard, a maximum of *consecutive
+days* is soft. The first is a legal limit, the second a preference that a short-staffed week
+may have to break — and a hard constraint there would return "no feasible solution" precisely
+when the planner most needs an answer.
+
+Every soft weight is editable per organisation from the Solver Parameters page. The unit is
+deliberate: in the weekly and rest-pattern constraints, counted violations are multiplied by a
+weight and by `SOFT_UNIT_MINUTES` (480, a working day) so that they are commensurable with the
+penalties naturally expressed in minutes. Before that, three of them were inert — present in
+the code, worth nothing in the score. *Same location continuity* and *Balance night shifts*
+are scaled by their weight alone, and are correspondingly gentler.
+
+### Solving is asynchronous
+
+```mermaid
+sequenceDiagram
+    participant UI as Browser
+    participant API as EmployeeScheduleResource
+    participant SM as SolverManager
+    participant DB as Database
+
+    UI->>API: GET /demo-data/generate (window + pinned context)
+    API->>DB: load
+    API-->>UI: the problem
+    UI->>API: POST /schedules (the whole problem as JSON)
+    API->>SM: solveAndListen(jobId, problem)
+    API-->>UI: 200 text/plain jobId
+    loop while solving
+        SM-->>API: best solution event
+        UI->>API: GET /schedules/{jobId} (polling)
+        API-->>UI: score and best solution so far
+    end
+    UI->>API: POST save assignments
+    API->>DB: persist, transactionally, scoped to the structure
+```
+
+`SolverManager` runs the solve on its own thread with a termination limit (30 seconds by
+default, overridden per organisation and clamped to 5-600 s). The HTTP request never blocks;
+the interface shows the best solution found so far and the user decides when to keep it.
+Nothing is written until they do — the POST carries the problem in its body and touches no
+table. There is also `GET /schedules/{jobId}/status`, which returns score and solver status
+without the assignments; the interface polls the full-solution endpoint instead.
+
+---
+
+## 10. Configuration — who wins over whom
+
+```mermaid
+flowchart TB
+    A["450 · AppUserConfigSource<br/>%LOCALAPPDATA%/…/config.properties<br/><b>whoever installs</b>"]
+    B["400 · System properties<br/>--java-options in the package"]
+    C["320 · AppDataDirConfigSource<br/>computed at startup"]
+    D["300 · Environment variables"]
+    E["295 · .env file<br/>development"]
+    F["250 · application.properties<br/>in the jar"]
+    A --> B --> C --> D --> E --> F
+```
+
+Higher ordinal wins. The unusual choice is the top one: **the user's file sits above the
+values baked into the package**, on purpose. Those baked values are defaults, and whoever
+installs the application must be able to fix a port already taken by another program without
+depending on whoever produced the installer.
+
+One exception: `app.data.dir` is ignored from that file, because by the time it is read the
+data directory has already been resolved. Honouring it would produce a configuration that
+says one thing and an application that does another.
+
+---
+
+## 11. Data, backups, and where things live
+
+Application data lives **outside** the installation directory —
+`%LOCALAPPDATA%\EmployeeScheduling` on Windows, the configured data directory on Linux. This
+is not tidiness: it is the fix for three real failures. Uninstalling used to delete the
+user's database; the uninstaller could not remove a log file the running application held
+open; and hardening the backup directory's permissions locked out SYSTEM, which is the
+account the MSI uninstaller runs as.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Validating: restore requested
+    Validating --> REJECTED: wrong origin, unreadable file,<br/>or incompatible schema
+    Validating --> Snapshotting: accepted
+    Snapshotting --> Promoting: pre-restore snapshot taken
+    Promoting --> RESTORED: promotion succeeded
+    Promoting --> RollingBack: promotion failed
+    RollingBack --> ROLLED_BACK: previous state recovered
+    RollingBack --> INCONSISTENT: rollback failed too<br/>(recoveryFile names the snapshot)
+    REJECTED --> [*]
+    RESTORED --> [*]
+    ROLLED_BACK --> [*]
+    INCONSISTENT --> [*]
+```
+
+Three of the four outcomes are ordinary answers, not failures. Only `INCONSISTENT` needs a
+human, and it is the reason the outcome is a typed value rather than a boolean: "it did not
+work" would not tell the operator whether their data is intact.
+
+Backups are scheduled and also taken before every destructive operation. Restore is not a
+file copy: the backup is staged, validated, its schema compared against the live one, and a
+pre-restore snapshot is taken. It then reports a typed outcome — `RESTORED`, `REJECTED`
+(nothing was written), `ROLLED_BACK` (the previous state was recovered), or, if promotion and
+rollback both fail, `INCONSISTENT`, which names a recovery file for manual repair. That fourth
+case is the honest part: the guarantee is "all or nothing, and you are told which", not "all
+or nothing, always".
+
+---
+
+## 12. Six languages, edited at runtime
+
+Translations are not compiled into the bundle. They live in the database, in `labels` and
+`localizzazioni`, and the interface fetches them — which is what lets an administrator rename
+a label from the Labels page without a rebuild, in all six languages.
+
+```mermaid
+flowchart LR
+    TSV["i18n/ui-translations.tsv<br/>the canonical catalogue<br/>key + 6 languages"]
+    SYNC["UiTranslationSyncService<br/>at startup, via JPA"]
+    DB[("labels + localizzazioni<br/>same on both engines")]
+    API["GET /translations"]
+    LS["localStorage cache<br/>versioned by CACHE_KEY"]
+    UI["t('key', 'fallback')"]
+
+    TSV --> SYNC --> DB --> API --> LS --> UI
+    EDIT["Labels page"] --> DB
+```
+
+Two properties make this safe rather than fragile:
+
+- **The sync is additive.** It inserts what is missing and never overwrites, so an edit made
+  from the interface survives every restart. The TSV is the floor, not the truth.
+- **It runs through JPA**, so SQLite and PostgreSQL receive exactly the same rows. The older
+  seed used SQLite-only SQL, and a key added there appeared on one engine and not the other —
+  the user then saw the Italian fallback in every language, on PostgreSQL only.
+
+`UiTranslationCatalogTest` fails the build if a language is missing, if a key is duplicated,
+or if a key exists in the historical SQLite seed but not in the portable catalogue.
+
+---
+
+## 13. What was deliberately not done
+
+- **No microservices.** One process is easier to install, back up and reason about, and the
+  load is a handful of concurrent planners.
+- **No container by default.** The target user installs an MSI or runs one shell script;
+  asking them for Docker would lose them.
+- **No Timefold 2.x.** Not for want of score analysis — the application already uses
+  `SolutionManager.analyze` on Community 1.33 to build the constraint breakdown. What
+  Enterprise adds is multithreaded solving (`move-thread-count`), which this workload does not
+  need; and an upgrade would touch every constraint for no benefit yet.
+- **No in-place MSI upgrade.** Uninstall and reinstall, with the data untouched because it
+  lives elsewhere. Simple, and honest about it.
+
+---
+
+## Related documents
+
+| Document | Contents |
+|---|---|
+| [`INSTALLATION-WINDOWS.md`](INSTALLATION-WINDOWS.md) | Installing on Windows, and the manual build |
+| [`INSTALLATION-LINUX.md`](INSTALLATION-LINUX.md) | Installing on Linux, from the script or by hand |
+| [`PACKAGING-WINDOWS-MSI.md`](PACKAGING-WINDOWS-MSI.md) | Windows packaging, configuration precedence, pitfalls |
+| [`../setup/INSTALL.md`](../setup/INSTALL.md) | Linux server and Raspberry Pi wizard |

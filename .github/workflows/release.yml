@@ -1,0 +1,154 @@
+name: Publish release packages
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  linux-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Build frontend
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run build
+
+      - name: Build PostgreSQL and SQLite packages
+        shell: bash
+        run: |
+          python3 -m compileall -q setup scripts/test-smtp.py
+          # Exercise the wizard's argparse too: compileall alone would not catch a
+          # broken default or a bad format string in the option definitions.
+          python3 setup/wizard.py --help > /dev/null
+          mkdir -p release
+          mvn -B -ntp clean package -DskipTests \
+            -Dquarkus.package.jar.type=uber-jar -Dquarkus.profile=postgresql
+          cp target/*-runner.jar release/employee-scheduling-postgresql-runner.jar
+
+          mvn -B -ntp clean package -DskipTests \
+            -Dquarkus.package.jar.type=uber-jar -Dquarkus.profile=sqlite
+          cp target/*-runner.jar release/employee-scheduling-sqlite-runner.jar
+
+          mkdir -p release/raspberry-installer/scripts
+          install -m 755 scripts/install-linux.sh \
+            release/raspberry-installer/scripts/install-linux.sh
+          install -m 755 scripts/uninstall-linux.sh \
+            release/raspberry-installer/scripts/uninstall-linux.sh
+          install -m 755 scripts/test-smtp.py \
+            release/raspberry-installer/scripts/test-smtp.py
+          install -m 755 scripts/start-web-setup.sh \
+            release/raspberry-installer/scripts/start-web-setup.sh
+          install -m 755 scripts/setup-caddy.sh \
+            release/raspberry-installer/scripts/setup-caddy.sh
+          printf '%s\n' "$GITHUB_REF_NAME" > release/raspberry-installer/release-version.txt
+          cp -R setup release/raspberry-installer/setup
+          find release/raspberry-installer/setup -type d -name __pycache__ -prune -exec rm -rf {} +
+          find release/raspberry-installer/setup -type f -name '*.pyc' -delete
+          tar -C release/raspberry-installer -czf \
+            release/employee-scheduling-raspberry-installer.tar.gz scripts setup release-version.txt
+          rm -rf release/raspberry-installer
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-packages
+          path: |
+            release/*.jar
+            release/*.tar.gz
+          if-no-files-found: error
+
+  windows-msi:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Verify Windows toolchain
+        shell: powershell
+        run: |
+          java -version
+          mvn -version
+          node --version
+          npm --version
+          jpackage --version
+
+      - name: Build Windows MSI
+        shell: powershell
+        run: |
+          $log = Join-Path $env:RUNNER_TEMP 'windows-msi-build.log'
+          & powershell.exe -NoProfile -ExecutionPolicy Bypass `
+            -File .\scripts\install-windows.ps1 -Package msi 2>&1 |
+            Tee-Object -FilePath $log
+          $buildExitCode = $LASTEXITCODE
+          if ($buildExitCode -ne 0) {
+            $details = ((Get-Content -LiteralPath $log -Tail 30) -join '%0A')
+            Write-Host "::error title=Windows MSI build failed::$details"
+            exit $buildExitCode
+          }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-msi
+          path: dist/*.msi
+          if-no-files-found: error
+
+  publish-release:
+    needs:
+      - linux-packages
+      - windows-msi
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: '*-packages'
+          path: release
+          merge-multiple: true
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: windows-msi
+          path: release
+
+      - name: Generate checksums
+        working-directory: release
+        run: sha256sum *.jar *.msi *.tar.gz > SHA256SUMS
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: >-
+          gh release create "$GITHUB_REF_NAME"
+          release/*
+          --verify-tag
+          --generate-notes
+          --title "Employee Scheduling $GITHUB_REF_NAME"

@@ -1,0 +1,151 @@
+.shift-view-tabs {
+  display: flex;
+  gap: 4px;
+  padding-left: 8px;
+  border-bottom: 1px solid #adb5bd;
+}
+
+.shift-view-tab {
+  min-width: 125px;
+  padding: 9px 24px;
+  margin-bottom: -1px;
+  border: 1px solid #adb5bd;
+  border-bottom-color: #adb5bd;
+  border-radius: 8px 8px 0 0;
+  background: #e9ecef;
+  color: #495057;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.shift-view-tab:hover:not(.active) {
+  background: #dee2e6;
+  color: #212529;
+  border-color: #868e96;
+}
+
+.shift-view-tab.active {
+  border-color: #6c757d;
+  border-top: 3px solid #343a40;
+  border-bottom-color: #fff;
+  background: #fff;
+  color: #212529;
+  font-weight: 700;
+  padding-top: 7px;
+}
+
+.shift-view-tab:focus-visible {
+  outline: 3px solid rgba(73, 80, 87, 0.3);
+  outline-offset: 2px;
+}
+
+.timeline-stage {
+  position: relative;
+}
+
+/* vis-timeline measures the height of its own root div. Give the fixed-height
+   viewport's inner vis root full height so the internal vertical scroll engages
+   (wheel scrolls groups, time axis stays pinned) instead of growing with content. */
+.timeline-viewport > div {
+  height: 100%;
+}
+
+.empty-schedule {
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 48px 24px;
+  color: #344054;
+}
+
+.empty-schedule__art {
+  width: min(360px, 46vw);
+  height: auto;
+  filter: drop-shadow(0 12px 24px rgba(15, 23, 42, 0.12));
+}
+
+.empty-schedule__text h5 {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 900px) {
+  .empty-schedule {
+    flex-direction: column;
+    text-align: center;
+  }
+  .empty-schedule__art {
+    width: min(320px, 70vw);
+  }
+}
+
+/* 行检索：贴在视图 tab 右侧。只做定位与高亮，不过滤列表。 */
+.shift-view-search {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  padding: 0 6px 5px 0;
+  align-self: flex-end;
+}
+
+.shift-view-search__icon {
+  color: #adb5bd;
+  font-size: 0.8rem;
+}
+
+.shift-view-search input {
+  width: 200px;
+  padding: 4px 8px;
+  font-size: 0.84rem;
+  color: #212529;
+  background: #fff;
+  border: 1px solid #adb5bd;
+  border-radius: 6px;
+}
+
+.shift-view-search input::placeholder { color: #adb5bd; }
+
+.shift-view-search input:focus {
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.15);
+}
+
+.shift-view-search__count {
+  min-width: 36px;
+  font-size: 0.78rem;
+  color: #6c757d;
+  text-align: center;
+}
+
+.shift-view-search__step {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  font-size: 0.7rem;
+  line-height: 1;
+  color: #495057;
+  background: #fff;
+  border: 1px solid #adb5bd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.shift-view-search__step:hover { background: #e9ecef; }
+
+/* 命中的行：整块浅黄底 + 橙色描边，一直保持到换词/切视图（见 ShiftsPage 的检索 effect）。 */
+.vis-label.search-hit {
+  background: #fff3cd;
+}
+
+.vis-label.search-hit .vis-inner {
+  background: #fff3cd;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 2px #f0ad4e;
+}
+

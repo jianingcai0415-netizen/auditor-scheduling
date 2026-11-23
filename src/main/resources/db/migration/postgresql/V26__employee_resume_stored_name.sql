@@ -1,0 +1,12 @@
+-- ---------------------------------------------------------------------------
+-- 简历附件：补上磁盘文件名
+-- ---------------------------------------------------------------------------
+-- V25 只加了 resume_file_name（展示用的原始名）与 resume_uploaded_at。
+-- 原始名不可直接当磁盘路径：用户上传的名字可能重名、可能含路径分隔符。
+-- 因此另存一个由服务端生成的 stored_name，目录按 employeeId 分：
+--     {app.resume.dir}/{employeeId}/{resume_stored_name}
+--
+-- 三列的生命周期一致：上传时同时写入，删除附件时同时清空。
+-- 只有 resume_file_name 非空、resume_stored_name 为空的记录属于 V26 之前的历史数据，
+-- 读取端应视为"附件缺失"而不是报错。
+ALTER TABLE employees ADD COLUMN resume_stored_name TEXT;

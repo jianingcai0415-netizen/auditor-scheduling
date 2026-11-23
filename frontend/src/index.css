@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  font-family: system-ui, Helvetica, Arial, sans-serif;
+  background-color: #f8f9fa;
+}
+
+/*
+ * 顶部导航：中文菜单项不能被压缩到词中间换行（"审核调 配" 这种断法可读性很差）。
+ * 菜单项较多时优先压缩横向内边距与字号，而不是折行——实测在 1366px 宽度下，
+ * Bootstrap 默认内边距会溢出 72px，收紧后正好为 0。
+ * 低于 1200px 由 Navbar 的 expand="xl" 折叠成汉堡菜单。
+ */
+.navbar .navbar-nav .nav-link {
+  white-space: nowrap;
+  font-size: 0.93rem;
+  padding-left: 0.35rem;
+  padding-right: 0.35rem;
+}
+
+.navbar .navbar-nav .nav-link .svg-inline--fa {
+  margin-right: 0.22rem;
+}
+
+/* 品牌区在窄屏下也不要换行。 */
+.navbar .navbar-brand {
+  white-space: nowrap;
+}
