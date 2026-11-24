@@ -44,7 +44,7 @@ java -Dquarkus.profile=sqlite -Dquarkus.http.port=8081 -jar target/quarkus-app/q
 | 想知道什么 | 看哪里 |
 |---|---|
 | 怎么装、怎么起 | 本文「快速开始」；服务器 / 树莓派见 [`setup/INSTALL.md`](setup/INSTALL.md) |
-| 每个界面怎么用 | [`docs/全流程操作手册.md`](docs/全流程操作手册.md) |
+| 每个界面怎么用 | [`docs/USER-GUIDE-ZH.md`](docs/USER-GUIDE-ZH.md)（逐页操作）· [`docs/WALKTHROUGH-ZH.md`](docs/WALKTHROUGH-ZH.md)（一次完整跑通） |
 | 系统怎么设计的、为什么这么算 | [`docs/AUDITOR-SCHEDULING-ZH.md`](docs/AUDITOR-SCHEDULING-ZH.md) 与本文「几个关键设计」 |
 | 代码结构、怎么改、怎么测 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)、[`docs/DEVELOPMENT.md`](docs/DEVELOPMENT.md) |
 | 配置项与权限 | [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md)、[`docs/AUTHENTICATION.md`](docs/AUTHENTICATION.md) |

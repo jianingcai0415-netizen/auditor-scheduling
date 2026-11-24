@@ -193,3 +193,32 @@ OpenAI 可通过 `.env` 的供应商、模型和 Base URL 切换，排程、审�
 - `APPROVER`：查看风险与日志、批准、退回和发布。
 - `VIEWER`：只读查看订单和方案。
 - `CAPOSALA`：保留为旧数据兼容角色，业务权限按 `DISPATCHER` 处理。
+
+## 仓库约定
+
+**提交信息用英文，遵循 Conventional Commits。** 结构是 `<type>(<scope>): <subject>`：主题用祈使句、
+小写开头、不加句号、控制在 50 字符左右；空一行写正文（每行 ≤ 72 字符），正文只回答"为什么改、
+影响什么"，不复述 diff。`type` 只用 `feat` / `fix` / `docs` / `refactor` / `test` / `chore` /
+`ci` / `perf` / `build`，`scope` 取模块名（`db`、`frontend`、`seed`、`repo`…），跨模块就省略；
+破坏性变更在 type 后加 `!`，并在 footer 写 `BREAKING CHANGE:`。
+
+```
+fix(db): boolean literals and REAL column width
+
+JPQL rendered `active = true` as the SQL literal `true`, but the column is
+INTEGER in both engines: SQLite reads it as 1, PostgreSQL rejects it with
+"operator does not exist: integer = boolean".
+
+V21 declared the travel-matrix coordinates as REAL, which is 8 bytes in SQLite
+and 4 in PostgreSQL, so `WHERE from_lat = ?` never matched the stored value and
+the cache upsert degenerated into an insert. V27 widens both engines.
+```
+
+**路径一律 ASCII。** 目录名、文件名、分支名只用英文；中文只出现在 README、文档正文和界面文案里。
+中文路径在 Windows 解压、CI 脚本、URL 编码、`git ls-tree` 这些环节都踩过坑，`测试数据/` 因此
+改成了 `docs/samples/`。
+
+**界面文案不散落在组件里。** 新增文案只写 `src/main/resources/i18n/ui-translations.tsv`（每个键
+必须补齐 en/fr/es/de/zh 五语，由 `UiTranslationCatalogTest` 强制）；历史硬编码走
+`frontend/src/i18n/uiText.ts` 的词典。**数据本身不翻译**：审核员姓名、城市、订单项目名来自数据库，
+切英文后仍是原文。
