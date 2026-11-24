@@ -2,7 +2,7 @@
 
 Copies every file from the source build, then removes files in the target that no
 longer exist in the source (content-hashed asset filenames make stale files dead
-weight that would otherwise accumulate in the Quarkus jar). Usage: python .sync_build.py
+weight that would otherwise accumulate in the Quarkus jar). Usage: python scripts/sync_build.py
 
 It also prunes the same stale targets under target/classes/META-INF/resources.
 maven-resources-plugin only copies and overwrites -- it never deletes -- so an
@@ -14,7 +14,9 @@ already knows the canonical asset set.
 import shutil
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+# 本脚本住在 scripts/ 下：仓库根目录是它的上一级。用 parent.parent 而不是 cwd，
+# 这样从任何目录调用都指向同一份源码。
+ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / ".tmp-build"
 DST = ROOT / "src" / "main" / "resources" / "META-INF" / "resources"
 # Same content, one level downstream: what the resources plugin copies into and

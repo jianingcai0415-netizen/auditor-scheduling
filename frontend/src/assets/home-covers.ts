@@ -1,12 +1,12 @@
-import cover1 from '../../../assets/cover1.webp'
-import cover2 from '../../../assets/cover2.webp'
-import cover3 from '../../../assets/cover3.webp'
-import cover4 from '../../../assets/cover4.webp'
-import cover5 from '../../../assets/cover5.webp'
-import cover6 from '../../../assets/cover6.webp'
-import cover7 from '../../../assets/cover7.webp'
-import cover8 from '../../../assets/cover8.webp'
-import cover9 from '../../../assets/cover9.webp'
+import cover1 from './covers/cover1.webp'
+import cover2 from './covers/cover2.webp'
+import cover3 from './covers/cover3.webp'
+import cover4 from './covers/cover4.webp'
+import cover5 from './covers/cover5.webp'
+import cover6 from './covers/cover6.webp'
+import cover7 from './covers/cover7.webp'
+import cover8 from './covers/cover8.webp'
+import cover9 from './covers/cover9.webp'
 
 export const HOME_COVERS = [
   { id: 'cover1', label: 'Cover 1', src: cover1 },

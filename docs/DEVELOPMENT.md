@@ -12,7 +12,7 @@ it runs on the JRE shipped with Debian and Raspberry Pi OS, but development uses
 The repository ships a `.vscode/` folder that turns the commands below into one-click buttons in
 the status bar, so the usual development loop does not need a terminal at all.
 
-![Status-bar buttons contributed by the workspace configuration](../assets/readme/Screenshot23.png)
+![Status-bar buttons contributed by the workspace configuration](images/quickstart/Screenshot23.png)
 
 ### The extension that draws them
 

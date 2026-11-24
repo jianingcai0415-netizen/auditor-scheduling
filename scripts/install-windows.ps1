@@ -18,7 +18,7 @@ Write-Host "======================================================" -ForegroundC
 Write-Host ""
 
 # The script lives in scripts/, but everything it needs - pom.xml, frontend/,
-# target/, assets/ - is in its parent directory. That is the project root, not
+# target/, src/ - is in its parent directory. That is the project root, not
 # the script directory. Without Split-Path, Maven would run inside scripts/ and
 # find nothing.
 $Root = Split-Path $PSScriptRoot -Parent
@@ -576,8 +576,8 @@ if ($pkg -eq "1" -or $pkg -eq "2") {
     # Open the browser automatically at startup (desktop-app experience).
     $jopts += "--java-options", "-Dapp.open-browser-on-start=true"
     $jopts += "--java-options", "-Dapp.demo-data.enabled=$($demoDataEnabled.ToString().ToLowerInvariant())"
-    # Optional application icon: assets\app\app-icon.ico
-    $iconPath = Join-Path $Root "assets\app\app-icon.ico"
+    # Optional application icon: scripts\assets\app-icon.ico
+    $iconPath = Join-Path $Root "scripts\assets\app-icon.ico"
     if (Test-Path -LiteralPath $iconPath) {
         $jopts += "--icon", $iconPath
     }

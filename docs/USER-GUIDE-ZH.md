@@ -33,7 +33,7 @@
 
 ## 二、启动与登录
 
-1. 双击桌面 `启动审核员调配系统.bat`；
+1. 双击 `scripts/start-windows.bat`（分发包里是根目录的 `启动审核员调配系统.bat`）；
 2. 浏览器自动打开 `http://localhost:8081`；
 3. 用账号登录（当前演示环境：`selftest` / `SelfTest2026!`，管理员）。
 

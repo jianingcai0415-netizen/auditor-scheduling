@@ -129,7 +129,7 @@ browser page and shuts itself down when the installation finishes.
 sudo ./scripts/start-web-setup.sh --engine postgresql
 ```
 
-![Output of start-web-setup.sh: address and temporary code](../assets/readme/Screenshot24.png)
+![Output of start-web-setup.sh: address and temporary code](../docs/images/quickstart/Screenshot24.png)
 
 The terminal shows the address to open (`http://<server>:8899`) and the
 **temporary code**. Two things matter here:
@@ -143,7 +143,7 @@ The terminal shows the address to open (`http://<server>:8899`) and the
 
 ### 2. Open the page and enter the code
 
-![Setup access page: paste the temporary code](../assets/readme/Screenshot25.png)
+![Setup access page: paste the temporary code](../docs/images/quickstart/Screenshot25.png)
 
 From a PC on the same trusted local network, open the address printed by the
 launcher and paste the code. On an untrusted network, use an SSH tunnel instead
@@ -156,7 +156,7 @@ ssh -L 8899:localhost:8899 pi@raspberrypi.local
 
 ### 3. Fill the form and choose the exposure
 
-![Installation form: engine, ports, SMTP, exposure scenario, firewall](../assets/readme/Screenshot26.png)
+![Installation form: engine, ports, SMTP, exposure scenario, firewall](../docs/images/quickstart/Screenshot26.png)
 
 The form collects the data engine, the application port, the package path, the
 data directory, the sample data flag, and the SMTP configuration (with a test
@@ -177,7 +177,7 @@ except the proxy.
 
 ### 4. Completed
 
-![Installation completed: final message with the real URL](../assets/readme/Screenshot27.png)
+![Installation completed: final message with the real URL](../docs/images/quickstart/Screenshot27.png)
 
 The last page shows every step with its result and the **real address of the
 application** — for example `http://employee-scheduling.local` in LAN mode, or

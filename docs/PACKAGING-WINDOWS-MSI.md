@@ -222,7 +222,7 @@ $jopts = @(
   '--resource-dir', $resDir
 )
 # optional application icon, when present
-if (Test-Path "assets\app\app-icon.ico") { $jopts += '--icon', "assets\app\app-icon.ico" }
+if (Test-Path "scripts\assets\app-icon.ico") { $jopts += '--icon', "scripts\assets\app-icon.ico" }
 
 jpackage --type msi --name "EmployeeScheduling" --app-version $appVersion `
   --input target\jpackage-input `

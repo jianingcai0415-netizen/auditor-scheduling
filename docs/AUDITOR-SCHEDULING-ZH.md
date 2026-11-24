@@ -160,7 +160,7 @@ OpenAI 可通过 `.env` 的供应商、模型和 Base URL 切换，排程、审�
 
 工作区已有 500 名完全合成的审核员测试数据（不对应真实个人）：
 
-- `../outputs/01a0ec19-9fbf-7b40-a5b8-633acc5fb7c8/synthetic_auditor_test_dataset_500.xlsx`
+- [`samples/synthetic_auditor_test_dataset_500.xlsx`](samples/synthetic_auditor_test_dataset_500.xlsx)
 - `../outputs/01a0ec19-9fbf-7b40-a5b8-633acc5fb7c8/synthetic_auditor_test_dataset_500.json`
 
 数据覆盖 1,790 条资格、30 个地点、900 条转场矩阵、空闲/请假例外、已有外派任务和多阶段订单。  

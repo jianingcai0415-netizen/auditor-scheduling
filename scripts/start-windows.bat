@@ -1,6 +1,8 @@
 @echo off
 setlocal
 cd /d "%~dp0"
+REM 交付包里启动器就在根目录；源码仓库里它在 scripts\ 下，构建产物在上一级。
+if not exist "target\quarkus-app\quarkus-run.jar" if exist "..\target\quarkus-app\quarkus-run.jar" cd /d "%~dp0.."
 
 REM Single-instance guard: if port 8081 is already listening, open the browser
 REM and exit instead of starting a second instance on the same port.

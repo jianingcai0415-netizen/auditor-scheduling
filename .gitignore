@@ -85,13 +85,14 @@ __pycache__/
 # ─────────────────────────────────────────────────────────────────────────────
 # 安装包二进制（34 MB）与个人材料
 # ─────────────────────────────────────────────────────────────────────────────
-assets/app/installer/
+scripts/assets/installer/
 documents/
 output/
 
-# 大数据集只保留 xlsx 样例，json 工作文件不入库
-测试数据/*.json
-测试数据/*.json.bak
+# 大数据集只保留 xlsx 样例，json 工作文件不入库（旧的 测试数据/ 目录会残留这些文件）
+docs/samples/*.json
+docs/samples/*.json.bak
+测试数据/
 
 # 开发期临时脚本与抓包文件
 .i18n_inventory.py

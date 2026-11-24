@@ -25,6 +25,30 @@
 > **English abstract**
 > An auditor scheduling workbench for certification bodies. Orders carry phases (document review / on-site audit / corrective-action follow-up); once an order is approved, the system filters every auditor by hard constraints — qualification validity, lead-auditor grade, declared unavailability, shift overlap, transfer time and a 48-hour return-to-base window — then ranks the survivors with five weighted scores (ability 40%, location 30%, availability 15%, continuity 10%, age 5%) and explains each ranking. Built with Quarkus + React + SQLite/PostgreSQL, bilingual UI (Chinese / English).
 
+## 三步跑起来
+
+需要 JDK 17+ 与 Maven 3.9+（只改界面才需要 Node 22）。
+
+```bash
+git clone https://github.com/jianingcai0415-netizen/auditor-scheduling.git
+cd auditor-scheduling
+export AUTH_SESSION_KEY="$(head -c 36 /dev/urandom | base64)"   # Windows: 任取 32 位以上随机串
+mvn package -DskipTests -Dquarkus.profile=sqlite               # 首次会下载依赖
+java -Dquarkus.profile=sqlite -Dquarkus.http.port=8081 -jar target/quarkus-app/quarkus-run.jar
+```
+
+打开 <http://localhost:8081>，注册第一个账号（自动成为管理员），里面**已经有示例部门、8 名审核员和 4 张订单**，不用先造数据就能点通全流程。细节见下文「[快速开始](#快速开始)」。
+
+## 文档地图
+
+| 想知道什么 | 看哪里 |
+|---|---|
+| 怎么装、怎么起 | 本文「快速开始」；服务器 / 树莓派见 [`setup/INSTALL.md`](setup/INSTALL.md) |
+| 每个界面怎么用 | [`docs/全流程操作手册.md`](docs/全流程操作手册.md) |
+| 系统怎么设计的、为什么这么算 | [`docs/AUDITOR-SCHEDULING-ZH.md`](docs/AUDITOR-SCHEDULING-ZH.md) 与本文「几个关键设计」 |
+| 代码结构、怎么改、怎么测 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)、[`docs/DEVELOPMENT.md`](docs/DEVELOPMENT.md) |
+| 配置项与权限 | [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md)、[`docs/AUTHENTICATION.md`](docs/AUTHENTICATION.md) |
+
 ## 界面
 
 | 工作台 · 订单与阶段 | 候选名单（含评分理由） |
@@ -92,7 +116,7 @@ npm run dev            # 开发服务器，代理到 8081
 
 # 生产构建：产物同步进后端静态资源目录后再打 jar
 npm run build
-python ../.sync_build.py
+python ../scripts/sync_build.py
 ```
 
 仓库里已经带了构建好的前端产物（`src/main/resources/META-INF/resources/assets`），所以只跑后端也能直接看界面。
@@ -146,14 +170,13 @@ mvn test -Dquarkus.test.profile=test-sqlite
 ├── src/main/resources/
 │   ├── db/migration/  Flyway 迁移（sqlite + postgresql 双份）
 │   ├── i18n/          界面文案（TSV，7 字段 5 语言）
-│   └── META-INF/resources/  构建好的前端产物
-├── frontend/src/
-│   ├── pages/         工作台、排班、地图、报表、配置…
-│   ├── components/    时间轴、天格子、表单、弹窗…
-│   ├── i18n/          i18next 初始化、内置中文包、英文兜底词典
-│   └── api/           后端接口封装
-├── docs/              架构、认证、配置、安装、用户手册
-└── databases/         运行时数据库（.gitignore）
+│   └── META-INF/resources/  构建好的前端产物（随仓库提交，克隆即可用）
+├── frontend/          React 源码（页面、组件、i18n、接口封装、封面图）
+├── docs/              手册与交付物：操作手册、架构、配置、安装、样例数据、数据库 schema
+├── scripts/           运维脚本：安装/卸载、启动器、发版、SMTP 自测、构建同步
+├── setup/             服务器 / 树莓派的浏览器安装向导（Python）
+├── .github/workflows/ CI：前端 lint、SQLite 与 PostgreSQL 两套后端测试
+└── databases/         运行时数据库与备份（.gitignore，不入库）
 ```
 
 ## 几个关键设计
