@@ -360,7 +360,7 @@ public class SchedulePlanResource {
         if (limit < 1 || limit > 20 || !weights.valid()) return ApiErrors.badRequest("CANDIDATE_SCORING_INVALID");
 
         List<EmployeeEntity> employees = EmployeeEntity.<EmployeeEntity>find(
-                "structureId = ?1 and active = true order by lastName, firstName", structureId).list();
+                "structureId = ?1 and active = ?2 order by lastName, firstName", structureId, true).list();
         List<Integer> employeeIds = employees.stream().map(employee -> employee.id).toList();
         Map<Integer, List<EmployeeSkillEntity>> qualifications = employeeIds.isEmpty() ? Map.of()
                 : EmployeeSkillEntity.<EmployeeSkillEntity>list("employeeId in ?1", employeeIds).stream()
@@ -422,7 +422,7 @@ public class SchedulePlanResource {
         ShiftEntity shift = slots.get(slotIndex - 1);
         CandidateWeights weights = candidateWeights(structureId, null, null, null, null, null);
         List<EmployeeEntity> employees = EmployeeEntity.<EmployeeEntity>find(
-                "structureId = ?1 and active = true order by lastName, firstName", structureId).list();
+                "structureId = ?1 and active = ?2 order by lastName, firstName", structureId, true).list();
         List<Integer> employeeIds = employees.stream().map(employee -> employee.id).toList();
         Map<Integer, List<EmployeeSkillEntity>> qualifications = employeeIds.isEmpty() ? Map.of()
                 : EmployeeSkillEntity.<EmployeeSkillEntity>list("employeeId in ?1", employeeIds).stream()
@@ -622,7 +622,7 @@ public class SchedulePlanResource {
                 "auditOrderId = ?1 and status = 'READY' order by startTime, id", order.id).list();
         if (phases.isEmpty()) return ApiErrors.conflict("AUDIT_ORDER_NO_READY_PHASES");
         List<EmployeeEntity> employees = EmployeeEntity.<EmployeeEntity>find(
-                "structureId = ?1 and active = true order by lastName, firstName", structureId).list();
+                "structureId = ?1 and active = ?2 order by lastName, firstName", structureId, true).list();
         List<Integer> employeeIds = employees.stream().map(employee -> employee.id).toList();
         Map<Integer, List<EmployeeSkillEntity>> qualifications = employeeIds.isEmpty() ? Map.of()
                 : EmployeeSkillEntity.<EmployeeSkillEntity>list("employeeId in ?1", employeeIds).stream()

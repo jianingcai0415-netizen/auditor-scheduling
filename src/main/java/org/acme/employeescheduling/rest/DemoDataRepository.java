@@ -1732,7 +1732,7 @@ public class DemoDataRepository {
 		header.createdAt = LocalDateTime.now().format(dbFormatter);
 		header.persist();
 		Set<Integer> activeLocations = LocationEntity.<LocationEntity>list(
-				"structureId = ?1 and active = true", structureId).stream()
+				"structureId = ?1 and active = ?2", structureId, true).stream()
 				.map(location -> location.id).collect(Collectors.toSet());
 		for (Shift shift : getShifts(structureId, weekStart, weekStart.plusDays(7))) {
 			if (shift.getStart() == null || shift.getEnd() == null
@@ -1770,7 +1770,7 @@ public class DemoDataRepository {
 			LocalDateTime start, LocalDateTime end) {
 		if (templates == null || templates.isEmpty()) return -2;
 		Set<Integer> activeLocations = LocationEntity.<LocationEntity>list(
-				"structureId = ?1 and active = true", structureId).stream()
+				"structureId = ?1 and active = ?2", structureId, true).stream()
 				.map(location -> location.id).collect(Collectors.toSet());
 		// Validate the complete source before deleting a single real shift. This also
 		// protects databases that already contained poisoned legacy template rows.
@@ -1861,7 +1861,7 @@ public class DemoDataRepository {
 			template.delete();
 		}
 		Set<Integer> activeLocations = LocationEntity.<LocationEntity>list(
-				"structureId = ?1 and active = true", structureId).stream()
+				"structureId = ?1 and active = ?2", structureId, true).stream()
 				.map(location -> location.id).collect(Collectors.toSet());
 		for (Shift shift : getShifts(structureId, weekStart, weekStart.plusDays(7))) {
 			if (!activeLocations.contains(shift.getLocation_id())) continue;

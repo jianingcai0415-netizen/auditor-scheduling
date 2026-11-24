@@ -200,8 +200,9 @@ public class UsersResource {
                     true, AppUserEntity.ROLE_ADMIN);
         }
         return entityManager
-                .createQuery("select u from AppUserEntity u where u.active = true and u.role = :role",
+                .createQuery("select u from AppUserEntity u where u.active = :active and u.role = :role",
                         AppUserEntity.class)
+                .setParameter("active", true)
                 .setParameter("role", AppUserEntity.ROLE_ADMIN)
                 .setLockMode(LockModeType.PESSIMISTIC_WRITE)
                 .getResultList()

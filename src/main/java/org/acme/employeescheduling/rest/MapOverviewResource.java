@@ -116,9 +116,9 @@ public class MapOverviewResource {
         String[] window = windowOf(scope, now);
 
         List<LocationEntity> cities = LocationEntity.<LocationEntity>find(
-                "structureId = ?1 and active = true and latitude is not null and longitude is not null"
+                "structureId = ?1 and active = ?2 and latitude is not null and longitude is not null"
                         + " order by name",
-                structureId).list();
+                structureId, true).list();
         Map<Integer, LocationEntity> cityById = new LinkedHashMap<>();
         for (LocationEntity city : cities) {
             cityById.put(city.id, city);
@@ -126,7 +126,7 @@ public class MapOverviewResource {
 
         Map<Integer, ShiftEntity> shiftsByEmployee = shiftsInWindow(window[0], window[1], nowText);
         List<EmployeeEntity> employees = EmployeeEntity.<EmployeeEntity>find(
-                "structureId = ?1 and active = true order by id", structureId).list();
+                "structureId = ?1 and active = ?2 order by id", structureId, true).list();
         // 任务地点可能落在"没有坐标/已停用"的地点上（历史数据），所以名称表要取全部地点，
         // 不能复用上面筛过经纬度的 cities，否则跨城提示会因为查不到名字而整行消失。
         Map<Integer, String> cityNames = new HashMap<>();
