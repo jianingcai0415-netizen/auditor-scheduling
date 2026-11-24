@@ -52,9 +52,16 @@ public class OrmRegressionTestProfile implements QuarkusTestProfile {
                     + "start_time TEXT NOT NULL, end_time TEXT NOT NULL, employee_id INTEGER, pinned INTEGER NOT NULL DEFAULT 0)");
             statement.execute("CREATE TABLE skills (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE, "
                     + "skill_order INTEGER, active INTEGER NOT NULL DEFAULT 1)");
+            // 这份夹具模拟的是"老版本遗留库"，但表结构必须能被当前实体读：少一列，
+            // 任何 EmployeeEntity 查询都会 SQLITE_ERROR。历史上这里漏过 resume_* 等列，
+            // 导致整个测试类长期红灯——加列时请对照 EmployeeEntity 的 @Column 列表。
             statement.execute("CREATE TABLE employees (id INTEGER PRIMARY KEY AUTOINCREMENT, code TEXT NOT NULL UNIQUE, "
                     + "first_name TEXT NOT NULL, last_name TEXT NOT NULL, structure_id INTEGER NOT NULL DEFAULT 1, "
-                    + "active INTEGER NOT NULL DEFAULT 1, email TEXT NOT NULL DEFAULT '')");
+                    + "active INTEGER NOT NULL DEFAULT 1, email TEXT NOT NULL DEFAULT '', "
+                    + "operational_status TEXT NOT NULL DEFAULT 'AVAILABLE', busy_until TEXT, status_updated_at TEXT, "
+                    + "current_location_id INTEGER, "
+                    + "buffer_before_minutes INTEGER NOT NULL DEFAULT 30, buffer_after_minutes INTEGER NOT NULL DEFAULT 30, "
+                    + "resume_file_name TEXT, resume_stored_name TEXT, resume_uploaded_at TEXT)");
             statement.execute("CREATE TABLE location_skills (id INTEGER PRIMARY KEY AUTOINCREMENT, location_id INTEGER NOT NULL, "
                     + "skill_id INTEGER NOT NULL, skill_type_id INTEGER NOT NULL)");
             statement.execute("CREATE TABLE skill_type (id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT)");

@@ -24,6 +24,9 @@ interface AmapConfig {
 
 declare global {
   interface Window {
+    // 高德 JS API 没有官方 TypeScript 类型包，这里只是挂一个全局对象；
+    // 真写一套伪类型反而会掩盖 SDK 的真实形状，所以刻意保留 any。
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     AMap?: any
     _AMapSecurityConfig?: { securityJsCode: string }
   }

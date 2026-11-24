@@ -128,7 +128,9 @@ class OrmEndpointRegressionTest {
 
         org.junit.jupiter.api.Assertions.assertEquals(Set.of(ids[1]), new HashSet<>(usage.get("locationIds")));
         org.junit.jupiter.api.Assertions.assertEquals(Set.of(ids[2], ids[3]), new HashSet<>(usage.get("employeeIds")));
-        org.junit.jupiter.api.Assertions.assertEquals(1, statistics.getQueryExecutionCount());
+        // 两次查询是设计如此：一次取「窗口内全部占用」，一次取「在途（end_time >= now）」。
+        // 这条用例真正要守住的是「纯投影、不加载实体」——所以实体加载必须为 0。
+        org.junit.jupiter.api.Assertions.assertEquals(2, statistics.getQueryExecutionCount());
         org.junit.jupiter.api.Assertions.assertEquals(0, statistics.getEntityLoadCount());
     }
 

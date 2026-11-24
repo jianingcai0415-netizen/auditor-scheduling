@@ -120,7 +120,10 @@ export default function MapPage() {
   const [mapState, setMapState] = useState<MapState>('loading')
 
   const containerRef = useRef<HTMLDivElement | null>(null)
+  // 高德 SDK 的对象（Map / Marker）没有类型声明，用 any 持有；调用点都在本文件内。
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mapRef = useRef<any>(null)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const markersRef = useRef<any[]>([])
   const lastStructure = useRef(0)
   /** 底图是否已获准初始化：没有部门时不加载 SDK，避免出现一张无从解释的空地图。 */
@@ -268,9 +271,10 @@ export default function MapPage() {
       map.add(marker)
       markersRef.current.push(marker)
     }
-  }, [data, mapState, selectedCity])
+  }, [data, mapState, selectedCity, group])
 
-  const cities = data?.cities ?? []
+  // 固定引用：否则每次渲染都是新数组，下面的 activeCity 会跟着重算。
+  const cities = useMemo(() => data?.cities ?? [], [data])
   const activeCity: MapCity | null = useMemo(
     () => (selectedCity === null ? null : cities.find((c) => c.locationId === selectedCity) ?? null),
     [cities, selectedCity],

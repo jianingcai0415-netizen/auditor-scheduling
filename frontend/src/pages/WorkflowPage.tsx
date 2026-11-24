@@ -525,6 +525,8 @@ export default function WorkflowPage() {
     const names = ['audit-order', 'audit-phase', 'schedule-plan', 'candidate-weights', 'employee.status.changed', 'import', 'solver.started']
     names.forEach(name => source.addEventListener(name, refresh))
     return () => { names.forEach(name => source.removeEventListener(name, refresh)); source.close() }
+    // loadPlanHistory 每次渲染都是新函数，放进来会让 SSE 反复重连；这里只按业务关键值重订阅。
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [structureId, reload, orderCandidateResult, candidateLimit])
 
   const locationNames = useMemo(() => new Map(locations.map(location => [location.id, location.name])), [locations])
@@ -602,6 +604,27 @@ export default function WorkflowPage() {
     })))
     return result
   }, [orderCandidateResult])
+  useEffect(() => {
+    const code = deepLinkOrder?.trim()
+    if (!code || !structureId || lastDeepLinkOrder.current === code) return
+    lastDeepLinkOrder.current = code
+    setOrderCodeSearch(code)
+    // 候选页：直接查好这一单的候选人；订单页：把列表收到这一单，再靠下面的 effect 展开。
+    if (tab === 'candidates') void searchOrderCandidates(code)
+    else setOrderListSearch(code)
+    // 深链接只应在 URL 的订单号/页签变化时触发一次，函数本身不进依赖。
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deepLinkOrder, tab, structureId])
+
+  // 订单页深链接：orders 到位后自动展开目标订单，用户不用再点开找。
+  useEffect(() => {
+    const code = deepLinkOrder?.trim()
+    if (!code || tab !== 'orders' || orders.length === 0) return
+    const target = orders.find(order => order.orderCode === code)
+    if (!target) return
+    setExpandedOrderIds(prev => prev.includes(String(target.id)) ? prev : [String(target.id)])
+  }, [deepLinkOrder, tab, orders])
+
   if (!structureId) return <Alert variant="warning">{tx("请先选择部门。")}</Alert>
 
   async function run(action: () => Promise<unknown>, success: string) {
@@ -724,24 +747,6 @@ export default function WorkflowPage() {
     finally { setBusy(false) }
   }
 
-  useEffect(() => {
-    const code = deepLinkOrder?.trim()
-    if (!code || !structureId || lastDeepLinkOrder.current === code) return
-    lastDeepLinkOrder.current = code
-    setOrderCodeSearch(code)
-    // 候选页：直接查好这一单的候选人；订单页：把列表收到这一单，再靠下面的 effect 展开。
-    if (tab === 'candidates') void searchOrderCandidates(code)
-    else setOrderListSearch(code)
-  }, [deepLinkOrder, tab, structureId])
-
-  // 订单页深链接：orders 到位后自动展开目标订单，用户不用再点开找。
-  useEffect(() => {
-    const code = deepLinkOrder?.trim()
-    if (!code || tab !== 'orders' || orders.length === 0) return
-    const target = orders.find(order => order.orderCode === code)
-    if (!target) return
-    setExpandedOrderIds(prev => prev.includes(String(target.id)) ? prev : [String(target.id)])
-  }, [deepLinkOrder, tab, orders])
 
   async function searchOrderCandidates(code = orderCodeSearch) {
     const orderCode = code.trim()

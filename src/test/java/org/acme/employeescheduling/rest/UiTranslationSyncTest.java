@@ -98,12 +98,12 @@ class UiTranslationSyncTest {
     void syncRecreatesMissingTranslations() {
         UiTranslationCatalog.Entry entry = UiTranslationCatalog.load().get(0);
         Integer languageId = QuarkusTransaction.requiringNew().call(() -> {
-            LanguageEntity language = LanguageEntity.<LanguageEntity>find("code", "it").firstResult();
+            LanguageEntity language = LanguageEntity.<LanguageEntity>find("code", "en").firstResult();
             return language == null ? null : language.id;
         });
-        assertNotNull(languageId, "Lingua 'it' assente dal database attivo");
+        assertNotNull(languageId, "缺少 en 语言记录：同步用例需要一个真实存在的语言");
 
-        String expected = entry.values().get("it");
+        String expected = entry.values().get("en");
         QuarkusTransaction.requiringNew().run(() -> translationRow(entry.key(), languageId).delete());
 
         UiTranslationSyncService.SyncResult result = syncService.syncCatalog();
@@ -120,10 +120,10 @@ class UiTranslationSyncTest {
     void syncDoesNotOverwriteEditedTranslations() {
         UiTranslationCatalog.Entry entry = UiTranslationCatalog.load().get(0);
         Integer languageId = QuarkusTransaction.requiringNew().call(() -> {
-            LanguageEntity language = LanguageEntity.<LanguageEntity>find("code", "it").firstResult();
+            LanguageEntity language = LanguageEntity.<LanguageEntity>find("code", "en").firstResult();
             return language == null ? null : language.id;
         });
-        assertNotNull(languageId, "Lingua 'it' assente dal database attivo");
+        assertNotNull(languageId, "缺少 en 语言记录：同步用例需要一个真实存在的语言");
 
         String edited = "Valore modificato dall'utente";
         String original = QuarkusTransaction.requiringNew().call(() -> {

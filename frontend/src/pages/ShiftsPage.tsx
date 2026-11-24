@@ -881,6 +881,8 @@ export default function ShiftsPage() {
     if (!schedule.shifts.some(row => row.id === target)) return
     pendingShiftId.current = null
     void openShiftOrGuide(target)
+    // 只在 schedule（窗口数据）变化时重试一次；把函数加进依赖会每次渲染都重跑。
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [schedule])
 
   // ─── Click on a shift item ─────────────────────────────────────────────────

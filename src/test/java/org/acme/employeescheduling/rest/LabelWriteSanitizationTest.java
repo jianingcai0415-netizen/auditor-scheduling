@@ -31,14 +31,19 @@ class LabelWriteSanitizationTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    /** @brief "it" language id on the active database (used in payloads and lookups). */
-    private static Integer IT_LANGUAGE_ID;
+    /**
+     * @brief 测试用语言 id（en）。
+     * @details 原先取的是 "it"：意大利语在 2026-10-19 已从字典里移除，取不到就拼出
+     *          "null" 当语言键，接口一律 400，这个用例从此没再跑通过。
+     */
+    private static Integer LANGUAGE_ID;
 
     @BeforeAll
-    static void findItalianLanguageId() {
-        IT_LANGUAGE_ID = QuarkusTransaction.requiringNew().call(() -> {
-            LanguageEntity language = LanguageEntity.<LanguageEntity>find("code", "it").firstResult();
-            return language == null ? null : language.id;
+    static void findEnglishLanguageId() {
+        LANGUAGE_ID = QuarkusTransaction.requiringNew().call(() -> {
+            LanguageEntity language = LanguageEntity.<LanguageEntity>find("code", "en").firstResult();
+            if (language == null) throw new IllegalStateException("缺少 en 语言记录，无法验证写入净化");
+            return language.id;
         });
     }
 
@@ -47,7 +52,7 @@ class LabelWriteSanitizationTest {
         node.put("key", key);
         node.put("description", description);
         ObjectNode translations = node.putObject("translations");
-        translations.put(String.valueOf(IT_LANGUAGE_ID), translation);
+        translations.put(String.valueOf(LANGUAGE_ID), translation);
         return node;
     }
 
@@ -109,7 +114,7 @@ class LabelWriteSanitizationTest {
         try {
             ArrayNode items = MAPPER.createArrayNode();
             ObjectNode item = items.addObject();
-            item.put("languageId", IT_LANGUAGE_ID);
+            item.put("languageId", LANGUAGE_ID);
             item.put("fieldName", "value");
             item.put("value", "<script>alert(1)</script>Valore");
             given().contentType(ContentType.JSON).body(items.toString())
