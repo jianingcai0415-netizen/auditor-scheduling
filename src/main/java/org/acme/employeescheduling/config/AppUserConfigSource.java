@@ -116,8 +116,10 @@ public class AppUserConfigSource implements ConfigSource {
                 # standalone = username and password, no email
                 # server     = email-address verification with a one-time code
                 #app.registration.mode=auto
-                # Optional test dataset (sample structure, staff, locations, skills, and shifts).
-                #app.demo-data.enabled=false
+                # Sample data: one department, 8 auditors, 4 cities, 4 orders with phases and a
+                # few assignments. Written only when the database has no structures yet, so it
+                # never mixes into a real installation. Set false to start from an empty database.
+                #app.demo-data.enabled=true
 
                 # ── Security ─────────────────────────────────────────────────────────────────
                 # Key that encrypts the session cookie: at least 16 characters, preferably 32+.

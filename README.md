@@ -70,12 +70,16 @@
 # 1) 打包（第一次会下载依赖）
 mvn package -DskipTests -Dquarkus.profile=sqlite
 
-# 2) 运行
+# 2) 设置会话密钥（必须，否则拒绝启动：默认值公开在仓库里，等于谁都能伪造 ADMIN 会话）
+export AUTH_SESSION_KEY="$(head -c 36 /dev/urandom | base64)"   # Windows: 随便 32 位以上的随机串
+
+# 3) 运行
 java -Dquarkus.profile=sqlite -Dquarkus.http.port=8081 \
      -jar target/quarkus-app/quarkus-run.jar
 ```
 
-打开 <http://localhost:8081>。首次启动会用 Flyway 自动建库建表到 `databases/employee_scheduling.db`。
+打开 <http://localhost:8081>。首次启动会用 Flyway 自动建库建表到 `databases/employee_scheduling.db`，
+随后写入一份示例数据（见下文「数据」）。
 
 **没有预置账号**：第一个注册的人自动成为 `ADMIN`（本地 sqlite 走 `standalone` 注册模式，不需要邮箱验证）；之后由管理员在「用户」页创建其他人。
 
@@ -113,9 +117,9 @@ mvn test -Dquarkus.test.profile=test-sqlite
 | `DISPATCH_AI_BASE_URL` | API 地址（兼容 OpenAI 协议） | — |
 | `AMAP_JS_KEY` / `AMAP_JS_SECURITY_CODE` | 高德地图 JS API 的 Key 与安全密钥（不配则地图页给出配置提示，其余功能不受影响） | 空 |
 | `AMAP_API_KEY` | 高德 Web 服务 Key，用于计算城市间驾车时长（不配则退化为直线距离估算） | 空 |
-| `AUTH_SESSION_KEY` | 会话加密密钥，首次启动自动生成到 `.env` | 自动 |
+| `AUTH_SESSION_KEY` | 会话加密密钥，至少 32 个随机字符。**`java -jar` 必须自己提供**（安装脚本会自动生成） | — |
 | `APP_REGISTRATION_MODE` | `auto` / `standalone` / `server` | `auto` |
-| `APP_DEMO_DATA` | 是否写入演示数据 | `false` |
+| `APP_DEMO_DATA` | 是否写入示例数据（只在空库首次启动时写） | `true` |
 | `DISPATCH_RETURN_TO_BASE_HOURS` | 返程空窗期小时数 | `48` |
 | `DISPATCH_LOCATION_SCORE_BASELINE_MINUTES` | 位置分归零的转场基准（分钟） | `2880` |
 
@@ -125,7 +129,10 @@ mvn test -Dquarkus.test.profile=test-sqlite
 
 - 数据库文件：`databases/employee_scheduling.db`（已加入 `.gitignore`，不入库）
 - 建表：Flyway，迁移脚本在 `src/main/resources/db/migration/{sqlite,postgresql}`，两套引擎的 DDL 由测试强制对齐
-- 演示数据：设置 `APP_DEMO_DATA=true` 后首次启动会写入示例部门 / 地点 / 资格 / 审核员；也可以从首页的「导入测试数据」入口生成
+- 示例数据：**空库第一次启动时会自动写入**（可用 `APP_DEMO_DATA=false` 关掉），内容是
+  一个「演示部门」+ 6 项资格 + 4 个城市 + 8 名审核员 + 4 张订单（草稿 / 待审批 / 已批准两份，
+  共 11 个阶段 15 个名额，其中 4 个已派人，北京那段现场审核跨过当天，所以地图上能看到在岗）。
+  只要库里已经有任何部门，它就静默跳过——不会混进真实数据。
 - 备份：应用内的备份页会把快照写到 `databases/backups/`（同样不入库）
 
 ## 目录结构
